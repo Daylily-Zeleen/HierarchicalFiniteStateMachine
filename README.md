@@ -12,7 +12,7 @@
 
 # HFSM structure:
 
-> ![](C:\Users\73517\Desktop\image\strusture.png)
+> ![](README.assets/strusture.png)
 >
 
 # Installation
