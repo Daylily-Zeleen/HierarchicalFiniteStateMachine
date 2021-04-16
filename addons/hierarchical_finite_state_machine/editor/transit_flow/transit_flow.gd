@@ -320,7 +320,7 @@ func follow_mouse(mouse_offset:Vector2):
 		mouse_offset -= (Vector2.UP* OVERLAP_OFFSET ).rotated(deg2rad(rect_rotation))
 	if from :
 		place_line(from , mouse_offset)
-
+		visible = true
 	
 #------------------signal----------------------
 func _on_VariableExpressionRes_deleted(res):

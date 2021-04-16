@@ -389,7 +389,6 @@ func _on_GraphEdit_gui_input(event):
 				if editing_transit_flow:
 					yield(get_tree(),"idle_frame")#等待PlaceLine
 					yield(get_tree(),"idle_frame")
-					editing_transit_flow.visible = true
 					
 			if mouse_button_event.button_index == BUTTON_RIGHT :
 				if editing_transit_flow:

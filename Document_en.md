@@ -24,7 +24,7 @@
 >
 > + HFSM structure:
 >
-> ![](C:\Users\73517\Desktop\image\strusture.png)
+> ![](DOCUMENT.assets/strusture.png)
 >
 
 ## Installation
@@ -42,34 +42,34 @@
 
 ​		When you add a "HFSM" node to the scene tree and select it, the HFSM editor will pop up at bottom.
 
-![](C:\Users\73517\Desktop\image\Main Interface.png)
+![](DOCUMENT.assets\Main Interface.png)
 
 ### Variable List
 
-![](C:\Users\73517\Desktop\image\Variable List.png)
+![](DOCUMENT.assets\Variable List.png)
   1. Extend button ：Hide or expand more information. After expansion, you can change the order of variables or add variable comments, as shown in the following figure:
 
 
-![](C:\Users\73517\Desktop\image\variable list extend.png)
+![](DOCUMENT.assets\variable list extend.png)
 
   2. Add button : Add a new variable to HFSM.
 
      > Note: you must make a unique name for the variable after adding it, otherwise the variable will be ignored at run time
 
-![](C:\Users\73517\Desktop\image\Variable list add.png)
+![](DOCUMENT.assets\Variable list add.png)
 
   3. Hide button : When designing a state machine, if the list hinders observation, it can be hidden, and the visibility of the list can be restored in the right click popup menu.
 
 ### Variable Editor
 ​	Click "add new variable" in variable list to add a variable editor.
 
-![](C:\Users\73517\Desktop\image\Variable Editor.png)
+![](DOCUMENT.assets\Variable Editor.png)
 
  1. Move buttons :  When there are multiple variable editors, you can change there order.
 
  2. Variable type option button : Used to select the type of the variable.
 
-    ![](C:\Users\73517\Desktop\image\Variable Editor type.png)
+    ![](DOCUMENT.assets\Variable Editor type.png)
 
 	>    + Trigger : it can persist only one frame(default physics frame,but it will be idle frame if HSFM's Process Mode is set at "Idle") after being trigger.
 	>    + The behavior of other variable types is the same as that of ordinary variables.
@@ -90,7 +90,7 @@
 
 ​	Press the right mouse button in the editing interface to pop up.
 
-![](C:\Users\73517\Desktop\image\right popup.png)
+![](DOCUMENT.assets\right popup.png)
 
  1. Add State : Add State in current location
 
@@ -140,19 +140,19 @@
 
 ### FSM path
 
-![](C:\Users\73517\Desktop\image\Path.png)
+![](DOCUMENT.assets\Path.png)
 
 ​		This Item is composed of a group of buttons, indicating the path of the current FSM. The last key is the position of the current FSM, and the button is disabled. Click the previous button to jump to the target FSM.
 
 ### Toolbar 
 
-![](C:\Users\73517\Desktop\image\Toolbar.png)
+![](DOCUMENT.assets\Toolbar.png)
 
 ​		The last button is to toggle the visibility of the Transitions comment 
 
-![](C:\Users\73517\Desktop\image\comment visible.png)
+![](DOCUMENT.assets\comment visible.png)
 
-![comment visible1](C:\Users\73517\Desktop\image\comment visible1.png)
+![](DOCUMENT.assets\comment visible1.png)
 
 
 
@@ -164,7 +164,7 @@
 >NOTE：
 >		At present, the display of mini map is not good enough. The Transitions will show at mini map without rotation. I have been submitted a Proposal for this error.
 
-![](C:\Users\73517\Desktop\image\minimap.png)
+![](DOCUMENT.assets\minimap.png)
 
 ## State
 
@@ -174,7 +174,7 @@
 
 
 
-![](C:\Users\73517\Desktop\image\State.png)
+![](DOCUMENT.assets\State.png)
 
 1. State Name
 
@@ -186,9 +186,9 @@
 
 2. State Type
 
-![](C:\Users\73517\Desktop\image\state type inspector.png)
+![](DOCUMENT.assets\state type inspector.png)
 
-![](C:\Users\73517\Desktop\image\State Type.png)
+![](DOCUMENT.assets\State Type.png)
 
 + Normal : Most commonly used type with complete State behavior (Initialization, Entry, Update, Physical update, Exit).
 + Entry : Each FSM must contain a unique Entry State, which is used to indicate the starting point when entering the FSM, and also has a complete State behavior.
@@ -206,7 +206,7 @@
 
    ​	A white box will be showed on the State, which is attached the script, as a prompt, as shown in the following figure:
 
-![](C:\Users\73517\Desktop\image\script.png)
+![](DOCUMENT.assets\script.png)
 
 ​		It is recommended to create, attach and remove State scripts through the right click menu. The State script property in inspector can also be edited, but it is not so convenient.
 
@@ -220,7 +220,7 @@
 
 ​		If true, a FSM will be nested in the State, then display a Button to use to entry the nested FSM and add a new property :Rest Nested Fsm When Entry. As follow figure show.
 
-![](C:\Users\73517\Desktop\image\is_nested.png)
+![](DOCUMENT.assets\is_nested.png)
 
 + Rest Nested Fsm When Entry:
 
@@ -381,13 +381,13 @@ func exit()->void:
 
 ​		It is used to connect State, determine the direction of transition, and shift State when meeting the Transition conditions. It can be created either by right click menu or by shortcut key Shift+left click. When you select a transition, its inspector property are as follows：
 
-![](C:\Users\73517\Desktop\image\transition.png)
+![](DOCUMENT.assets\transition.png)
 
 ​		Neither of the first two properties can be edited, indicating only the States connected by both sides of the Transition.
 
 ​		There are currently three types of Transition (Auto, Variable, Expression) ,and sufficient to cope with the vast majority of cases. Set the type of transition through the "Transition Type" in the inspector.
 
-![](C:\Users\73517\Desktop\image\transition type.png)
+![](DOCUMENT.assets\transition type.png)
 
 ### State Transit Behavior
 
@@ -399,35 +399,35 @@ func exit()->void:
 
   		There are 5 modes, which can be selected by "Auto transit mode" in the inspector.
 
-![](C:\Users\73517\Desktop\image\auto mode.png)
+![](DOCUMENT.assets\auto mode.png)
 
   1. Delay timer:
 
-     ![](C:\Users\73517\Desktop\image\delay timer.png)
+     ![](DOCUMENT.assets\delay timer.png)
 
      ​		In this mode, by configuring the delay time, when FSM enters the start State of the Transition, the Transition will start countdown according to the delay time you set. When the countdown ends, the condition of the Transition is true.
 
   2. Nested Fsm Exit：
 
-    ![](C:\Users\73517\Desktop\image\nested exit.png)
+    ![](DOCUMENT.assets\nested exit.png)
     
     ​		Only when the start State of the Transition contain a nested FSM, the condition of the Transition can be true. When the nested FSM of the start State runs to its Exit State and exit ehavior is finished, the condition of the Transition is true.
     
   3. Manual Exit ：
     
-    ![](C:\Users\73517\Desktop\image\manual exit.png)
+    ![](DOCUMENT.assets\manual exit.png)
     
     ​		In this mode, when the start State of this Transition execute manual_exit() in mormal State behavior, the condition of the Transition is true.
     
   4. Update times :
 
-     ![](C:\Users\73517\Desktop\image\update times.png)
+     ![](DOCUMENT.assets\update times.png)
 
      ​		In this mode, when FSM enters the start State of the Transition, it will start to count the number of updates (that is, the number of times update() is executed). When the number of times you set is reached, the condition of the Transition is true.
 
   5. Physics Update times :
 
-     ![](C:\Users\73517\Desktop\image\physics update time.png)
+     ![](DOCUMENT.assets\physics update time.png)
 
      ​		In this mode, when FSM enters the start State of the Transition, it will start to count the number of physics updates (that is, the number of times physics_updates() is executed). When the number of times you set is reached, the condition of the Transition is true.
 
@@ -439,18 +439,18 @@ func exit()->void:
 >
 > ​		If not add variable expression, the condition for the Transition will never be set to true.
 
-![](C:\Users\73517\Desktop\image\variable transition.png)
+![](DOCUMENT.assets\variable transition.png)
 
 ​		You can add variable expressions by dragging a variable from a Variable List to the inspector:
 
-![](C:\Users\73517\Desktop\image\Variable expression.png)
+![](DOCUMENT.assets\Variable expression.png)
 
 > ​		When you press the expand button, you can display more information about variable expressions, and you can change the order of expressions:
 >
-> ![](C:\Users\73517\Desktop\image\variable expression extend.png)
+> ![](DOCUMENT.assets\variable expression extend.png)
 1. Operation Mode：
 
-![](C:\Users\73517\Desktop\image\operate mode.png)
+![](DOCUMENT.assets\operate mode.png)
 
 + And Mode : Only when all variable expressions are met, the condition of the Transition is true.
 
@@ -476,7 +476,7 @@ func exit()->void:
 
 ​		Transition which is this type has highest flexibility and can cope with almost all situations. On the other hand, it may consume more performance than variable Transition, although it's very small on macroscopic scale.
 
-![](C:\Users\73517\Desktop\image\expression.png)
+![](DOCUMENT.assets\expression.png)
 
 + The upper editor is used to edit expressions：
 
@@ -529,7 +529,7 @@ func exit()->void:
 
 ​		When you select the HFSM node in the scene tree, the inspector will display its properties as follows:
 
-![](C:\Users\73517\Desktop\image\HFSM Inspector.png)
+![](DOCUMENT.assets\HFSM Inspector.png)
 
 1. Active
 
@@ -539,7 +539,7 @@ func exit()->void:
 
 ​		The process type of HFSM mainly affects the behavior of State in FSM and the timing of HFSM signal transmission.
 
-![](C:\Users\73517\Desktop\image\process type.png)
+![](DOCUMENT.assets\process type.png)
 
 The difference between process types as follows：
 
@@ -562,11 +562,11 @@ The difference between process types as follows：
 
 ​		
 
-![](C:\Users\73517\Desktop\image\agents.png)
+![](DOCUMENT.assets\agents.png)
 
 ​		This property will automatically add a key value pair whose key is "null" and value is empty NodePath. It is convenient to add nodes in the scene tree without manually changing the type and adding the key value pair.
 
-![](C:\Users\73517\Desktop\image\add agent.png)
+![](DOCUMENT.assets\add agent.png)
 
 ​		According to Godot's style of naming, in general, node names follow CamelCase, while variable names follow snake_case. To simplify the naming operation, the node name will be automatically converted to snake_case. If you don't need this feature, you can turn it off in advanced settings.
 
@@ -584,7 +584,7 @@ The difference between process types as follows：
 
 ​		According to Godot's style of naming, in general, file names follow snake_case, while class names follow CamelCase. So it will convert file name to CamelCase as it class name. 
 
-​	![](C:\Users\73517\Desktop\image\custom class.png)
+​	![](DOCUMENT.assets\custom class.png)
 
 > NOTE：
 >
@@ -598,18 +598,18 @@ The difference between process types as follows：
 
 ​		if checked, It will display a simple debugger at bottom left in runtime, to indicate the current State path.
 
-![](C:\Users\73517\Desktop\image\debug.png)
+![](DOCUMENT.assets\debug.png)
 
 ​		From left to right by path, the top of each column is the name of nested FSM or State at the current level. The dark red one is last Exit State, and the translucent one is past State. It will not be displayed after 5 seconds.
 
 6. Advanced  Setting
 
-![](C:\Users\73517\Desktop\image\Advanced Setting.png)
+![](DOCUMENT.assets\Advanced Setting.png)
 
 + Disable Rename To Snake Case : If checked，the name of agent node will be used as its variable name in State script directly.
 + Force All State Entry Behavior :
 
-![](C:\Users\73517\Desktop\image\force behavior.png)
+![](DOCUMENT.assets\force behavior.png)
 
 ​		a. Not Force : Default mode, the entry behavior of State will be decided by itself. 
 
@@ -624,7 +624,7 @@ The difference between process types as follows：
 
 + Force All Fsm Entry Behavior : 
 
-![](C:\Users\73517\Desktop\image\force fsm.png)
+![](DOCUMENT.assets\force fsm.png)
 
 ​		a. Not Force : Default mode, the entry behavior of FSM will be decided by itself. 
 
