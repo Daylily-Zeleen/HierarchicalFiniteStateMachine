@@ -12,8 +12,7 @@
 
 # HFSM structure:
 
-> ![](README.assets/strusture.png)
->
+![](DOCUMENT.assets/strusture.png)
 
 # Installation
 
