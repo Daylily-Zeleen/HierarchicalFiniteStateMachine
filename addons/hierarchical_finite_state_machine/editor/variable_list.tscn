@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/variable_list.gd" type="Script" id=1]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/Editor/Icon/visiblity_icon.png" type="Texture" id=2]
+
+[node name="VariableList" type="GraphNode"]
+self_modulate = Color( 1, 1, 1, 0.501961 )
+margin_right = 214.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 198, 0 )
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_icons/close = ExtResource( 2 )
+custom_colors/close_color = Color( 1, 1, 1, 1 )
+title = "Variable list"
+show_close = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OpButtons" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 198.0
+margin_bottom = 44.0
+
+[node name="FoldButton" type="Button" parent="OpButtons"]
+margin_right = 28.0
+margin_bottom = 20.0
+text = ">>"
+
+[node name="AddButton" type="Button" parent="OpButtons"]
+margin_left = 61.0
+margin_right = 182.0
+margin_bottom = 20.0
+size_flags_horizontal = 10
+text = "Add new variable"
+
+[connection signal="close_request" from="." to="." method="_on_VariableList_close_request"]
+[connection signal="dragged" from="." to="." method="_on_VariableList_dragged"]
+[connection signal="resize_request" from="." to="." method="_on_FsmVariableNode_resize_request"]
+[connection signal="pressed" from="OpButtons/FoldButton" to="." method="_on_FoldButton_pressed"]
+[connection signal="pressed" from="OpButtons/AddButton" to="." method="_on_AddButton_pressed"]

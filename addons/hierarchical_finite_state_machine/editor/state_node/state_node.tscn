@@ -1,0 +1,174 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/state_node/state_node.gd" type="Script" id=1]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/icon/edit_icon.png" type="Texture" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.215686, 0.215686, 0.215686, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.215686, 0.215686, 0.215686, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 1, 0.541176, 1 )
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.34902, 0, 0, 0.501961 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.8, 0.8, 0.8, 0 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0.27451, 0.054902, 0.501961 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 1, 0.541176, 0 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=5]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 0.392157 )
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[node name="State" type="GraphNode"]
+margin_right = 56.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+custom_styles/frame = SubResource( 1 )
+custom_styles/selectedframe = SubResource( 2 )
+custom_styles/position = SubResource( 3 )
+custom_styles/breakpoint = SubResource( 4 )
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+state_type = null
+is_nested = null
+reset_properties_when_entry = null
+reset_nested_fsm_when_entry = null
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 54.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 0, 35 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 2
+custom_constants/margin_top = 1
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 1
+
+[node name="ScriptTip" type="Panel" parent="MarginContainer"]
+visible = false
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 50.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 0, 31 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 5 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 50.0
+margin_bottom = 34.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NameEdit" type="LineEdit" parent="MarginContainer/HBoxContainer"]
+margin_top = 9.0
+margin_right = 48.0
+margin_bottom = 23.0
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+custom_styles/read_only = SubResource( 6 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 6 )
+custom_colors/selection_color = Color( 0, 0.27451, 0.564706, 1 )
+custom_colors/cursor_color = Color( 1, 1, 1, 1 )
+custom_colors/clear_button_color_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0.772549, 0.760784, 0.760784, 1 )
+custom_colors/font_color = Color( 0.772549, 0.760784, 0.760784, 1 )
+custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
+text = "State"
+align = 1
+editable = false
+expand_to_text_length = true
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+selecting_enabled = false
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="NestedButton" type="ToolButton" parent="MarginContainer/HBoxContainer"]
+visible = false
+margin_left = 52.0
+margin_right = 71.0
+margin_bottom = 33.0
+size_flags_vertical = 3
+custom_constants/hseparation = 0
+icon = ExtResource( 2 )
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="dragged" from="." to="." method="_on_State_dragged"]
+[connection signal="gui_input" from="." to="." method="_on_State_gui_input"]
+[connection signal="focus_exited" from="MarginContainer/HBoxContainer/NameEdit" to="." method="_on_NameEdit_focus_exited"]
+[connection signal="gui_input" from="MarginContainer/HBoxContainer/NameEdit" to="." method="_on_NameEdit_gui_input"]
+[connection signal="text_changed" from="MarginContainer/HBoxContainer/NameEdit" to="." method="_on_NameEdit_text_changed"]
+[connection signal="text_entered" from="MarginContainer/HBoxContainer/NameEdit" to="." method="_on_NameEdit_text_entered"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/NestedButton" to="." method="_on_NestedButton_pressed"]

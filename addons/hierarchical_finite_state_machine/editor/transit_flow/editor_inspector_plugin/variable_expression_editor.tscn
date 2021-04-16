@@ -1,0 +1,203 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/transit_flow/editor_inspector_plugin/variable_expression_editor.gd" type="Script" id=1]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/Editor/Icon/movedown_icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/Editor/Icon/moveup_icon.png" type="Texture" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+resource_local_to_scene = true
+bg_color = Color( 0.58, 0, 0.83, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.203922, 0.203922, 0.203922, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.152941, 0.156863, 0.2, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 1 )
+shadow_color = Color( 0.117647, 0.117647, 0.117647, 0.6 )
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.152941, 0.156863, 0.2, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.309804, 0.811765, 1, 1 )
+shadow_color = Color( 0.117647, 0.117647, 0.117647, 0.6 )
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.152941, 0.156863, 0.2, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.290196, 0.290196, 0.290196, 1 )
+border_blend = true
+shadow_color = Color( 0.117647, 0.117647, 0.117647, 0.6 )
+shadow_size = 2
+
+[node name="VariableExpressionEditor" type="HBoxContainer"]
+margin_right = 405.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoveUpButton" type="Button" parent="."]
+margin_right = 27.0
+margin_bottom = 24.0
+icon = ExtResource( 3 )
+
+[node name="MoveDownButton" type="Button" parent="."]
+margin_left = 31.0
+margin_right = 57.0
+margin_bottom = 24.0
+icon = ExtResource( 2 )
+
+[node name="VariableTypeLabel" type="Label" parent="."]
+margin_left = 61.0
+margin_right = 81.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 20, 0 )
+mouse_filter = 1
+size_flags_vertical = 5
+custom_styles/normal = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "B"
+align = 1
+valign = 1
+
+[node name="NameLabel" type="Label" parent="."]
+margin_left = 85.0
+margin_right = 231.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 58, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 5
+custom_styles/normal = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+align = 1
+valign = 1
+
+[node name="NotNumberComparationButton" type="MenuButton" parent="."]
+visible = false
+margin_left = 234.0
+margin_right = 262.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 28, 24 )
+focus_mode = 2
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0.866667, 0.866667, 0.866667, 1 )
+text = "=="
+flat = false
+items = [ "==", null, 0, false, false, 0, 0, null, "", false, "!=", null, 0, false, false, 1, 0, null, "", false ]
+switch_on_hover = true
+
+[node name="NumberComparationButton" type="MenuButton" parent="."]
+visible = false
+margin_left = 234.0
+margin_right = 262.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 28, 24 )
+focus_mode = 2
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0.866667, 0.866667, 0.866667, 1 )
+text = "=="
+flat = false
+items = [ "==", null, 0, false, false, 0, 0, null, "", false, "!=", null, 0, false, false, 1, 0, null, "", false, ">", null, 0, false, false, 2, 0, null, "", false, ">=", null, 0, false, false, 3, 0, null, "", false, "<", null, 0, false, false, 4, 0, null, "", false, "<=", null, 0, false, false, 5, 0, null, "", false ]
+switch_on_hover = true
+
+[node name="BooleanValueButton" type="MenuButton" parent="."]
+visible = false
+margin_left = 272.0
+margin_right = 382.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 30, 0 )
+focus_mode = 2
+size_flags_horizontal = 3
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0.866667, 0.866667, 0.866667, 1 )
+text = "true"
+flat = false
+items = [ "True", null, 0, false, false, 0, 0, null, "", false, "False", null, 0, false, false, 1, 0, null, "", false ]
+switch_on_hover = true
+
+[node name="TriggerModeButton" type="MenuButton" parent="."]
+margin_left = 235.0
+margin_right = 382.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 80, 0 )
+hint_tooltip = "Trigger Mode:
+\"Force mode\" :this transition will transit when this trigger be setted ,whether other conditions  are met or not , meanwhile ,the whole transition will operator without this trigger . 
+\"Normal mode\" :this transitiion perform like other condition , but note that trigger condition will be reset at next frame."
+focus_mode = 2
+size_flags_horizontal = 3
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0.866667, 0.866667, 0.866667, 1 )
+text = "Force mode"
+flat = false
+items = [ "Force mode", null, 0, false, false, 0, 0, null, "", false, "Normal mode", null, 0, false, false, 1, 0, null, "", false ]
+switch_on_hover = true
+
+[node name="ValueEdit" type="LineEdit" parent="."]
+visible = false
+margin_left = 266.0
+margin_right = 382.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "0.0"
+
+[node name="DeletButton" type="Button" parent="."]
+margin_left = 386.0
+margin_right = 405.0
+margin_bottom = 24.0
+size_flags_horizontal = 9
+size_flags_vertical = 7
+text = "x"
+
+[connection signal="pressed" from="MoveUpButton" to="." method="_on_MoveUpButton_pressed"]
+[connection signal="pressed" from="MoveDownButton" to="." method="_on_MoveDownButton_pressed"]
+[connection signal="focus_exited" from="ValueEdit" to="." method="_on_ValueEdit_focus_exited"]
+[connection signal="text_changed" from="ValueEdit" to="." method="_on_ValueEdit_text_changed"]
+[connection signal="text_entered" from="ValueEdit" to="." method="_on_ValueEdit_text_entered"]
+[connection signal="pressed" from="DeletButton" to="." method="_on_DeletButton_pressed"]

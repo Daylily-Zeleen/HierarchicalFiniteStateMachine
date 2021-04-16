@@ -1,0 +1,325 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/transit_flow/editor_inspector_plugin/transition_editor.gd" type="Script" id=1]
+
+[node name="TransitionEditor" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -632.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 300, 730 )
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FromLabel" type="Label" parent="."]
+margin_right = 392.0
+margin_bottom = 14.0
+
+[node name="ToLabel" type="Label" parent="."]
+margin_top = 18.0
+margin_right = 392.0
+margin_bottom = 32.0
+
+[node name="InspectTitle" type="MarginContainer" parent="."]
+margin_top = 36.0
+margin_right = 392.0
+margin_bottom = 61.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InspectTitle"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 387.0
+margin_bottom = 25.0
+
+[node name="Label" type="Label" parent="InspectTitle/HBoxContainer"]
+margin_top = 3.0
+margin_right = 109.0
+margin_bottom = 17.0
+text = "Transition Type : "
+
+[node name="TransitionTypeOptionButton" type="OptionButton" parent="InspectTitle/HBoxContainer"]
+margin_left = 113.0
+margin_right = 193.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 80, 20 )
+hint_tooltip = "Transition Type"
+size_flags_vertical = 15
+text = "Auto"
+align = 1
+items = [ "Auto", null, false, 0, null, "Variable", null, false, 1, null, "Expression", null, false, 2, null ]
+selected = 0
+
+[node name="FoldButton" type="Button" parent="InspectTitle/HBoxContainer"]
+margin_left = 354.0
+margin_right = 382.0
+margin_bottom = 20.0
+size_flags_horizontal = 10
+toggle_mode = true
+text = "<<"
+
+[node name="Editor" type="MarginContainer" parent="."]
+margin_top = 65.0
+margin_right = 392.0
+margin_bottom = 730.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 3
+custom_constants/margin_left = 3
+custom_constants/margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AutoEditor" type="Panel" parent="Editor"]
+margin_left = 3.0
+margin_right = 389.0
+margin_bottom = 662.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="MarginContainer" parent="Editor/AutoEditor"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Editor/AutoEditor/Panel"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 381.0
+margin_bottom = 657.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="HBoxContainer" parent="Editor/AutoEditor/Panel/VBoxContainer"]
+margin_right = 376.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="Editor/AutoEditor/Panel/VBoxContainer/Title"]
+margin_top = 3.0
+margin_right = 120.0
+margin_bottom = 17.0
+text = "Auto transit mode:"
+
+[node name="AutoModeButton" type="OptionButton" parent="Editor/AutoEditor/Panel/VBoxContainer/Title"]
+margin_left = 124.0
+margin_right = 376.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Delay timer"
+align = 1
+items = [ "Delay timer", null, false, 0, null, "Nested Fsm Exit", null, false, 1, null, "Manual Exit", null, false, 2, null, "Update times", null, false, 3, null, "Physics Update times", null, false, 4, null ]
+selected = 0
+
+[node name="DelayTimerEditor" type="HBoxContainer" parent="Editor/AutoEditor/Panel/VBoxContainer"]
+margin_top = 24.0
+margin_right = 376.0
+margin_bottom = 48.0
+
+[node name="Label" type="Label" parent="Editor/AutoEditor/Panel/VBoxContainer/DelayTimerEditor"]
+margin_top = 5.0
+margin_right = 128.0
+margin_bottom = 19.0
+text = "Delay time(second):"
+
+[node name="DelayTimerEdit" type="LineEdit" parent="Editor/AutoEditor/Panel/VBoxContainer/DelayTimerEditor"]
+margin_left = 132.0
+margin_right = 376.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="TimesEditor" type="HBoxContainer" parent="Editor/AutoEditor/Panel/VBoxContainer"]
+visible = false
+margin_top = 52.0
+margin_right = 376.0
+margin_bottom = 76.0
+
+[node name="Label" type="Label" parent="Editor/AutoEditor/Panel/VBoxContainer/TimesEditor"]
+margin_top = 5.0
+margin_right = 47.0
+margin_bottom = 19.0
+text = "Times :"
+
+[node name="TimesEdit" type="LineEdit" parent="Editor/AutoEditor/Panel/VBoxContainer/TimesEditor"]
+margin_left = 51.0
+margin_right = 376.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="TipLabel" type="Label" parent="Editor/AutoEditor/Panel/VBoxContainer"]
+margin_top = 52.0
+margin_right = 376.0
+margin_bottom = 652.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 1, 0.886275, 0, 1 )
+text = "      If using this mode ,you must ensure that there has a script  attach to  the from state of this transition, and the exit() function must be excute at tick() or physic_tick() ."
+autowrap = true
+
+[node name="ExpressionEditior" type="VBoxContainer" parent="Editor"]
+visible = false
+margin_left = 3.0
+margin_right = 389.0
+margin_bottom = 662.0
+
+[node name="Expression" type="TextEdit" parent="Editor/ExpressionEditior"]
+margin_right = 386.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 0, 200 )
+size_flags_horizontal = 3
+custom_colors/member_variable_color = Color( 0.737255, 0.878431, 1, 1 )
+custom_colors/code_folding_color = Color( 1, 1, 1, 0.74902 )
+custom_colors/function_color = Color( 0.341176, 0.698039, 1, 1 )
+custom_colors/safe_line_number_color = Color( 0.815686, 0.945098, 0.827451, 1 )
+custom_colors/symbol_color = Color( 0.670588, 0.784314, 1, 1 )
+custom_colors/caret_background_color = Color( 0, 0, 0, 1 )
+custom_colors/bookmark_color = Color( 0.0784314, 0.490196, 0.980392, 1 )
+custom_colors/selection_color = Color( 0.268219, 0.730469, 0.502955, 0.501961 )
+custom_colors/caret_color = Color( 1, 1, 1, 1 )
+custom_colors/breakpoint_color = Color( 0.74902, 0.352941, 0.313726, 1 )
+custom_colors/font_color_selected = Color( 0, 0.533333, 0.733333, 1 )
+custom_colors/font_color = Color( 0.670588, 0.670588, 0.670588, 1 )
+custom_colors/line_number_color = Color( 1, 1, 1, 0.317647 )
+custom_colors/completion_font_color = Color( 0.796078, 0.803922, 0.811765, 1 )
+custom_colors/completion_scroll_color = Color( 1, 1, 1, 0.0784314 )
+custom_colors/background_color = Color( 0.113725, 0.137255, 0.156863, 1 )
+custom_colors/number_color = Color( 0.627451, 1, 0.878431, 1 )
+custom_colors/completion_background_color = Color( 0.180392, 0.219608, 0.25098, 1 )
+custom_colors/brace_mismatch_color = Color( 1, 0.470588, 0.419608, 1 )
+custom_colors/current_line_color = Color( 1, 1, 1, 0.0941176 )
+custom_colors/completion_selected_color = Color( 1, 1, 1, 0.160784 )
+custom_colors/executing_line_color = Color( 0, 1, 0.223529, 0.227451 )
+custom_colors/mark_color = Color( 1, 0, 0, 0.196078 )
+custom_colors/word_highlighted_color = Color( 1, 1, 1, 0.0862745 )
+custom_colors/completion_existing_color = Color( 1, 1, 1, 0.0980392 )
+highlight_current_line = true
+syntax_highlighting = true
+show_line_numbers = true
+draw_tabs = true
+breakpoint_gutter = true
+fold_gutter = true
+highlight_all_occurrences = true
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+smooth_scrolling = true
+wrap_enabled = true
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="Comment" type="TextEdit" parent="Editor/ExpressionEditior"]
+margin_top = 204.0
+margin_right = 386.0
+margin_bottom = 662.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/member_variable_color = Color( 1, 0.882353, 0, 1 )
+custom_colors/symbol_color = Color( 1, 0.882353, 0, 1 )
+custom_colors/selection_color = Color( 0.268219, 0.730469, 0.502955, 0.501961 )
+custom_colors/font_color = Color( 1, 0.882353, 0, 1 )
+custom_colors/line_number_color = Color( 1, 1, 1, 0.317647 )
+custom_colors/background_color = Color( 0.113725, 0.137255, 0.156863, 1 )
+custom_colors/number_color = Color( 1, 0.882353, 0, 1 )
+custom_colors/word_highlighted_color = Color( 1, 0.882353, 0, 1 )
+text = "Here is comment: 
+ you can code a condition expression for this transition.However,the identifiers which are used in you expression must be included in below:
+	 1.'hfsm' :the hierarchical finite state machines. 
+	 2.objects which are define in 'agent' :they are defined by youself. 
+	 3.build-in singletons which define by Godot engine ,such as 'Input' and so on.You can browse then in  '@GlobalScpoe' ,the second item in Godot document."
+highlight_current_line = true
+syntax_highlighting = true
+show_line_numbers = true
+draw_tabs = true
+breakpoint_gutter = true
+highlight_all_occurrences = true
+context_menu_enabled = false
+virtual_keyboard_enabled = false
+smooth_scrolling = true
+wrap_enabled = true
+caret_blink = true
+caret_blink_speed = 0.5
+
+[node name="VariableEditor" type="VBoxContainer" parent="Editor"]
+visible = false
+margin_left = 3.0
+margin_right = 389.0
+margin_bottom = 662.0
+
+[node name="VariableOpModeButton" type="OptionButton" parent="Editor/VariableEditor"]
+margin_right = 386.0
+margin_bottom = 20.0
+text = "And Mode"
+align = 1
+items = [ "And Mode", null, false, 0, null, "Or Mode", null, false, 1, null ]
+selected = 0
+__meta__ = {
+"_editor_description_": "Condition Operation Mode :
+\"And\" :Only can transition when all conditions are met.
+\"Or\" :can transition when any condition is met."
+}
+
+[node name="Panel" type="PanelContainer" parent="Editor/VariableEditor"]
+self_modulate = Color( 0.854902, 0.854902, 0.854902, 1 )
+margin_top = 24.0
+margin_right = 386.0
+margin_bottom = 662.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Editor/VariableEditor/Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 379.0
+margin_bottom = 631.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VariableExpressionEditorList" type="VBoxContainer" parent="Editor/VariableEditor/Panel/ScrollContainer"]
+margin_right = 372.0
+margin_bottom = 624.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Editor/VariableEditor/Panel"]
+margin_left = 7.0
+margin_top = 312.0
+margin_right = 379.0
+margin_bottom = 326.0
+text = "Drag variable and drop at hear to edit further."
+align = 1
+valign = 1
+
+[connection signal="item_selected" from="InspectTitle/HBoxContainer/TransitionTypeOptionButton" to="." method="_on_TransitionTypeOptionButton_item_selected"]
+[connection signal="toggled" from="InspectTitle/HBoxContainer/FoldButton" to="." method="_on_FoldButton_toggled"]
+[connection signal="item_selected" from="Editor/AutoEditor/Panel/VBoxContainer/Title/AutoModeButton" to="." method="_on_AutoModeButton_item_selected"]
+[connection signal="focus_exited" from="Editor/AutoEditor/Panel/VBoxContainer/DelayTimerEditor/DelayTimerEdit" to="." method="_on_DelayTimerEdit_focus_exited"]
+[connection signal="text_changed" from="Editor/AutoEditor/Panel/VBoxContainer/DelayTimerEditor/DelayTimerEdit" to="." method="_on_DelayTimerEdit_text_changed"]
+[connection signal="text_entered" from="Editor/AutoEditor/Panel/VBoxContainer/DelayTimerEditor/DelayTimerEdit" to="." method="_on_DelayTimerEdit_text_entered"]
+[connection signal="focus_exited" from="Editor/AutoEditor/Panel/VBoxContainer/TimesEditor/TimesEdit" to="." method="_on_TimesEdit_focus_exited"]
+[connection signal="text_changed" from="Editor/AutoEditor/Panel/VBoxContainer/TimesEditor/TimesEdit" to="." method="_on_TimesEdit_text_changed"]
+[connection signal="text_entered" from="Editor/AutoEditor/Panel/VBoxContainer/TimesEditor/TimesEdit" to="." method="_on_TimesEdit_text_entered"]
+[connection signal="text_changed" from="Editor/ExpressionEditior/Expression" to="." method="_on_Expression_text_changed"]
+[connection signal="focus_exited" from="Editor/ExpressionEditior/Comment" to="." method="_on_Comment_focus_exited"]
+[connection signal="text_changed" from="Editor/ExpressionEditior/Comment" to="." method="_on_Comment_text_changed"]
+[connection signal="item_selected" from="Editor/VariableEditor/VariableOpModeButton" to="." method="_on_VariableOpModeButton_item_selected"]
+[connection signal="gui_input" from="Editor/VariableEditor/Panel/ScrollContainer/VariableExpressionEditorList" to="." method="_on_VariableExpressionEditorList_gui_input"]

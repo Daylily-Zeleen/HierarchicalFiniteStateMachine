@@ -1,0 +1,148 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/hfsm_editor.gd" type="Script" id=1]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/Editor/variable_list.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/message.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.25098, 0.25098, 0.25098, 0.501961 )
+
+[node name="FsmEditorDock" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 100 )
+focus_mode = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FsmEditior" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="FsmEditior"]
+margin_right = 1024.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+mouse_filter = 1
+
+[node name="CenterContainer" type="MarginContainer" parent="FsmEditior/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SwitchButtons" type="HBoxContainer" parent="FsmEditior/Panel/CenterContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1019.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PahLabel" type="Label" parent="FsmEditior/Panel/CenterContainer/SwitchButtons"]
+margin_top = 5.0
+margin_right = 36.0
+margin_bottom = 19.0
+text = "Path :"
+align = 1
+valign = 1
+
+[node name="GraphEdit" type="GraphEdit" parent="FsmEditior"]
+margin_top = 39.0
+margin_right = 1024.0
+margin_bottom = 582.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VariableList" parent="FsmEditior/GraphEdit" instance=ExtResource( 2 )]
+anchor_top = 0.089
+anchor_bottom = 0.089
+margin_top = 1.673
+margin_right = 292.0
+margin_bottom = 142.673
+offset = Vector2( 0, 50 )
+
+[node name="Message" type="HBoxContainer" parent="FsmEditior"]
+margin_top = 586.0
+margin_right = 1024.0
+margin_bottom = 600.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Tip" type="Label" parent="FsmEditior/Message"]
+margin_right = 1020.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Right click: popup mune | Shift+Left click: creat transition | Ctrl+Left click: multiple select | Delete : delete | Esc: cancel current opereation"
+clip_text = true
+
+[node name="History" type="Label" parent="FsmEditior/Message"]
+margin_left = 1024.0
+margin_right = 1024.0
+margin_bottom = 14.0
+size_flags_horizontal = 9
+align = 2
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+margin_left = 285.553
+margin_top = 275.715
+margin_right = 423.553
+margin_bottom = 381.715
+items = [ "Add State", null, 0, false, false, 0, 0, null, "", false, "Create Transition", null, 0, false, false, 1, 0, null, "", false, "Script", null, 0, false, false, 2, 0, null, "ScriptPopupMenu", false, "Copy", null, 0, false, false, 3, 0, null, "", false, "Paste", null, 0, false, false, 4, 0, null, "", false, "Duplicate", null, 0, false, false, 5, 0, null, "", false, "Delete", null, 0, false, false, 6, 0, null, "", false, "", null, 0, false, false, 7, 0, null, "", true, "Conver to Nested State Machine", null, 0, false, false, 8, 0, null, "", false, "Show Variable List at here", null, 0, false, false, 9, 0, null, "", false ]
+submenu_popup_delay = 0.1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScriptPopupMenu" type="PopupMenu" parent="PopupMenu"]
+margin_right = 20.0
+margin_bottom = 20.0
+items = [ "Open", null, 0, false, false, 0, 0, null, "", false, "Create new", null, 0, false, false, 1, 0, null, "", false, "Attach exist", null, 0, false, false, 2, 0, null, "", false, "Remove", null, 0, false, false, 3, 0, null, "", false ]
+submenu_popup_delay = 0.1
+
+[node name="NotSelectedWarming" type="Label" parent="."]
+anchor_left = 0.000921756
+anchor_right = 1.00092
+anchor_bottom = 1.0
+mouse_filter = 0
+size_flags_horizontal = 4
+custom_styles/normal = SubResource( 1 )
+text = "Please selected a \"FiniteStateMachine\" node to start edit ."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[connection signal="_begin_node_move" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit__begin_node_move"]
+[connection signal="_end_node_move" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit__end_node_move"]
+[connection signal="copy_nodes_request" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_copy_nodes_request"]
+[connection signal="delete_nodes_request" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_delete_nodes_request"]
+[connection signal="duplicate_nodes_request" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_duplicate_nodes_request"]
+[connection signal="gui_input" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_gui_input"]
+[connection signal="node_selected" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_node_selected"]
+[connection signal="node_unselected" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_node_unselected"]
+[connection signal="paste_nodes_request" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_paste_nodes_request"]
+[connection signal="popup_request" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_popup_request"]
+[connection signal="resized" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_resized"]
+[connection signal="scroll_offset_changed" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_scroll_offset_changed"]
+[connection signal="index_pressed" from="PopupMenu" to="." method="_on_PopupMenu_index_pressed"]
+[connection signal="index_pressed" from="PopupMenu/ScriptPopupMenu" to="." method="_on_ScriptPopupMenu_index_pressed"]
