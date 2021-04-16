@@ -42,11 +42,11 @@
 
 ​		When you add a "HFSM" node to the scene tree and select it, the HFSM editor will pop up at bottom.
 
-![](DOCUMENT.assets\Main Interface.png)
+![](DOCUMENT.assets/Main Interface.png)
 
 ### Variable List
 
-![](DOCUMENT.assets\Variable List.png)
+![](DOCUMENT.assets/Variable List.png)
   1. Extend button ：Hide or expand more information. After expansion, you can change the order of variables or add variable comments, as shown in the following figure:
 
 
