@@ -27,7 +27,7 @@
 >
 # Tutorial
 
-​		Read [document]() for more.
+​		Read [document](https://github.com/Daylily-Zeleen/HierarchicalFiniteStateMachine/blob/main/Document_en.md) for more.
 
 
 
