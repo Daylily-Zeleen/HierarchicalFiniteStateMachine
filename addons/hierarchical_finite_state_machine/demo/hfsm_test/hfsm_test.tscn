@@ -141,7 +141,7 @@ state_res_list = [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ]
 transition_res_list = [ SubResource( 11 ), SubResource( 16 ) ]
 is_nested = true
 variable_list_offset = Vector2( 20, 40 )
-editor_scroll_offset = Vector2( 0, 0 )
+editor_scroll_offset = Vector2( -84, -135 )
 transition_comment_visible = true
 transition_editor_folded = false
 
@@ -259,7 +259,7 @@ transition_res_list = [ SubResource( 23 ), SubResource( 28 ), SubResource( 32 ) 
 is_nested = false
 variable_res_list = [ SubResource( 8 ) ]
 variable_list_offset = Vector2( -160, 80 )
-editor_scroll_offset = Vector2( -97, 29 )
+editor_scroll_offset = Vector2( -97, -31 )
 transition_comment_visible = true
 transition_editor_folded = false
 
@@ -279,10 +279,6 @@ process_type = 2
 agents = {
 "null": NodePath("")
 }
-_custom_class_list = {
-"Null": ""
-}
-debug = false
 _disable_rename_to_snake_case = false
 _force_all_state_entry_behavior = 0
 _force_all_fsm_entry_behavior = 0

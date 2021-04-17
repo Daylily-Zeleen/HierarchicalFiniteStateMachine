@@ -322,7 +322,7 @@ func update_comment():
 
 const HFSM = preload("res://addons/hierarchical_finite_state_machine/script/hfsm.gd")
 func _process(delta):
-	if not is_selected() or not hfsm_editor.the_plugin.get_editor_interface().get_selection().get_selected_nodes()[0] is HFSM:
+	if not is_selected() or (hfsm_editor.the_plugin.get_editor_interface().get_selection().get_selected_nodes().size() > 0 and not hfsm_editor.the_plugin.get_editor_interface().get_selection().get_selected_nodes()[0] is HFSM):
 		modulate = normal_color
 		set_process(false)
 

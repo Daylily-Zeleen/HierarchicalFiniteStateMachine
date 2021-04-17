@@ -132,8 +132,8 @@ func _set_current_nested_fsm_res(nested_fsm_res :NestedFsmRes):
 	if not loading:
 		current_nested_fsm_res.entered_nested_fsm_res = null
 	current_fsm_button = add_new_switch_button(nested_fsm_res)
-	_load_state_machine_from_res()
-	yield(get_tree(),"idle_frame")
+	yield(_load_state_machine_from_res(),"completed")
+#	yield(get_tree(),"idle_frame")
 	comment_visible_button.pressed = nested_fsm_res.transition_comment_visible
 	_set_transition_comment_visible(nested_fsm_res.transition_comment_visible)
 			

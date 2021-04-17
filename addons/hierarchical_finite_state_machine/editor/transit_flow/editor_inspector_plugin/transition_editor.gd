@@ -319,7 +319,7 @@ func action_set_transition_type(old_type , new_type):
 	undo_redo.add_do_property(get_node("Editor/ExpressionEditior") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_EXPRESSION else false)
 	undo_redo.add_do_property(get_node("Editor/VariableEditor") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
 	undo_redo.add_do_property(get_node("Editor/AutoEditor") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_AUTO else false)
-	undo_redo.add_do_property(fold_button , "visible" ,true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
+	undo_redo.add_do_property(fold_button , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
 	undo_redo.add_do_method(transition_type_button , "select" , new_type )
 	undo_redo.add_do_method(inspector_res , "update_comment" )
 	
@@ -329,7 +329,7 @@ func action_set_transition_type(old_type , new_type):
 	undo_redo.add_undo_property(get_node("Editor/ExpressionEditior") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_EXPRESSION else false)
 	undo_redo.add_undo_property(get_node("Editor/VariableEditor") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
 	undo_redo.add_undo_property(get_node("Editor/AutoEditor") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_AUTO else false)
-	undo_redo.add_undo_property(fold_button , "visible" ,true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
+	undo_redo.add_undo_property(fold_button , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
 	undo_redo.add_undo_method(transition_type_button , "select" , old_type )
 	undo_redo.add_undo_method(inspector_res , "update_comment" )
 	undo_redo.commit_action()
