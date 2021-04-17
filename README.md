@@ -31,5 +31,14 @@
 
 ​		[中文文档](Document_cn.md)请点击这里
 
+# Note:
+
+​		This plugin still is a alpha version . there might have some bugs in this plugin . Please submit issues to report the bugs or offer proposals.
 
 
+
+If this plugin can help you , please consider to sponsor me by getting the full version :
+
+https://afdian.net/@Daylily-Zeleen
+
+https://godotmarketplace.com/?post_type=product&p=37138 
