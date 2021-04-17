@@ -449,7 +449,7 @@ func exit()->void:
 
 ​		通过拖拽变量列表(Variable List)中的变量到监视器中，可以为该变量添加变量表达式：
 
-![](DOCUMENT.assets/Variable_expression.png)
+![](DOCUMENT.assets/variable_expression.png)
 
 > 当您按下扩展按钮后，可以显示变量表达式的更多信息,且可以调换表达式的顺序：
 >

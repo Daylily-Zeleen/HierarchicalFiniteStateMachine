@@ -441,7 +441,7 @@ func exit()->void:
 
 ​		You can add variable expressions by dragging a variable from a Variable List to the inspector:
 
-![](DOCUMENT.assets/Variable_expression.png)
+![](DOCUMENT.assets/variable_expression.png)
 
 > ​		When you press the expand button, you can display more information about variable expressions, and you can change the order of expressions:
 >
