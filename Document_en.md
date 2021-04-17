@@ -968,7 +968,7 @@ The difference between process types as follow :
 
 ### Signals
 
-​		Read [The Emit Timinng of HFSM's signals](###the-emit-timinng-of-hfsms-signals) for more
+​		Read [The Emit Timinng of HFSM's signals](#the-emit-timinng-of-hfsms-signals) for more
 
 1. inited()
 
