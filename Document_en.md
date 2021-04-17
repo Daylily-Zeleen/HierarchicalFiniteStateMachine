@@ -50,13 +50,13 @@
   1. Extend button ：Hide or expand more information. After expansion, you can change the order of variables or add variable comments, as shown in the following figure:
 
 
-![](DOCUMENT.assets\variablelist_extend.png)
+![](DOCUMENT.assets\variable_list_extend.png)
 
   2. Add button : Add a new variable to HFSM.
 
      > Note: you must make a unique name for the variable after adding it, otherwise the variable will be ignored at run time
 
-![](DOCUMENT.assets\variable_list_add.png)
+![](DOCUMENT.assets\variablelist_add.png)
 
   3. Hide button : When designing a state machine, if the list hinders observation, it can be hidden, and the visibility of the list can be restored in the right click popup menu.
 
