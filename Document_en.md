@@ -1,6 +1,6 @@
 #Hierarchical Finite State Machine
 
-â€?	As we all know, state machine is a very common design pattern. Here provide a powerful and easy-to-use Godot plugin for Hierarchical Finite State Machine with visual editing.
+â€‹		As we all know, state machine is a very common design pattern. Here provide a powerful and easy-to-use Godot plugin for Hierarchical Finite State Machine with visual editing.
 
 # Features
 
@@ -12,15 +12,15 @@
 
 # Tutorial
 
-> + Conventionï¼?
+> + Convention
 >
->   â€?HFSM :  Hierarchical Finite State Machine 
+>    + HFSM :  Hierarchical Finite State Machine 
 >
->   â€?FSM : Finite State Machine
+>    + FSM : Finite State Machine
 >
->   â€?State: the State which in FSM
+>    + State: the State which in FSM
 >
->   â€?Transition : the Transition to connect States in FSM
+>    + Transition : the Transition to connect States in FSM
 >
 > + HFSM structure:
 >
@@ -29,25 +29,25 @@
 
 ## Installation
 
-â€?	Clone this repo and copy "addons" folder in your project,then Activate this plugin in Project Settings -> Plugins.
+â€‹		Clone this repo and copy "addons" folder in your project,then Activate this plugin in Project Settings -> Plugins.
 
 > NOTE:
 >
-> â€?	Please obey the lisence(read LISENCE.md for more) when you using this plugin.
+> â€‹		Please obey the lisence(read LISENCE.md for more) when you using this plugin.
 >
 > + The full version is under a custom lisence.
 > + The trial version is under the GNU Lesser General Public License v3.0.
 
 ## Learn the HFSM editor
 
-â€?	When you add a "HFSM" node to the scene tree and select it, the HFSM editor will pop up at bottom.
+â€‹		When you add a "HFSM" node to the scene tree and select it, the HFSM editor will pop up at bottom.
 
 ![](DOCUMENT.assets/main_interface.png)
 
 ### Variable List
 
 ![](DOCUMENT.assets/variable_list.png)
-  1. Extend button ï¼šHide or expand more information. After expansion, you can change the order of variables or add variable comments, as shown in the following figure:
+  1. Extend button : Hide or expand more information. After expansion, you can change the order of variables or add variable comments, as shown in the following figure:
 
 
 ![](DOCUMENT.assets/variable_list_extend.png)
@@ -61,7 +61,7 @@
   3. Hide button : When designing a state machine, if the list hinders observation, it can be hidden, and the visibility of the list can be restored in the right click popup menu.
 
 ### Variable Editor
-â€?Click "add new variable" in variable list to add a variable editor.
+â€‹		Click "add new variable" in variable list to add a variable editor.
 
 ![](DOCUMENT.assets/variable_editor.png)
 
@@ -82,13 +82,13 @@
 
 6. Drag area: Drag the variable to the inspector of the transition whose "transition type" is set to "variable" and add the variable expression. Only then can the variable work in HFSM.
 
-    > NOTEï¼?
+    > NOTE :
     >
-    > â€?	If the variable name is illegal, the variable cannot be added as a variable expression.
+    > â€‹		If the variable name is illegal, the variable cannot be added as a variable expression.
 
 ### Right click Popup Menu
 
-â€?Press the right mouse button in the editing interface to pop up.
+â€‹		Press the right mouse button in the editing interface to pop up.
 
 ![](DOCUMENT.assets/right_popup.png)
 
@@ -98,30 +98,30 @@
 
  3. Script :This option is only available when you right-click the mouse over the State.
 
-	aã€?Open script : This option is only available if a script is attached to the State.
+	+ Open script : This option is only available if a script is attached to the State.
 	
-	bã€?Create new script : This option is only available if the State has not contain a script. It will pop up a script create dialog, and attach the new script to the State automatically after the new script is created.
+	+ Create new script : This option is only available if the State has not contain a script. It will pop up a script create dialog, and attach the new script to the State automatically after the new script is created.
 	
-	cã€?Attach exist script : This option is only available if the State has not contain a script. It will pop up a script selected dialog, and attach the selected script to the State.
+	+ Attach exist script : This option is only available if the State has not contain a script. It will pop up a script selected dialog, and attach the selected script to the State.
 	
-	dã€?Remove script : This option is only available if a script is attached to the State. It will remove the script which was attached to the State.
+	+ Remove script : This option is only available if a script is attached to the State. It will remove the script which was attached to the State.
 	
-	> NOTEï¼?
+	> NOTE :
 	>
-	> â€?	Only [correct script](+ Points for attention of using State script template :) can be attached to State.
+	> + Only [correct script](+ Points for attention of using State script template :) can be attached to State.
 	
 4. Copy : This option is only available if there have States or Transitions are being selected. The selected States and Transitions will be copied. Shortcut key: Ctrl + C.
 
 5. Paste :  This option is only available after there have States or Transitions been copied. The copied object will be pasted, which can be pasted across FSM to realize simple reuse. Shortcut key: Ctrl + V.
 
-   > NOTEï¼?
+   > NOTE :
    >
    > + If the States at both ends of the copied Transition are not completely copied, the transition will not be pasted.
    >+ The pasted State's name will be added "_" until the State's name is not repeated within the FSM which contain this State.
    
 6. Duplicate : This option is only available if there has States or Transitions are being selected. It will Copy, offset and paste the selected objects.
 
-   > NOTEï¼?
+   > NOTE :
    >
    > + If the States at both ends of the copied Transition are not completely copied, the transition will not be duplicate.
    >+ The pasted State's name will be added "_" until the State's name is not repeated within the FSM which contain this State.
@@ -130,9 +130,9 @@
 
 8. Convert to Nested State Machine : This option is only available if there has States or Transitions are being selected and right click at State to pop up the menu. Even if the design of HFSM is not clear at the initial stage of design, the cumbersome structure can be easily converted to a nested FSM.
 
-   > NOTEï¼?
+   > NOTE :
    >
-   > + The State ,which is pointed by mouse when right click, will be set as a Entery State for the new nested FSM.
+   > + The State ,which is pointed by mouse when right click, will be set as a Entry State for the new nested FSM.
    >+ If the State to be set as a nested FSM is attached to the script, the script will be removed and attached to the entry State in the nested FSM.
    > + All Transitions connected to the selected state will be deleted if the States which connected to both sides is not fully selected, unless the State connected to Transiton is set to nested FSM.
 
@@ -142,13 +142,13 @@
 
 ![](DOCUMENT.assets/path.png)
 
-â€?	This Item is composed of a group of buttons, indicating the path of the current FSM. The last key is the position of the current FSM, and the button is disabled. Click the previous button to jump to the target FSM.
+â€‹		This Item is composed of a group of buttons, indicating the path of the current FSM. The last key is the position of the current FSM, and the button is disabled. Click the previous button to jump to the target FSM.
 
 ### Toolbar 
 
 ![](DOCUMENT.assets/toolbar.png)
 
-â€?	The last button is to toggle the visibility of the Transitions comment 
+â€‹		The last button is to toggle the visibility of the Transitions comment 
 
 ![](DOCUMENT.assets/comment_visible.png)
 
@@ -158,17 +158,17 @@
 
    > NOTE:
    >
-   > â€?	The first three buttons, is related to zoom, are not recommended to use in the current version, which may cause some nonfatal bugs. Currently, the known bug is the node drag exception.
+   > â€‹		The first three buttons, is related to zoom, are not recommended to use in the current version, which may cause some nonfatal bugs. Currently, the known bug is the node drag exception.
 ### Mini Map
-â€?	If your Godot version is newer than 3.2.2, a mini map will be displayed in the HFSM editor.
->NOTEï¼?
+â€‹		If your Godot version is newer than 3.2.2, a mini map will be displayed in the HFSM editor.
+>NOTE :
 >		At present, the display of mini map is not good enough. The Transitions will show at mini map without rotation. I have been submitted a Proposal for this error.
 
 ![](DOCUMENT.assets/minimap.png)
 
 ## State
 
-â€?	The smallest unit of HFSM, you can create a new state through the right click menu.
+â€‹		The smallest unit of HFSM, you can create a new state through the right click menu.
 
 ### State Inspector Properties
 
@@ -178,11 +178,11 @@
 
 1. State Name
 
-â€?	The name of State, is useful for judging in the code of signal callback. It is not only used to judge the current State directly, but also used to indicate the path of FSM. Therefore, please name your State reasonably, recommend to use snake_case to name State.
+   â€‹		The name of State, is useful for judging in the code of signal callback. It is not only used to judge the current State directly, but also used to indicate the path of FSM. Therefore, please name your State reasonably, recommend to use snake_case to name State.
 
 > NOTE:
 >
-> â€?	You can modify the State name by selete the State, and single click on it name in HFSM editor.
+> â€‹		You can modify the State name by select the State, and single click on it name in HFSM editor.
 
 2. State Type
 
@@ -194,44 +194,44 @@
 + Entry : Each FSM must contain a unique Entry State, which is used to indicate the starting point when entering the FSM, and also has a complete State behavior.
 + Exit : This type of State has only three behaviors: Initialization, Entry and Exit. An FSM can contain multiple Exit States to indicate the end point of the FSM. When the FSM runs to the exit state, it will no longer run until it is reseted manually or entered again.
 
-> NOTEï¼?
+> NOTE :
 >
-> â€?	The Nested FSM of Exit State will not run.
+> â€‹		The Nested FSM of Exit State will not run.
 
 3. Reset Properties When Entry
 
-   â€?Default is true, and will reset all custom properties when this State is entered. If false, all custom properties will persist.
+   â€‹		Default is true, and will reset all custom properties when this State is entered. If false, all custom properties will persist.
 
 4. State Script
 
-   â€?A white box will be showed on the State, which is attached the script, as a prompt, as shown in the following figure:
+   â€‹		A white box will be showed on the State, which is attached the script, as a prompt, as shown in the following figure:
 
 ![](DOCUMENT.assets/script.png)
 
-â€?	It is recommended to create, attach and remove State scripts through the right click menu. The State script property in inspector can also be edited, but it is not so convenient.
+â€‹		It is recommended to create, attach and remove State scripts through the right click menu. The State script property in inspector can also be edited, but it is not so convenient.
 
-â€?	Currently, only gdscript script is supported, and the script must use the "HFSM State Template" template provided by this plugin. When you create a script through the right click menu, the template will be selected by default.
+â€‹		Currently, only gdscript script is supported, and the script must use the "HFSM State Template" template provided by this plugin. When you create a script through the right click menu, the template will be selected by default.
 
 > NOTE:
 >
-> â€?	If the State already has a script attached, when you double-click the State, it will jump to the script editor and load the State script.
+> â€‹		If the State already has a script attached, when you double-click the State, it will jump to the script editor and load the State script.
 
 5. Is Nested
 
-â€?	If true, a FSM will be nested in the State, then display a Button to use to entry the nested FSM and add a new property :Rest Nested Fsm When Entry. As follow figure show.
+   â€‹	If true, a FSM will be nested in the State, then display a Button to use to entry the nested FSM and add a new property :Rest Nested Fsm When Entry. As follow figure show.
 
 ![](DOCUMENT.assets/is_nested.png)
 
 + Rest Nested Fsm When Entry:
 
-  â€?When entering a State which contain a nested FSM, it will also enter its nested FSM. If this property is true, it will be reset when entering the nested FSM. The reset behavior includes:
+  â€‹		When entering a State which contain a nested FSM, it will also enter its nested FSM. If this property is true, it will be reset when entering the nested FSM. The reset behavior includes:
 
   1. Set the Entry State and Exit States of the nested FSM to which perset in the editor.
   2. Reset all States in the nested FSM(read [Reset Properties When Entry](3. Reset Properties When Entry ) to learn more).
 
 ### State Behavior & Code Control
 
-â€?	This is the State script template provided by this plugin.
+â€‹		This is the State script template provided by this plugin.
 
 ```python
 extends "res://addons/hierarchical_finite_state_machine/script/source/state.gd"
@@ -289,33 +289,33 @@ func exit()->void:
 
 + State Behavior
 
-â€?	A state has 5 behaviors, which correspond to 5 overridable methods in the script template:
+  â€‹	A state has 5 behaviors, which correspond to 5 overridable methods in the script template:
 
 + init() : Will be called when HFSM is generated, it is usually used to initialize variables and obtain objects. After the behavior is executed, all variables will be determined as initial values.
 
 + entry() : Execute every time when enter the State.
 
-> NOTEï¼?
+> NOTE:
 >
-> â€?	If the State has a nested FSM, the entry behavior of the Entry State in the FSM will be executed after this State's entry behavior executed.
+> â€‹		If the State has a nested FSM, the entry behavior of the Entry State in the FSM will be executed after this State's entry behavior executed.
 
-+ update(delta : float) : Will be executed during the processing step of the main loop if this state is not exited. It means that  the delta time since the previous frame is not constantï¼Œdelta is in second.(analogy with Node._process(delta))
++ update(delta : float) : Will be executed during the processing step of the main loop if this state is not exited. It means that  the delta time since the previous frame is not constant, and delta is in second.(analogy with Node._process(delta))
 
-> NOTEï¼?
+> NOTE :
 >
 > + If the State has a nested FSM and is not terminated, the update behavior of the current State in the nested FSM will be executed further.
 > + If the State type is Exit, the update behavior is not executed.
 
-+ physics_update(delta : float) :  Will be executed during the physics processing step of the main loop if this state is not exited. It means that  the delta variable should be constantï¼Œdelta is in second.(analogy with Node.__physics_process(delta)).
++ physics_update(delta : float) :  Will be executed during the physics processing step of the main loop if this state is not exited. It means that  the delta variable should be constant, and delta is in second.(analogy with Node.__physics_process(delta)).
 
-> NOTEï¼?
+> NOTE :
 >
 > + If the State has an nested FSM and is not terminated, the physics update behavior of the current State in the nested FSM will be executed further.
-> + If the State type is Exit, the physics update behavior is not executed.ã€?
+> + If the State type is Exit, the physics update behavior is not executed.
 
 + exit() : Will be executed when exit the State.
 
-> NOTEï¼?
+> NOTE :
 >
 > + If the State's type is Exit, its update and physics update behaviors will not be executed, and the exit behavior will be executed immediately after entry behavior finished.
 > + If the State has an running nested FSM, it will get the current State of the nested FSM, if this current State still has an nested FSM, it will trace back until the last State has no nested FSM. Then it will execute the exit behavior of these States in reverse order, terminate the nested FSM, and finally execute the exit behavior of this State.
@@ -325,9 +325,9 @@ func exit()->void:
 
 + Points for attention of using State script template :
 
-  â€?	The purpose of using this template is not only makes it easy for you to build the State function, but also to synchronize the HFSM settings to the script. Therefore, there are some points to pay attention to:
+  â€‹		The purpose of using this template is not only makes it easy for you to build the State function, but also to synchronize the HFSM settings to the script. Therefore, there are some points to pay attention to:
 
-  + Ensure the correct inheritance path for script class ï¼?
+  + Ensure the correct inheritance path for script class .
 
     ```python
     extends "res://addons/hierarchical_finite_state_machine/script/source/state.gd"
@@ -345,59 +345,57 @@ func exit()->void:
     ```
 
     > Only by not changing these four lines of comments, can HFSM's agent configuration and the State object which contain the nested FSM be synchronized to the State script correctly (because the plugin synchronizes it by matching text).
-
-â€?	Only scripts that meet the above two conditions can be attached to a State. However, you can modify it after attaching, and the plugin will not detect its qualification in real time. It is strongly recommended that you do not make any changes to this 5 lines of text in the State script , so as to ensure complete additional features in the script.
-
+  
+  â€‹         Only scripts that meet the above two conditions can be attached to a State. However, you can modify it after attaching, and the plugin will not detect its qualification in real time. It is strongly recommended that you do not make any changes to this 5 lines of text in the State script , so as to ensure complete additional features in the script.
+  
 + Agent Node & State which contain Nested FSM :
 
-  â€?	After you set the agents correctly in the HFSM inspector(read [HFSM's Inspector Porperties](### Â· HFSM's Inspector Porperties) for more), a series of variables representing the agent nodes will be added to all the State scripts belonging to the HFSM. The example is as follows:
-  
+  â€‹		After you set the agents correctly in the HFSM inspector(read [HFSM's Inspector Porperties](### Ã‚Â· HFSM's Inspector Porperties) for more), a series of variables representing the agent nodes will be added to all the State scripts belonging to the HFSM. The example is as follows:
+
   ```python
   ###agents list start# please not modify this line.
   const Player = preload("res://addons/hierarchical_finite_state_machine/demo/test_2d_platform_player/Player.gd")
   var player : Player 
   ###agents list end# please not modify this line.
   ```
-  
-  â€?	When a state with nested FSM has a state script, the plugin will automatically add a variable representing this State for all States in nested FSM and the variable name is "fsm_xxx", "xxx" is the name of the State, and its type is referenced from the script of the state. The example is as follows:
-  
+
+  â€‹		When a state with nested FSM has a state script, the plugin will automatically add a variable representing this State for all States in nested FSM and the variable name is "fsm_xxx", "xxx" is the name of the State, and its type is referenced from the script of the state. The example is as follows:
+
   ```python
   ###nested fsm state-start# please not modify this line.
   const NestedFsmState = preload("res://addons/hierarchical_finite_state_machine/demo/hfsm_test/hfsm_state_nested_fsm.gd")
   var fsm_nested_fsm : NestedFsmState
   ###nested fsm state-end# please not modify this line.
   ```
-  
-  â€?	Therefore, when building the State behavior, you can easily call the nodes outside HFSM and the members in the State, which contain nested FSM , in the States belong to its nested FSM.
-  
-  > NOTEï¼?
-  >
-  > â€?	Do not modify or assign values to these variables or class names manually. They will be assigned values when the HFSM is generated.
 
-â€?
+  â€‹		Therefore, when building the State behavior, you can easily call the nodes outside HFSM and the members in the State, which contain nested FSM , in the States belong to its nested FSM.
+
+  > NOTE :
+  >
+  > â€‹		Do not modify or assign values to these variables or class names manually. They will be assigned values when the HFSM is generated.
 
 ## Transition
 
 
-â€?	It is used to connect State, determine the direction of transition, and shift State when meeting the Transition conditions. It can be created either by right click menu or by shortcut key Shift+left click. When you select a transition, its inspector property are as followsï¼?
+â€‹		It is used to connect State, determine the direction of transition, and shift State when meeting the Transition conditions. It can be created either by right click menu or by shortcut key Shift+left click. When you select a transition, its inspector property are as follows :
 
 ![](DOCUMENT.assets/transition.png)
 
-â€?	Neither of the first two properties can be edited, indicating only the States connected by both sides of the Transition.
+â€‹		Neither of the first two properties can be edited, indicating only the States connected by both sides of the Transition.
 
-â€?	There are currently three types of Transition (Auto, Variable, Expression) ,and sufficient to cope with the vast majority of cases. Set the type of transition through the "Transition Type" in the inspector.
+â€‹		There are currently three types of Transition (Auto, Variable, Expression) ,and sufficient to cope with the vast majority of cases. Set the type of transition through the "Transition Type" in the inspector.
 
 ![](DOCUMENT.assets/transition_type.png)
 
 ### State Transit Behavior
 
-â€?	When meeting the Transition conditions, the FSM which contain this Transition will occur the State transit behavior. A complete transit behavior includes:
+â€‹		When meeting the Transition conditions, the FSM which contain this Transition will occur the State transit behavior. A complete transit behavior includes:
 
-â€?	Exit current State (execute exit() in State script ), then entry the target State which be pointed by Transition (execute entry() in target State's State script).
+â€‹		Exit current State (execute exit() in State script ), then entry the target State which be pointed by Transition (execute entry() in target State's State script).
 
 ### Auto Transition
 
-â€?	There are 5 modes, which can be selected by "Auto transit mode" in the inspector.
+â€‹		There are 5 modes, which can be selected by "Auto transit mode" in the inspector.
 
 ![](DOCUMENT.assets/auto_mode.png)
 
@@ -405,50 +403,50 @@ func exit()->void:
 
      ![](DOCUMENT.assets/delay_timer.png)
 
-     â€?	In this mode, by configuring the delay time, when FSM enters the start State of the Transition, the Transition will start countdown according to the delay time you set. When the countdown ends, the condition of the Transition is true.
+     â€‹		In this mode, by configuring the delay time, when FSM enters the start State of the Transition, the Transition will start countdown according to the delay time you set. When the countdown ends, the condition of the Transition is true.
 
-  2. Nested Fsm Exitï¼?
+  2. Nested Fsm Exit :
 
     ![](DOCUMENT.assets/nested_exit.png)
     
-    â€?	Only when the start State of the Transition contain a nested FSM, the condition of the Transition can be true. When the nested FSM of the start State runs to its Exit State and exit ehavior is finished, the condition of the Transition is true.
+    â€‹		Only when the start State of the Transition contain a nested FSM, the condition of the Transition can be true. When the nested FSM of the start State runs to its Exit State and exit behavior is finished, the condition of the Transition is true.
     
-  3. Manual Exit ï¼?
+  3. Manual Exit :
     
     ![](DOCUMENT.assets/manual_exit.png)
     
-    â€?	In this mode, when the start State of this Transition execute manual_exit() in mormal State behavior, the condition of the Transition is true.
+    â€‹		In this mode, when the start State of this Transition execute manual_exit() in normal State behavior, the condition of the Transition is true.
     
   4. Update times :
 
      ![](DOCUMENT.assets/update_times.png)
 
-     â€?	In this mode, when FSM enters the start State of the Transition, it will start to count the number of updates (that is, the number of times update() is executed). When the number of times you set is reached, the condition of the Transition is true.
+     â€‹		In this mode, when FSM enters the start State of the Transition, it will start to count the number of updates (that is, the number of times update() is executed). When the number of times you set is reached, the condition of the Transition is true.
 
   5. Physics Update times :
 
      ![](DOCUMENT.assets/physics_update_time.png)
 
-     â€?	In this mode, when FSM enters the start State of the Transition, it will start to count the number of physics updates (that is, the number of times physics_updates() is executed). When the number of times you set is reached, the condition of the Transition is true.
+     â€‹		In this mode, when FSM enters the start State of the Transition, it will start to count the number of physics updates (that is, the number of times physics_updates() is executed). When the number of times you set is reached, the condition of the Transition is true.
 
 ### Variable Transition
 
-â€?	 The condition of the Transition is set by adding variable expression to it. This type is adequate for most cases.
+â€‹		The condition of the Transition is set by adding variable expression to it. This type is adequate for most cases.
 
-> NOTEï¼?
+> NOTE :
 >
-> â€?	If not add variable expression, the condition for the Transition will never be set to true.
+> â€‹		If not add variable expression, the condition for the Transition will never be set to true.
 
 ![](DOCUMENT.assets/variable_transition.png)
 
-â€?	You can add variable expressions by dragging a variable from a Variable List to the inspector:
+â€‹		You can add variable expressions by dragging a variable from a Variable List to the inspector:
 
 ![](DOCUMENT.assets/Variable_expression.png)
 
-> â€?	When you press the expand button, you can display more information about variable expressions, and you can change the order of expressions:
+> â€‹		When you press the expand button, you can display more information about variable expressions, and you can change the order of expressions:
 >
 > ![](DOCUMENT.assets/variable_expression_extend.png)
-1. Operation Modeï¼?
+1. Operation Mode :
 
 ![](DOCUMENT.assets/operate_mode.png)
 
@@ -458,7 +456,7 @@ func exit()->void:
 
 2. Variable Expression Editor :
 
-â€?	When you drag a variable to the inspector of the variable Transition, a variable expression editor is added based on the type of variable. You can edit the Comparator, compare value, or trigger mode for the variable expression. Note that the compare value should match the variable type.
+   â€‹	When you drag a variable to the inspector of the variable Transition, a variable expression editor is added based on the type of variable. You can edit the Comparator, compare value, or trigger mode for the variable expression. Note that the compare value should match the variable type.
 
 |              |         Trigger          | Boolean  |         Integer          |          Float           |  String  |
 | :----------: | :----------------------: | :------: | :----------------------: | :----------------------: | :------: |
@@ -466,40 +464,40 @@ func exit()->void:
 | Trigger Mode | Force mode ; Normal mode |          |                          |                          |          |
 
 + Comparator : The same meaning as when you write expressions in your code.
-+ Trigger Mode ï¼šTrigger variable is controlled by set_variable() or set_trigger(). Different trigger mode will have different effects on the Transitionï¼?
++ Trigger Mode : Trigger variable is controlled by set_variable() or set_trigger(). Different trigger mode will have different effects on the Transition :
   + Force mode : When the trigger is triggered, the condition of the Transition will be true, no matter what the operation mode of the variable Transition is and whether other variable expressions are met.
-  + Normal mode : As a normal variable expression, it follows the constraint of operation mode, it means thatï¼?
+  + Normal mode : As a normal variable expression, it follows the constraint of operation mode, it means that :
     + If is in And Mode, the condition is true only when other variable expressions are met and the trigger is triggered.
 
     + If is in Or Mode, when other variable expressions are met or the trigger is triggered, the condition of the Transition is true.
 ### Expression Transition
 
-â€?	Transition which is this type has highest flexibility and can cope with almost all situations. On the other hand, it may consume more performance than variable Transition, although it's very small on macroscopic scale.
+â€‹		Transition which is this type has highest flexibility and can cope with almost all situations. On the other hand, it may consume more performance than variable Transition, although it's very small on macroscopic scale.
 
 ![](DOCUMENT.assets/expression.png)
 
-+ The upper editor is used to edit expressionsï¼?
++ The upper editor is used to edit expression :
 
-  â€?	The object identifiers you can use  must be included in belowï¼?
+  â€‹		The object identifiers you can use  must be included in below :
 
-  + "hfsm"ï¼šThe HFSM which contain this Transition.
+  + "hfsm" : The HFSM which contain this Transition.
   + "from_state" : The State which is this Transition connected from.
-  + "to_state" ï¼šThe State which is this Transition connected to.
-  + Name of all agent nodes configured in HFSM: corresponding agent node object.
+  + "to_state" : The State which is this Transition connected to.
+  + Name of all agent nodes configured in HFSM : corresponding agent node object.
   + All the built-in singletons of Godot, such as "Input", they can be found in the second item, '@ globalscope', in the Godot document.
 
 + The below editor can be used to add comment. If your expression is very complex, it can help you to understand the meaning of the expression.
 
-  â€?	By default, there has a default comment in order to prompts you to edit expression.
+  â€‹		By default, there has a default comment in order to prompts you to edit expression.
 
-> NOTEï¼?
+> NOTE :
 >
 > +  The text editor does not provide code completion, error prompt and other features. Therefore, when you edit an expression, you need to carefully confirm whether the expression is wrong, otherwise it may print errors at runtime.
 > + Expression may be a confusing concept for novices. Please don't write it as method, assignment or return statement, etc.
 
  ### Multiple Transitions
 
-â€?	When the start States of multiple Transitions are the same, and multiple Transition's conditions are true, although it will not transit to the next State randomly, its priority is opaque to developers. Therefore, when you design the Transition's condition, you should avoid that multiple Transitions with the same start State can reach to true in the same frame.
+â€‹		When the start States of multiple Transitions are the same, and multiple Transition's conditions are true, although it will not transit to the next State randomly, its priority is opaque to developers. Therefore, when you design the Transition's condition, you should avoid that multiple Transitions with the same start State can reach to true in the same frame.
 
 ## Finite State Machine - FSM
 
@@ -509,68 +507,66 @@ func exit()->void:
 
 + A FSM can contain multiple or no Exit States to indicate the exit of the FSM. the FSM will be terminated when the Exit State finished Its exit behavior.
 
-  > NOTEï¼?
+  > NOTE :
   > + If root FSM runs to Exit State, the whole HFSM will be terminated after the exit behavior of the Exit State.
   > + When a FSM is terminated, it means that all State behaviors in the FSM will no longer be executed. However, this will not hinder the behavior of States which is nested by this FSM.
   
 + FSM path:
 
-  â€?	Although each State name is not allowed to be repeated in the same FSM, the State names across levels are allowed to be repeated. It is obviously inappropriate to directly use the name of State, is nested by a FSM, as the unique identification for the FSM. If we name each FSM separately, If we name each FSM separately, developers need to standardize the naming, which may lead to unclear meaning and inconvenient cross level operation.
+  â€‹		Although each State name is not allowed to be repeated in the same FSM, the State names across levels are allowed to be repeated. It is obviously inappropriate to directly use the name of State, is nested by a FSM, as the unique identification for the FSM. If we name each FSM separately, If we name each FSM separately, developers need to standardize the naming, which may lead to unclear meaning and inconvenient cross level operation.
 
-  â€?	In order to solve the problem of FSM identification, this plugin uses a path to identify each FSM. Each FSM has a path property  to identify itself, which is an array type. Note: the path of root FSM is ["root"].
+  â€‹		In order to solve the problem of FSM identification, this plugin uses a path to identify each FSM. Each FSM has a path property  to identify itself, which is an array type. Note: the path of root FSM is ["root"].
 
-  â€?	For example, a State named "state" is nested in the path "root"->"nested_state_level_1"->"nested_state_level_2"->"state",The path of FSM which nested in State named "state" is ["root" , "nested_state_level_1" , "nested_state_level_2"]. You can get State name which in upper level FSM, also can cut or modify the path to control State which in other FSM.
+  â€‹		For example, a State named "state" is nested in the path "root"->"nested_state_level_1"->"nested_state_level_2"->"state",The path of FSM which nested in State named "state" is ["root" , "nested_state_level_1" , "nested_state_level_2"]. You can get State name which in upper level FSM, also can cut or modify the path to control State which in other FSM.
 
 
 ## Hierarchical Finite State Machine - HFSM
 
 
-### HFSM's Inspector Porperties
+### HFSM's Inspector Properties
 
-â€?	When you select the HFSM node in the scene tree, the inspector will display its properties as follows:
+â€‹		When you select the HFSM node in the scene tree, the inspector will display its properties as follows:
 
 ![](DOCUMENT.assets/hfsm_inspector.png)
 
 1. Active
 
-â€?	Decide whether HFSM is allowed or not.
+   â€‹	Decide whether HFSM is allowed or not.
 
 2. Process Type
 
-â€?	The process type of HFSM mainly affects the behavior of State in FSM and the timing of HFSM signal transmission.
+   â€‹	The process type of HFSM mainly affects the behavior of State in FSM and the timing of HFSM signal transmission.
 
 ![](DOCUMENT.assets/process_type.png)
 
-The difference between process types as followsï¼?
+The difference between process types as follow :
 
 |  | Idle And Physics | Idle | Physics | Manual |
 |:----:|:------------------:|:----:|:-------:|:------:|
 | update()/signal : updated | _process() | _process() | _physics_process() | manual_update() |
 | physics_update()/signal : physics_updated | _physics_process() | _process() | _physics_process() | manual_physics_update() |
 
-â€?	Here is a simple compare between different process types. Recommend to manage your custom behaviors properly by using **Idle And Physics**  (such as the stability requirement of frame rate), it is similar to use nodes.__process() and nodes. _physics_process().
+â€‹		Here is a simple compare between different process types. Recommend to manage your custom behaviors properly by using **Idle And Physics**  (such as the stability requirement of frame rate), it is similar to use nodes.__process() and nodes. _physics_process().
 
 > NOTE:
 >
-> â€?	It is not recommended to use Manual except for special situation. This type sets HFSM to Manual mode, and only update or physics update if you call HFSM.manual_update() or HFSM.manual_physics_update(). Unlike Idle mode or Physics mode, HFSM still calls update() and physics_update() in the State script to ensure the functional integrity of the State in this frame. Manual mode will only call the corresponding method. So when you're using Manual mode, make sure you know what you're doing.
+> â€‹		It is not recommended to use Manual except for special situation. This type sets HFSM to Manual mode, and only update or physics update if you call HFSM.manual_update() or HFSM.manual_physics_update(). Unlike Idle mode or Physics mode, HFSM still calls update() and physics_update() in the State script to ensure the functional integrity of the State in this frame. Manual mode will only call the corresponding method. So when you're using Manual mode, make sure you know what you're doing.
 
 3. Agents
 
-â€?	This is a Dictionary property for adding agent nodes:
+   â€‹	This is a Dictionary property for adding agent nodes:
 
-> Agent Node ï¼šIn order to conveniently call other nodes in the scene when writing State scripts, here put forward the concept of agent node. When you set up a agent node for HFSM, it will automatically add a series of variables which meaning representing the agent node to the State script, and assign the correct objects to these variables in runtime.(Read [State Behavior & Code Control](### Â·State Behavior & Code Control) for more)
-
-â€?	
+> Agent Node : In order to conveniently call other nodes in the scene when writing State scripts, here put forward the concept of agent node. When you set up a agent node for HFSM, it will automatically add a series of variables which meaning representing the agent node to the State script, and assign the correct objects to these variables in runtime.(Read [State Behavior & Code Control](### Ã‚Â·State Behavior & Code Control) for more)
 
 ![](DOCUMENT.assets/agents.png)
 
-â€?	This property will automatically add a key value pair whose key is "null" and value is empty NodePath. It is convenient to add nodes in the scene tree without manually changing the type and adding the key value pair.
+â€‹		This property will automatically add a key value pair whose key is "null" and value is empty NodePath. It is convenient to add nodes in the scene tree without manually changing the type and adding the key value pair.
 
 ![](DOCUMENT.assets/add_agent.png)
 
-â€?	According to Godot's style of naming, in general, node names follow CamelCase, while variable names follow snake_case. To simplify the naming operation, the node name will be automatically converted to snake_case. If you don't need this feature, you can turn it off in advanced settings.
+â€‹		According to Godot's style of naming, in general, node names follow CamelCase, while variable names follow snake_case. To simplify the naming operation, the node name will be automatically converted to snake_case. If you don't need this feature, you can turn it off in advanced settings.
 
-> NOTEï¼?
+> NOTE :
 >
 > + A agent node will not be added repeatedly.
 > + If the name of new added agent node already exist, it will be appended "_" until it doesn't repeated. 
@@ -579,14 +575,15 @@ The difference between process types as followsï¼?
 
    **Full version feature**
 
-â€?	This is a Dictionary property for adding custom class :
-â€?	If  the class of your agent node is a custom class which does not use "class_name" to defined as a global class, you can add the script absolute path (right click the script file in the file system and click "Copy Path" to copy its absolute path) to this list. When you added agent node is  the custom class which is added to this list, it will be set to State script with a correct variable type, and you can get benefit of code completion from its custom variable type. This is very helpful for code completion when the custom class does not need to be exposed to the global.
+	â€‹		This is a Dictionary property for adding custom class :
+	
+	â€‹		If  the class of your agent node is a custom class which does not use "class_name" to defined as a global class, you can add the script absolute path (right click the script file in the file system and click "Copy Path" to copy its absolute path) to this list. When you added agent node is  the custom class which is added to this list, it will be set to State script with a correct variable type, and you can get benefit of code completion from its custom variable type. This is very helpful for code completion when the custom class does not need to be exposed to the global.
+	
+	â€‹		According to Godot's style of naming, in general, file names follow snake_case, while class names follow CamelCase. So it will convert file name to CamelCase as it class name. 
 
-â€?	According to Godot's style of naming, in general, file names follow snake_case, while class names follow CamelCase. So it will convert file name to CamelCase as it class name. 
+![](DOCUMENT.assets/custom_class.png)
 
-â€?![](DOCUMENT.assets/custom_class.png)
-
-> NOTEï¼?
+> NOTE :
 >
 > + It will not add repeatedly if the script file path already existed.
 >
@@ -595,45 +592,42 @@ The difference between process types as followsï¼?
 5. debug
 
    **Full version feature**
-
-â€?	if checked, It will display a simple debugger at bottom left in runtime, to indicate the current State path.
+   
+   â€‹	if checked, It will display a simple debugger at bottom left in runtime, to indicate the current State path.
 
 ![](DOCUMENT.assets/debug.png)
 
-â€?	From left to right by path, the top of each column is the name of nested FSM or State at the current level. The dark red one is last Exit State, and the translucent one is past State. It will not be displayed after 5 seconds.
+â€‹		From left to right by path, the top of each column is the name of nested FSM or State at the current level. The dark red one is last Exit State, and the translucent one is past State. It will not be displayed after 5 seconds.
 
 6. Advanced  Setting
 
 ![](DOCUMENT.assets/advanced_setting.png)
 
-+ Disable Rename To Snake Case : If checkedï¼Œthe name of agent node will be used as its variable name in State script directly.
++ Disable Rename To Snake Case : If checked, the name of agent node will be used as its variable name in State script directly.
 + Force All State Entry Behavior :
 
 ![](DOCUMENT.assets/force_behavior.png)
 
-â€?	a. Not Force : Default mode, the entry behavior of State will be decided by itself. 
+â€‹		a. Not Force : Default mode, the entry behavior of State will be decided by itself. 
 
-â€?	b. Force Reset :  In this mode, all custom properties of each State will be reset to the initialized values when the State is entered.
+â€‹		b. Force Reset :  In this mode, all custom properties of each State will be reset to the initialized values when the State is entered.
 
-â€?	c. Force Persist : In this mode, all custom properties of each State will not be reset to the initialized values when the State is entered.
+â€‹		c. Force Persist : In this mode, all custom properties of each State will not be reset to the initialized values when the State is entered.
 
-> NOTEï¼?
+> NOTE :
 >
-> â€?	Even if set this property to Force Reset, all built-in properties (including variables used in the State class, variables which represents agent node, and variable which represents State which be nested FSM) will not be reset when entering the State.
+> â€‹		Even if set this property to Force Reset, all built-in properties (including variables used in the State class, variables which represents agent node, and variable which represents State which be nested FSM) will not be reset when entering the State.
 >
 
 + Force All Fsm Entry Behavior : 
 
 ![](DOCUMENT.assets/force_fsm.png)
 
-â€?	a. Not Force : Default mode, the entry behavior of FSM will be decided by itself. 
+â€‹		a. Not Force : Default mode, the entry behavior of FSM will be decided by itself. 
 
-â€?	b. Force Reset :  In this mode, all FSM will execute [reset behavior of FSM](+ Rest Nested Fsm When Entry:) when is entered.
+â€‹		b. Force Reset :  In this mode, all FSM will execute [reset behavior of FSM](+ Rest Nested Fsm When Entry:) when is entered.
 
-â€?	c. Force Persist : In this mode, all FSM will not execute [reset behavior of FSM](+ Rest Nested Fsm When Entry:) when is entered.
-
-
-â€?   
+â€‹		c. Force Persist : In this mode, all FSM will not execute [reset behavior of FSM](+ Rest Nested Fsm When Entry:) when is entered.
 
 ### The running of  HFSM
 
@@ -650,7 +644,7 @@ The difference between process types as followsï¼?
 
 ### The Emit Timinng of HFSM's signals
 
-â€?	A HFSM has 6 signalsï¼?
+â€‹		A HFSM has 6 signals :
 
  1. inited() : When the game starts, the generate behavior of HFSM will be delayed until the scene tree is ready (i.e. All the child nodes of HFSM.owner are ready, and this signal is emitted after HFSM.is_Inited being assigned to true.
 
@@ -676,7 +670,7 @@ The difference between process types as followsï¼?
     + delta(float) : The physics frame time in second.
     + fsm_path(Array) : The path of FSM which occur this behavior.
 
-6. transited(from , to , fsm_path) ï¼šEmitted when a State is transited, the meaning of the callback parameters is as follows :
+6. transited(from , to , fsm_path) : Emitted when a State is transited, the meaning of the callback parameters is as follows :
 
     + from(String / null) : The name of State which transited from.
 
@@ -689,15 +683,15 @@ The difference between process types as followsï¼?
       > + When FSM enters the Entery State, HFSM will emit this signal,too. In this case, the callback parameter "from" is null, and "fsm_path" is this FSM path.
       > + When FSM enters the Exit State, HFSM will emit this signal after the exit behavior of Exit State is finished,too. In this case, the callback parameter "to" is null, and "fsm_path" is this FSM path.
 
-    > NOTEï¼?
+    > NOTE :
     >
-    > â€?       When these behavior occur in root FSM, the parameter "fsm_path" equal to ["root"].
+    > â€‹       When these behavior occur in root FSM, the parameter "fsm_path" equal to ["root"].
 
 ## Recommended develop pattern
 
 ### Signal Callback
 
-â€?	After the introduction of [the emit timinng of HFSM's signals](### Â· The Emit Timinng of HFSM's signals), we can learn that HFSM has signals which describe all behaviors. Just connect HFSM's signals to the required objects, and you can develop it just like you use the signals of other nodes.
+â€‹		After the introduction of [the emit timinng of HFSM's signals](### Ã‚Â· The Emit Timinng of HFSM's signals), we can learn that HFSM has signals which describe all behaviors. Just connect HFSM's signals to the required objects, and you can develop it just like you use the signals of other nodes.
 
 + Advantage : Control the object itself by signal callback at appropriate timing. This way may suitable for thinking of most godoter, and need not create more file for HFSM to reduce the burden of maintaining file structure.
 
@@ -705,16 +699,16 @@ The difference between process types as followsï¼?
 
 ### Attach Script to State
 
-â€?	You can attach the script, which use the template provided by this plugin, to the State which need to be customized behavior for controlling other objects, by using variables to control agent nodes and so on.
+â€‹		You can attach the script, which use the template provided by this plugin, to the State which need to be customized behavior for controlling other objects, by using variables to control agent nodes and so on.
 
-+ Advantage ï¼šEvery State script controls other objects in itself(except when external signals are connected), so that the function of a single script is clear.
-+ Disadvantage ï¼?
++ Advantage : Every State script controls other objects in itself(except when external signals are connected), so that the function of a single script is clear.
++ Disadvantage :
   + You must call other objects by using a agent variable, instead of controlling directly in those objects, this may annoy you. Even though this just a small problem.
   + If your HFSM's function is quite complex, it may create many State scripts, you need to manage these file's name and storage, in order to keep the file structure of your project.
 
 ### Conclusion
 
-â€?	Combining the above two development modes and complement each other may be the best choice, but you should follow these principles:
+â€‹		Combining the above two development modes and complement each other may be the best choice, but you should follow these principles:
 
 1. The function of State which has higher level should take "Signal Callback" pattern as priority.
 
@@ -724,7 +718,7 @@ The difference between process types as followsï¼?
 
 4. Minimize the number of States in the same FSM.
 
-   > â€?	 The level of State is decide by its path index. The smaller the index is, the higher the level is. On the contrary, the larger the index is, the lower the level is. Among all FSMs,  the level of root FSM is highest.
+   > â€‹		The level of State is decide by its path index. The smaller the index is, the higher the level is. On the contrary, the larger the index is, the lower the level is. Among all FSMs,  the level of root FSM is highest.
 
    If you obey these principles, it can help you to maintain the code of HFSM. Even though this is  not mandatory.
 
@@ -743,7 +737,7 @@ The difference between process types as followsï¼?
 2. bool active[default :true]
 
    > set_active(value) #setter
-   > get_active() #gettter
+   > get_active() #getter
    >
    > If true, the HFSM is running. Note: It will not restart the HFSM if you set this property from false to true.
 
@@ -752,7 +746,7 @@ The difference between process types as followsï¼?
    > **Full version feature**
    >
    > set_debug(value) #setter
-   > get_degug() #getter
+   > get_debug() #getter
    > If true, it will display a simple debugger at bottom left in runtime.
 
 4. Dictionary agents[default : {"null" : NodePath("")}]
@@ -787,7 +781,7 @@ The difference between process types as followsï¼?
    >
    > Set a new Entry State for a FSM and set the original Entry State to the normal State.
    >
-   > Use "fsm_path" to indicate the target FSMï¼Œand use "state_name" to indicate the target Entry State.
+   > Use "fsm_path" to indicate the target FSM, and use "state_name" to indicate the target Entry State.
    >
    > If the State which is indicated by state_name is no exist in the target FSM, or the target FSM is not exist in HFSM, it will print an error.
    >
@@ -799,7 +793,7 @@ The difference between process types as followsï¼?
    >
    > Set a new Exit State for a FSM.
    >
-   > Use "fsm_path" to indicate the target FSMï¼Œand use "state_name" to indicate the target Exit State.
+   > Use "fsm_path" to indicate the target FSM, and use "state_name" to indicate the target Exit State.
    >
    > If the State which is indicated by state_name is no exist in the target FSM, or it is a Entry State, or the target FSM is not exist in HFSM, it will print an error.
    >
@@ -811,7 +805,7 @@ The difference between process types as followsï¼?
    >
    > Set a unique Exit State for a FSM.
    >
-   > Use "fsm_path" to indicate the target FSMï¼Œand use "state_name" to indicate the unique target Exit State.
+   > Use "fsm_path" to indicate the target FSM, and use "state_name" to indicate the unique target Exit State.
    >
    > If the State which is indicated by state_name is no exist in the target FSM, or it is a Entry State, or the target FSM is not exist in HFSM, it will print an error.
    >
@@ -823,7 +817,7 @@ The difference between process types as followsï¼?
    >
    > Set a Normal State for a FSM.
    >
-   > Use "fsm_path" to indicate the target FSMï¼Œand use "state_name" to indicate the unique target Normal State.
+   > Use "fsm_path" to indicate the target FSM,  and use "state_name" to indicate the unique target Normal State.
    >
    > If the State which is indicated by state_name is no exist in the target FSM, or it is a Entry State, or the target FSM is not exist in HFSM, it will print an error.
    >
@@ -835,7 +829,7 @@ The difference between process types as followsï¼?
    >
    >Force entry a FSM,  specify entry state is optional.
    >
-   >Use "fsm_path" to indicate the target FSMï¼Œand use "entry_state_name" to indicate the target Entry State.
+   >Use "fsm_path" to indicate the target FSM, and use "entry_state_name" to indicate the target Entry State.
    >
    >If the parameter "fsm_path" is a valid path, it will execute a specific force entry behavior as follows: starting from the beginning of the current running path of HFSM and use the parameter "fsm_path" to match from front, until the element before the different one, these matched element will be a new array path by order, for indicating the FSM which should be exited. After the FSM exited, it will enter the Entry State which is indicated by you parameters( If you ignore the parameter "entry_state_name", the target State which will be entered is the exist Entry State in the target FSM). 
    >
@@ -845,7 +839,7 @@ The difference between process types as followsï¼?
 
    > **Full version feature**
    >
-   > Force exit a FSM and terminate it. It will trigger a series of exit behavior (read [The running of  HFSM](### Â· The running of  HFSM) for more).
+   > Force exit a FSM and terminate it. It will trigger a series of exit behavior (read [The running of  HFSM](### Ã‚Â· The running of  HFSM) for more).
    >
    > Use "fsm_path" to indicate the target FSM.
    >
@@ -859,7 +853,7 @@ The difference between process types as followsï¼?
    >
    > Force transit to a State by ignoring the direction of transition flow.
    >
-   > Use "fsm_path" to indicate the target FSMï¼Œand use "state_name" to indicate the target State.
+   > Use "fsm_path" to indicate the target FSM, and use "state_name" to indicate the target State.
    >
    > It will exit the current State in target FSM if is not exited, then enter the target State (Even if the target State is current State of target FSM).
    >
@@ -885,15 +879,15 @@ The difference between process types as followsï¼?
    >
    > func some_func():
    >
-   > â€?var current_state :String = hfsm.get_current_path().back() 
+   > â€‹	var current_state :String = hfsm.get_current_path().back() 
    >
-   > â€?if current_state != "root":
+   > â€‹	if current_state != "root":
    >
-   > â€?	print("current state : " + current_state)
+   > â€‹		print("current state : " + current_state)
    >
-   > â€?else :
+   > â€‹	else :
    >
-   > â€?	print("the HFSM was terminated.")
+   > â€‹		print("the HFSM was terminated.")
 
 10. Array get_previous_path()
 
@@ -904,14 +898,14 @@ The difference between process types as followsï¼?
 11. Dictionary get_variable_list()
 
     > Get all variables and their values, return a dictionary which key is variable name ,and value is vairbale value. 
-    > For exampleï¼?
+    > For example :
     > {
     >
-    > â€?â€œvariable_triggerâ€?: false,
-    > â€?"variable_boolean" : true ,
-    > â€?"variable_integer" : 2 ,
-    > â€?"variable_float" : 3.14 ,
-    > â€?"variable_string" : "test_string" ,
+    > â€‹	"variable_trigger": false,
+    > â€‹	"variable_boolean" : true ,
+    > â€‹	"variable_integer" : 2 ,
+    > â€‹	"variable_float" : 3.14 ,
+    > â€‹	"variable_string" : "test_string" ,
     > } 
 
 12. Variant get_variable(variable_name : String) 
@@ -974,9 +968,9 @@ The difference between process types as followsï¼?
 
 ### Signals
 
-â€?	Read [The Emit Timinng of HFSM's signals](###the-emit-timinng-of-hfsms-signals) for more
+â€‹		Read [The Emit Timinng of HFSM's signals](###the-emit-timinng-of-hfsms-signals) for more
 
-1. initedï¼ˆï¼‰
+1. inited()
 
    > Emitted after HFSM is generated.
 
@@ -1002,11 +996,11 @@ The difference between process types as followsï¼?
 
 ## State
 
-â€?	Scripts attached to the State in HFSM inherit from this class, but you can not obtain the objects which inherited from this class directly outside HFSM.
+â€‹		Scripts attached to the State in HFSM inherit from this class, but you can not obtain the objects which inherited from this class directly outside HFSM.
 
 ### Properties
 
-â€?	All State's properties are read only.
+â€‹		All State's properties are read only.
 
 1. String state_name[default : ""]
 
@@ -1029,7 +1023,7 @@ The difference between process types as followsï¼?
 
 ### Methods
 
-â€?	Read [State Behavior](+ State Behavior) for more informations of overridable methods.
+â€‹		Read [State Behavior](+ State Behavior) for more informations of overridable methods.
 
 1. void manual_exit()
 
@@ -1037,7 +1031,7 @@ The difference between process types as followsï¼?
 
 2. void init()   
 
-   > Overridableï¼Œcalled when HFSM is generated, values of all custom properties will be confirm as initial value.
+   > Overridable, called when HFSM is generated, values of all custom properties will be confirm as initial value.
 
 3. void entry()   
 
