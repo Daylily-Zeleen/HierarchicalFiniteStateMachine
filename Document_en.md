@@ -625,9 +625,9 @@ The difference between process types as follow :
 
 ​		a. Not Force : Default mode, the entry behavior of FSM will be decided by itself. 
 
-​		b. Force Reset :  In this mode, all FSM will execute [reset behavior of FSM](+ Rest Nested Fsm When Entry:) when is entered.
+​		b. Force Reset :  In this mode, all FSM will execute [reset behavior of FSM](#strate-inspector-properties) when is entered.
 
-​		c. Force Persist : In this mode, all FSM will not execute [reset behavior of FSM](+ Rest Nested Fsm When Entry:) when is entered.
+​		c. Force Persist : In this mode, all FSM will not execute [reset behavior of FSM](#strate-inspector-properties) when is entered.
 
 ### The running of HFSM
 
