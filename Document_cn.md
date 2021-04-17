@@ -1043,7 +1043,7 @@ func exit()->void:
 
 ### · 方法(Methods)
 
-​		对于可重载方法，其行为详见[状态行为及其代码控制](## · 状态行为及其代码控制(State Behavior & Code Control))
+​		对于可重载方法，其行为详见[状态行为及其代码控制](#-%E7%8A%B6%E6%80%81%E8%A1%8C%E4%B8%BA%E5%8F%8A%E5%85%B6%E4%BB%A3%E7%A0%81%E6%8E%A7%E5%88%B6state-behavior--code-control)
 
 1. void manual_exit()
 
