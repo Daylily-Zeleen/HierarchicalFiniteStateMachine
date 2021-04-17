@@ -34,6 +34,11 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
+#	
+# Sponsor link (赞助链接): 
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138   
+#
 #                                    
 #	@author   Daylily-Zeleen                                                      
 #	@email    735170336@qq.com                                              
