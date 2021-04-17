@@ -108,7 +108,7 @@
 	
 	> NOTE :
 	>
-	> + Only [correct script](+ Points for attention of using State script template :) can be attached to State.
+	> + Only [correct script](#state-behavior-code-control) can be attached to State.
 	
 4. Copy : This option is only available if there have States or Transitions are being selected. The selected States and Transitions will be copied. Shortcut key: Ctrl + C.
 
@@ -227,7 +227,7 @@
   ​		When entering a State which contain a nested FSM, it will also enter its nested FSM. If this property is true, it will be reset when entering the nested FSM. The reset behavior includes:
 
   1. Set the Entry State and Exit States of the nested FSM to which perset in the editor.
-  2. Reset all States in the nested FSM(read [Reset Properties When Entry](3. Reset Properties When Entry ) to learn more).
+  2. Reset all States in the nested FSM when enter they.
 
 ### State Behavior & Code Control
 
