@@ -691,7 +691,7 @@ The difference between process types as follow :
 
 ### Signal Callback
 
-​		After the introduction of [the emit timinng of HFSM's signals](### Â· The Emit Timinng of HFSM's signals), we can learn that HFSM has signals which describe all behaviors. Just connect HFSM's signals to the required objects, and you can develop it just like you use the signals of other nodes.
+​		After the introduction of [the emit timinng of HFSM's signals](#the-emit-timinng-of-hfsms-signals), we can learn that HFSM has signals which describe all behaviors. Just connect HFSM's signals to the required objects, and you can develop it just like you use the signals of other nodes.
 
 + Advantage : Control the object itself by signal callback at appropriate timing. This way may suitable for thinking of most godoter, and need not create more file for HFSM to reduce the burden of maintaining file structure.
 
@@ -1023,7 +1023,7 @@ The difference between process types as follow :
 
 ### Methods
 
-​		Read [State Behavior](+ State Behavior) for more informations of overridable methods.
+​		Read [State Behavior](#state-behavior--code-control) for more informations of overridable methods.
 
 1. void manual_exit()
 
