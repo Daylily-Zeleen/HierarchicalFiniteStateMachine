@@ -42,7 +42,7 @@
 
 ​		When you add a "HFSM" node to the scene tree and select it, the HFSM editor will pop up at bottom.
 
-![](DOCUMENT.assets/Main Interface.png)
+![](DOCUMENT.assets/Main_Interface.png)
 
 ### Variable List
 
