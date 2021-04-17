@@ -839,7 +839,7 @@ The difference between process types as follow :
 
    > **Full version feature**
    >
-   > Force exit a FSM and terminate it. It will trigger a series of exit behavior (read [The running of  HFSM](### Â· The running of  HFSM) for more).
+   > Force exit a FSM and terminate it. It will trigger a series of exit behavior (read [The running of  HFSM](#the-running-of-hfsm) for more).
    >
    > Use "fsm_path" to indicate the target FSM.
    >
