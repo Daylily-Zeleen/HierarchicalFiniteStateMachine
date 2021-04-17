@@ -27,7 +27,9 @@
 >
 # Tutorial
 
-​		Read [document]() for more.
+​		Read [document](Document_en.md) for more.
+
+​		[中文文档](Document_cn.md)请点击这里
 
 
 
