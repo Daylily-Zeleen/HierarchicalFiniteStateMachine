@@ -110,7 +110,7 @@
 	
 	> 注意：
 	>
-	> ​		只有[符合要求的脚本](+ 使用状态脚本时的注意事项:)才能被附加到State上。
+	> ​		只有[符合要求的脚本](#-%E7%8A%B6%E6%80%81%E8%A1%8C%E4%B8%BA%E5%8F%8A%E5%85%B6%E4%BB%A3%E7%A0%81%E6%8E%A7%E5%88%B6state-behavior--code-control)才能被附加到State上。
 	
 4. 拷贝(Copy)：只有已经选中状态或转换后该项目才可用，将复制选中的State和Transition，快捷键：ctrl+ c
 
@@ -231,7 +231,7 @@
   ​	当进入一个被嵌套的状态时，也会进入其嵌套的FSM，如果勾选该属性，进入嵌套的FSM时会对其进行复位，复位行为包括：
 
   1. 将该嵌套FSM的Entry State和Exit State设置为在编辑器中设置的Entry State和Exit State.
-  2. 复位该嵌套FSM中的所有State（详见[进入时复位属性](3. 进入时复位属性(Reset Properties When Entry)) ）。
+  2. 复位该嵌套FSM中的所有State。
 
 ### · 状态行为及其代码控制(State Behavior & Code Control)
 
@@ -356,7 +356,7 @@ func exit()->void:
 
 + 代理节点(Agent Node) 和 内嵌了FSM的State(State which contain Nested FSM):
 
-  ​		当您在HFSM监视器中正确设置代理(详见[HFSM监视器属性](3. 代理(Agents)))之后,会在所有属于该HFSM里的状态脚本中添加一系列代表代理节点的变量,示例如下:
+  ​		当您在HFSM监视器中正确设置代理(详见[HFSM监视器属性](#-hfsm%E7%9A%84%E7%9B%91%E8%A7%86%E5%99%A8%E5%B1%9E%E6%80%A7hfsms-inspector-porperties))之后,会在所有属于该HFSM里的状态脚本中添加一系列代表代理节点的变量,示例如下:
   
   ```python
   ###agents list start# please not modify this line.
@@ -638,14 +638,14 @@ func exit()->void:
 
 ​		a. 不进行任何强制行为(Not Force) : 默认为该模式，所有FSM的进入行为均由自身设置决定。
 
-​		b. 强制复位(Force Reset) :  该模式下，所有FSM在进入时均都会执行[FSM的复位](+ 进入嵌套FSM时复位(Rest Nested Fsm When Entry):)。
+​		b. 强制复位(Force Reset) :  该模式下，所有FSM在进入时均都会执行[FSM的复位](#-%E7%8A%B6%E6%80%81%E7%9B%91%E8%A7%86%E5%99%A8%E5%B1%9E%E6%80%A7state-inspector-properties)。
 
-​		c. 强制保持(Force Persist) : 该模式下，所有FSM在进入时均不执行[FSM的复位](+ 进入嵌套FSM时复位(Rest Nested Fsm When Entry):)。
+​		c. 强制保持(Force Persist) : 该模式下，所有FSM在进入时均不执行[FSM的复位](#-%E7%8A%B6%E6%80%81%E7%9B%91%E8%A7%86%E5%99%A8%E5%B1%9E%E6%80%A7state-inspector-properties)。
 
 
 ​    
 
-### · HFSM的运行(The running of  HFSM)
+### · HFSM的运行(The running of HFSM)
 
 1. 当游戏正式运行时，在HFSM加入场景树后，所有的FSM，State，Transition均会被实例化，并执行所有State的初始化行为。
 
@@ -859,7 +859,7 @@ func exit()->void:
 
    > **完整版特有**
    >
-   > 强制终止并退出某个FSM，注意会触发一系列退出行为，详见[HFSM的运行](### · HFSM的运行(The running of  HFSM))。
+   > 强制终止并退出某个FSM，注意会触发一系列退出行为，详见[HFSM的运行](#-hfsm%E7%9A%84%E8%BF%90%E8%A1%8Cthe-running-of-hfsm)。
    >
    > 通过fsm_path指定FS
    >
@@ -990,7 +990,7 @@ func exit()->void:
 
 ### · 信号(Signals)
 
-​		HFSM信号的更多详情请看[HFSM信号的发射时机](### · HFSM信号的发射时机(The Emit Timinng of HFSM's signals))
+​		HFSM信号的更多详情请看[HFSM信号的发射时机](#-hfsm%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%8F%91%E5%B0%84%E6%97%B6%E6%9C%BAthe-emit-timinng-of-hfsms-signals)
 
 1. inited（）
 
