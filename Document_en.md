@@ -629,7 +629,7 @@ The difference between process types as follow :
 
 ​		c. Force Persist : In this mode, all FSM will not execute [reset behavior of FSM](+ Rest Nested Fsm When Entry:) when is entered.
 
-### The running of  HFSM
+### The running of HFSM
 
 1. When the game starts , after HFSM is added to the scene tree, all FSMs, States and Transitions will be instantiated and all States will be initialized.
 
