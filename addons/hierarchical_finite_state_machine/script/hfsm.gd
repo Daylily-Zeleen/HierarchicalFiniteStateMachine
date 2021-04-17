@@ -209,7 +209,7 @@ func get_variable(variable_name :String ):
 	if variables[variable_name]:
 		return variables[variable_name][1]
 	else :
-		printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name , name ,variable_name])
+		printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name if owner else "", name ,variable_name])
 		
 #------------------------------------------------------------------------------
 #@description : to get all variable 
@@ -259,7 +259,7 @@ func set_variable(variable_name :String ,value )->void:
 		else :
 			printerr("HFSM: the value to set is not an expected type.")
 	else:
-		printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name , name ,variable_name])
+		printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name if owner else "", name ,variable_name])
 
 #------------------------------------------------------------------------------
 #@description : to trigger a trigger variable
@@ -272,7 +272,7 @@ func set_trigger(trigger_name :String)->void:
 	if variables[trigger_name] and variables[trigger_name][0] == 0:
 		variables[trigger_name][1] = true
 	else:
-		printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name , name ,trigger_name])
+		printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name if owner else "", name ,trigger_name])
 
 #------------------------------------------------------------------------------
 #@description : to set the value of boolean variable
@@ -288,9 +288,9 @@ func set_boolean(boolean_name:String , value:bool)->void:
 		variables[boolean_name][1] = value
 	else :
 		if not variables[boolean_name] :
-			printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name , name ,boolean_name])
+			printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name if owner else "", name ,boolean_name])
 		else :
-			printerr("HFSM: the type of %s/%s's variable '/s' is not Boolean. " % [owner.name , name ,boolean_name])
+			printerr("HFSM: the type of %s/%s's variable '/s' is not Boolean. " % [owner.name if owner else "", name ,boolean_name])
 
 #------------------------------------------------------------------------------
 #@description : to set the value of integer variable
@@ -306,9 +306,9 @@ func set_integer(integer_name:String , value:int)->void:
 		variables[integer_name][1] = value
 	else :
 		if not variables[integer_name]:
-			printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name , name ,integer_name])
+			printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name if owner else "", name ,integer_name])
 		else:
-			printerr("HFSM: the type of %s/%s's variable '/s' is not Integer. " % [owner.name , name ,integer_name])
+			printerr("HFSM: the type of %s/%s's variable '/s' is not Integer. " % [owner.name if owner else "", name ,integer_name])
 
 #------------------------------------------------------------------------------
 #@description : to set the value of float variable
@@ -324,9 +324,9 @@ func set_float(float_name:String , value:float)->void:
 		variables[float_name][1] = value
 	else :
 		if not  variables[float_name] :
-			printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name , name ,float_name])
+			printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name if owner else "", name ,float_name])
 		else :
-			printerr("HFSM: the type of %s/%s's variable '/s' is not Float. " % [owner.name , name ,float_name])
+			printerr("HFSM: the type of %s/%s's variable '/s' is not Float. " % [owner.name if owner else "", name ,float_name])
 
 #------------------------------------------------------------------------------
 #@description : to set the value of String variable
@@ -342,9 +342,9 @@ func set_string(string_name:String , value:String)->void:
 		variables[string_name][1] = value
 	else :
 		if not variables[string_name]:
-			printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name , name ,string_name])
+			printerr("HFSM: %s/%s has not contain variable which be named '%s'" % [owner.name if owner else "", name ,string_name])
 		else :
-			printerr("HFSM: the type of %s/%s's variable '/s' is not Sring. " % [owner.name , name ,string_name])
+			printerr("HFSM: the type of %s/%s's variable '/s' is not Sring. " % [owner.name if owner else "", name ,string_name])
 
 
 
@@ -522,7 +522,10 @@ func _exited(state:String , fsm_path:Array)->void:
 
 
 func _on_Self_tree_entered():
-	yield(owner,"ready")
+	if owner :
+		yield(owner,"ready")
+	else :
+		yield(self,"ready")
 	for agent in agents.keys():
 		var obj = owner.get_node_or_null(agents[agent])
 		if not obj:

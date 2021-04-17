@@ -89,7 +89,7 @@ func get_process_type()->int:
 var agents :Dictionary = {"null" : NodePath("")} setget _set_agents , _get_agents
 func _set_agents(a:Dictionary)->void:
 	for p in hfsm.agents.values():
-		var obj:Node = hfsm.owner.get_node_or_null(String(p))
+		var obj:Node = hfsm.owner.get_node_or_null(String(p)) if hfsm.owner else hfsm.get_node_or_null(String(p))
 		if not obj:
 			obj = hfsm.get_node_or_null(p) 
 		if obj:
@@ -97,7 +97,7 @@ func _set_agents(a:Dictionary)->void:
 				obj.disconnect("renamed",self,"_on_Agents_node_renamed")
 	var obj_to_path :Dictionary
 	for k in a.keys():
-		var obj = hfsm.owner.get_node_or_null(String(a[k]))
+		var obj = hfsm.owner.get_node_or_null(String(a[k])) if hfsm.owner else hfsm.get_node_or_null(String(a[k]))
 		if not obj:
 			obj = hfsm.get_node_or_null(a[k])
 		if not obj:
@@ -183,7 +183,7 @@ func _change_script_agents():
 		if self._custom_class_list[custom_class].is_abs_path():
 			agents_text += "const %s = preload(\"%s\")\n" %[custom_class.substr(0 ,custom_class.find(".")) , self._custom_class_list[custom_class]]
 	for agent_name in self.agents.keys():
-		var obj:Node = hfsm.owner.get_node_or_null(String(self.agents[agent_name]))
+		var obj:Node = hfsm.owner.get_node_or_null(String(self.agents[agent_name]))if hfsm.owner else hfsm.get_node_or_null(String(self.agents[agent_name]))
 		if not obj:
 			obj = hfsm.get_node_or_null(self.agents[agent_name])
 		var obj_class :String 

@@ -160,7 +160,7 @@ class ExpressionTransition:
 	func check()->bool:
 		if expression.parse(expression_text,name_to_obj.keys()) != OK:
 			printerr(expression.get_error_text())
-			push_warning("HFSM: The ExpressionTransition '%s'->'%s' of '%s/%s' has syntax error,please check it."% [from_state.state_name , to_state.state_name , _hfsm.owner.name ,_hfsm.name ])
+			push_warning("HFSM: The ExpressionTransition '%s'->'%s' of '%s/%s' has syntax error,please check it."% [from_state.state_name , to_state.state_name , _hfsm.owner.name if _hfsm.owner else ""  ,_hfsm.name ])
 			return false
 		else :
 			var result = expression.execute(name_to_obj.values(),_hfsm,false)
@@ -172,10 +172,8 @@ class ExpressionTransition:
 						return true
 					else :
 						return false 
-#					push_warning("HFSM: The ExpressionTransition '%s'->'%s' of '%s/%s' is not return a bool,please check it."% [from_state.state_name , to_state.state_name , _hfsm.owner.name ,_hfsm.name ])
-#					return false
 			else :
-				push_warning("HFSM: The ExpressionTransition '%s'->'%s' of '%s/%s' has execute failed,please check it."% [from_state.state_name , to_state.state_name , _hfsm.owner.name ,_hfsm.name ])
+				push_warning("HFSM: The ExpressionTransition '%s'->'%s' of '%s/%s' has execute failed,please check it."% [from_state.state_name , to_state.state_name , _hfsm.owner.name if _hfsm.owner else "" ,_hfsm.name ])
 				return false
 #-------------Variable-----------------
 class VariableTransition:
