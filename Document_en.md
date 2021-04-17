@@ -46,30 +46,30 @@
 
 ### Variable List
 
-![](DOCUMENT.assets/Variable List.png)
+![](DOCUMENT.assets/variable_list.png)
   1. Extend button ：Hide or expand more information. After expansion, you can change the order of variables or add variable comments, as shown in the following figure:
 
 
-![](DOCUMENT.assets\variable list extend.png)
+![](DOCUMENT.assets\variable_list_extend.png)
 
   2. Add button : Add a new variable to HFSM.
 
      > Note: you must make a unique name for the variable after adding it, otherwise the variable will be ignored at run time
 
-![](DOCUMENT.assets\Variable list add.png)
+![](DOCUMENT.assets\variable_list_add.png)
 
   3. Hide button : When designing a state machine, if the list hinders observation, it can be hidden, and the visibility of the list can be restored in the right click popup menu.
 
 ### Variable Editor
 ​	Click "add new variable" in variable list to add a variable editor.
 
-![](DOCUMENT.assets\Variable Editor.png)
+![](DOCUMENT.assets\variable_editor.png)
 
  1. Move buttons :  When there are multiple variable editors, you can change there order.
 
  2. Variable type option button : Used to select the type of the variable.
 
-    ![](DOCUMENT.assets\Variable Editor type.png)
+    ![](DOCUMENT.assets\variable_editor_type.png)
 
 	>    + Trigger : it can persist only one frame(default physics frame,but it will be idle frame if HSFM's Process Mode is set at "Idle") after being trigger.
 	>    + The behavior of other variable types is the same as that of ordinary variables.
@@ -90,7 +90,7 @@
 
 ​	Press the right mouse button in the editing interface to pop up.
 
-![](DOCUMENT.assets\right popup.png)
+![](DOCUMENT.assets\right_popup.png)
 
  1. Add State : Add State in current location
 
@@ -100,11 +100,11 @@
 
 	a、 Open script : This option is only available if a script is attached to the State.
 	
-	b、 Create new script : This option is only available if the State has not contain a script. It will pop up a script create dialog, and attch the new script to the State automatically after the new script is created.
+	b、 Create new script : This option is only available if the State has not contain a script. It will pop up a script create dialog, and attach the new script to the State automatically after the new script is created.
 	
-	c、 Attach exist script : This option is only available if the State has not contain a script. It will pop up a script selected dialog, and attch the selected script to the State.
+	c、 Attach exist script : This option is only available if the State has not contain a script. It will pop up a script selected dialog, and attach the selected script to the State.
 	
-	d、 Remove script : This option is only available if a script is attached to the State. It will remove the script which was attacted to the State.
+	d、 Remove script : This option is only available if a script is attached to the State. It will remove the script which was attached to the State.
 	
 	> NOTE：
 	>
@@ -140,19 +140,19 @@
 
 ### FSM path
 
-![](DOCUMENT.assets\Path.png)
+![](DOCUMENT.assets\path.png)
 
 ​		This Item is composed of a group of buttons, indicating the path of the current FSM. The last key is the position of the current FSM, and the button is disabled. Click the previous button to jump to the target FSM.
 
 ### Toolbar 
 
-![](DOCUMENT.assets\Toolbar.png)
+![](DOCUMENT.assets\toolbar.png)
 
 ​		The last button is to toggle the visibility of the Transitions comment 
 
-![](DOCUMENT.assets\comment visible.png)
+![](DOCUMENT.assets\comment_visible.png)
 
-![](DOCUMENT.assets\comment visible1.png)
+![](DOCUMENT.assets\comment_visible1.png)
 
 
 
@@ -174,7 +174,7 @@
 
 
 
-![](DOCUMENT.assets\State.png)
+![](DOCUMENT.assets\state.png)
 
 1. State Name
 
@@ -186,9 +186,9 @@
 
 2. State Type
 
-![](DOCUMENT.assets\state type inspector.png)
+![](DOCUMENT.assets\state_type_inspector.png)
 
-![](DOCUMENT.assets\State Type.png)
+![](DOCUMENT.assets\state_type.png)
 
 + Normal : Most commonly used type with complete State behavior (Initialization, Entry, Update, Physical update, Exit).
 + Entry : Each FSM must contain a unique Entry State, which is used to indicate the starting point when entering the FSM, and also has a complete State behavior.
@@ -289,7 +289,7 @@ func exit()->void:
 
 + State Behavior
 
-​		A state has 5 behaviors, which correspond to 5 overloadable methods in the script template:
+​		A state has 5 behaviors, which correspond to 5 overridable methods in the script template:
 
 + init() : Will be called when HFSM is generated, it is usually used to initialize variables and obtain objects. After the behavior is executed, all variables will be determined as initial values.
 
@@ -297,7 +297,7 @@ func exit()->void:
 
 > NOTE：
 >
-> ​		If the State has a nested FSM, the entry behavior of the Entry State in the FSM will be exctued after this State's entery behavior executed.
+> ​		If the State has a nested FSM, the entry behavior of the Entry State in the FSM will be executed after this State's entry behavior executed.
 
 + update(delta : float) : Will be executed during the processing step of the main loop if this state is not exited. It means that  the delta time since the previous frame is not constant，delta is in second.(analogy with Node._process(delta))
 
@@ -387,7 +387,7 @@ func exit()->void:
 
 ​		There are currently three types of Transition (Auto, Variable, Expression) ,and sufficient to cope with the vast majority of cases. Set the type of transition through the "Transition Type" in the inspector.
 
-![](DOCUMENT.assets\transition type.png)
+![](DOCUMENT.assets\transition_type.png)
 
 ### State Transit Behavior
 
@@ -397,37 +397,37 @@ func exit()->void:
 
 ### Auto Transition
 
-  		There are 5 modes, which can be selected by "Auto transit mode" in the inspector.
+​		There are 5 modes, which can be selected by "Auto transit mode" in the inspector.
 
-![](DOCUMENT.assets\auto mode.png)
+![](DOCUMENT.assets\auto_mode.png)
 
   1. Delay timer:
 
-     ![](DOCUMENT.assets\delay timer.png)
+     ![](DOCUMENT.assets\delay_timer.png)
 
      ​		In this mode, by configuring the delay time, when FSM enters the start State of the Transition, the Transition will start countdown according to the delay time you set. When the countdown ends, the condition of the Transition is true.
 
   2. Nested Fsm Exit：
 
-    ![](DOCUMENT.assets\nested exit.png)
+    ![](DOCUMENT.assets\nested_exit.png)
     
     ​		Only when the start State of the Transition contain a nested FSM, the condition of the Transition can be true. When the nested FSM of the start State runs to its Exit State and exit ehavior is finished, the condition of the Transition is true.
     
   3. Manual Exit ：
     
-    ![](DOCUMENT.assets\manual exit.png)
+    ![](DOCUMENT.assets\manual_exit.png)
     
     ​		In this mode, when the start State of this Transition execute manual_exit() in mormal State behavior, the condition of the Transition is true.
     
   4. Update times :
 
-     ![](DOCUMENT.assets\update times.png)
+     ![](DOCUMENT.assets\update_times.png)
 
      ​		In this mode, when FSM enters the start State of the Transition, it will start to count the number of updates (that is, the number of times update() is executed). When the number of times you set is reached, the condition of the Transition is true.
 
   5. Physics Update times :
 
-     ![](DOCUMENT.assets\physics update time.png)
+     ![](DOCUMENT.assets\physics_update_time.png)
 
      ​		In this mode, when FSM enters the start State of the Transition, it will start to count the number of physics updates (that is, the number of times physics_updates() is executed). When the number of times you set is reached, the condition of the Transition is true.
 
@@ -439,18 +439,18 @@ func exit()->void:
 >
 > ​		If not add variable expression, the condition for the Transition will never be set to true.
 
-![](DOCUMENT.assets\variable transition.png)
+![](DOCUMENT.assets\variable_transition.png)
 
 ​		You can add variable expressions by dragging a variable from a Variable List to the inspector:
 
-![](DOCUMENT.assets\Variable expression.png)
+![](DOCUMENT.assets\Variable_expression.png)
 
 > ​		When you press the expand button, you can display more information about variable expressions, and you can change the order of expressions:
 >
-> ![](DOCUMENT.assets\variable expression extend.png)
+> ![](DOCUMENT.assets\variable_expression_extend.png)
 1. Operation Mode：
 
-![](DOCUMENT.assets\operate mode.png)
+![](DOCUMENT.assets\operate_mode.png)
 
 + And Mode : Only when all variable expressions are met, the condition of the Transition is true.
 
@@ -529,7 +529,7 @@ func exit()->void:
 
 ​		When you select the HFSM node in the scene tree, the inspector will display its properties as follows:
 
-![](DOCUMENT.assets\HFSM Inspector.png)
+![](DOCUMENT.assets\hfsm_inspector.png)
 
 1. Active
 
@@ -539,14 +539,14 @@ func exit()->void:
 
 ​		The process type of HFSM mainly affects the behavior of State in FSM and the timing of HFSM signal transmission.
 
-![](DOCUMENT.assets\process type.png)
+![](DOCUMENT.assets\process_type.png)
 
 The difference between process types as follows：
 
 |  | Idle And Physics | Idle | Physics | Manual |
 |:----:|:------------------:|:----:|:-------:|:------:|
-| update()/signal :updated | _process() | _process() | _physics_process() | manual_update() |
-| physics_update()/signal:physics_updated | _physics_process() | _process() | _physics_process() | manual_physics_update() |
+| update()/signal : updated | _process() | _process() | _physics_process() | manual_update() |
+| physics_update()/signal : physics_updated | _physics_process() | _process() | _physics_process() | manual_physics_update() |
 
 ​		Here is a simple compare between different process types. Recommend to manage your custom behaviors properly by using **Idle And Physics**  (such as the stability requirement of frame rate), it is similar to use nodes.__process() and nodes. _physics_process().
 
@@ -566,7 +566,7 @@ The difference between process types as follows：
 
 ​		This property will automatically add a key value pair whose key is "null" and value is empty NodePath. It is convenient to add nodes in the scene tree without manually changing the type and adding the key value pair.
 
-![](DOCUMENT.assets\add agent.png)
+![](DOCUMENT.assets\add_agent.png)
 
 ​		According to Godot's style of naming, in general, node names follow CamelCase, while variable names follow snake_case. To simplify the naming operation, the node name will be automatically converted to snake_case. If you don't need this feature, you can turn it off in advanced settings.
 
@@ -584,7 +584,7 @@ The difference between process types as follows：
 
 ​		According to Godot's style of naming, in general, file names follow snake_case, while class names follow CamelCase. So it will convert file name to CamelCase as it class name. 
 
-​	![](DOCUMENT.assets\custom class.png)
+​	![](DOCUMENT.assets\custom_class.png)
 
 > NOTE：
 >
@@ -604,12 +604,12 @@ The difference between process types as follows：
 
 6. Advanced  Setting
 
-![](DOCUMENT.assets\Advanced Setting.png)
+![](DOCUMENT.assets\advanced_setting.png)
 
 + Disable Rename To Snake Case : If checked，the name of agent node will be used as its variable name in State script directly.
 + Force All State Entry Behavior :
 
-![](DOCUMENT.assets\force behavior.png)
+![](DOCUMENT.assets\force_behavior.png)
 
 ​		a. Not Force : Default mode, the entry behavior of State will be decided by itself. 
 
@@ -624,7 +624,7 @@ The difference between process types as follows：
 
 + Force All Fsm Entry Behavior : 
 
-![](DOCUMENT.assets\force fsm.png)
+![](DOCUMENT.assets\force_fsm.png)
 
 ​		a. Not Force : Default mode, the entry behavior of FSM will be decided by itself. 
 
