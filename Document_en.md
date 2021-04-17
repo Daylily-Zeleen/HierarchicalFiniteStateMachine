@@ -108,7 +108,7 @@
 	
 	> NOTE :
 	>
-	> + Only [correct script](#state-behavior-code-control) can be attached to State.
+	> + Only [correct script](#state-behavior--code-control) can be attached to State.
 	
 4. Copy : This option is only available if there have States or Transitions are being selected. The selected States and Transitions will be copied. Shortcut key: Ctrl + C.
 
