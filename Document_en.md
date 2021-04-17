@@ -1023,7 +1023,7 @@ The difference between process types as follow :
 
 ### Methods
 
-​		Read [State Behavior](###state-behavior--code-control) for more informations of overridable methods.
+​		Read [State Behavior](#state-behavior--code-control) for more informations of overridable methods.
 
 1. void manual_exit()
 
