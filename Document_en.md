@@ -556,7 +556,7 @@ The difference between process types as follow :
 
    ​	This is a Dictionary property for adding agent nodes:
 
-> Agent Node : In order to conveniently call other nodes in the scene when writing State scripts, here put forward the concept of agent node. When you set up a agent node for HFSM, it will automatically add a series of variables which meaning representing the agent node to the State script, and assign the correct objects to these variables in runtime.(Read [State Behavior & Code Control](### Â·State Behavior & Code Control) for more)
+> Agent Node : In order to conveniently call other nodes in the scene when writing State scripts, here put forward the concept of agent node. When you set up a agent node for HFSM, it will automatically add a series of variables which meaning representing the agent node to the State script, and assign the correct objects to these variables in runtime.(Read [State Behavior & Code Control](#state-behavior--code-control) for more)
 
 ![](DOCUMENT.assets/agents.png)
 
