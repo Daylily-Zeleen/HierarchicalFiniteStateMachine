@@ -33,7 +33,7 @@
 
 > 注意：
 >
-> ​		在实际使用中请遵守许可证要求(详情请见 LISENCE.md)。
+> ​		在实际使用中请遵守许可证要求(详情请见 LICENSE.md)。
 >
 > + 完整版本使用得是一个自定义得许可证。
 > + 试用版本使用得是GNU Lesser General Public License v3.0。

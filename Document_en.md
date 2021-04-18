@@ -33,9 +33,9 @@
 
 > NOTE:
 >
-> ​		Please obey the lisence(read LISENCE.md for more) when you using this plugin.
+> ​		Please obey the license(read LICENSE.md for more) when you using this plugin.
 >
-> + The full version is under a custom lisence.
+> + The full version is under a custom license.
 > + The trial version is under the GNU Lesser General Public License v3.0.
 
 ## Learn the HFSM editor
