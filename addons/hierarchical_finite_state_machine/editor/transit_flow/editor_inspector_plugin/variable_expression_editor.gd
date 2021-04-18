@@ -367,7 +367,7 @@ func _on_MoveUpButton_pressed():
 	
 
 func _on_MoveDownButton_pressed():
-	if get_index()<get_parent().get_child_count() -2:
+	if get_index()<get_parent().get_child_count() -1:
 		undo_redo.create_action("Variable_expresion move down")
 		undo_redo.add_undo_method(message,"set_undo_history",Message.History.MOVE_VARIABLE_EXPRESSION_DOWN)
 		undo_redo.add_undo_method(get_parent(),"move_child",self, get_index()-1)

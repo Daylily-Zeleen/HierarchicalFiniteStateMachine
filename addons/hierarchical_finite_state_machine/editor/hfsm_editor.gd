@@ -896,7 +896,7 @@ func action_paste(offset:Vector2) :
 	if state_res_origin_to_duplicate.size()>0 :
 		undo_redo.create_action("Paste copied objcet")
 		undo_redo.add_do_method(message,"set_redo_history",Message.History.PASTE)
-		undo_redo.add_do_method(self , "_do_paste",s_state_res_list ,s_transition_res_list ,state_res_origin_to_duplicate , d_transition_res_list )
+		undo_redo.add_do_method(self , "_redo_paste",s_state_res_list ,s_transition_res_list ,state_res_origin_to_duplicate , d_transition_res_list )
 		undo_redo.add_undo_method(message,"set_undo_history",Message.History.PASTE)
 		undo_redo.add_undo_method(self , "_undo_paste",s_state_res_list ,s_transition_res_list ,state_res_origin_to_duplicate , d_transition_res_list )
 		undo_redo.commit_action()
