@@ -708,21 +708,20 @@ func _redo_convert_to_nested(data:Dictionary):
 	#移动所属
 	for s in data.selected_stata_res_list:
 		data.request_nested_fsm_res.deleted_state(s)
-		data.nested_fsm_res.add_state(s)
+		data.nested_fsm_res.state_res_list.append(s)
 	for t in data.selected_transition_res_list :
-		data.request_nested_fsm_res.delete_transition(t)
-		data.nested_fsm_res.add_transition(t)
+		if not t in data.reconnect_from_transition_res_list and not t in data.reconnect_to_transition_res_list :
+			data.request_nested_fsm_res.delete_transition(t)
+			data.nested_fsm_res.add_transition(t)
 	#删除多余
 	for t in data.delete_transition_res_list :
 		data.request_nested_fsm_res.delete_transition(t)
 	#更改设定
 	data.nested_state_res.state_type = data.request_state_res.state_type
-	data.nested_state_res.state_script = data.request_state_res.state_script
 	
 	data.nested_state_res.is_nested = true
 	data.nested_state_res.nested_fsm_res = data.nested_fsm_res
 	
-	data.request_state_res.state_script = null
 	data.request_state_res.state_type = HfsmConstant.STATE_TYPE_ENTRY
 	if data.exist_entry :
 		data.exist_entry.state_type = HfsmConstant.STATE_TYPE_NORMAL
@@ -730,14 +729,14 @@ func _redo_convert_to_nested(data:Dictionary):
 	data.request_nested_fsm_res.add_state(data.nested_state_res)
 	#切换状态机
 	current_fsm_button.disabled = false
-	_set_current_nested_fsm_res(data.nested_fsm_res)
-	has_entry_state()
+	yield(_set_current_nested_fsm_res(data.nested_fsm_res) , "completed")
+#	has_entry_state()
 	
 func _undo_convert_to_nested(data:Dictionary):
+	print(data.request_state_res.state_type)
 	#移除拷贝
 	data.request_nested_fsm_res.deleted_state(data.nested_state_res)
 	#更改设定
-	data.request_state_res.state_script = data.nested_state_res.state_script
 	data.request_state_res.state_type = data.request_state_type
 	
 	if data.exist_entry :
@@ -750,8 +749,9 @@ func _undo_convert_to_nested(data:Dictionary):
 		data.nested_fsm_res.delete_transition(t)
 		data.request_nested_fsm_res.add_transition(t)
 	for s in data.selected_stata_res_list:
-		data.nested_fsm_res.deleted_state(s)
-		data.request_nested_fsm_res.add_state(s)
+		if s in data.nested_fsm_res.transition_res_list:
+			data.nested_fsm_res.deleted_state(s)
+			data.request_nested_fsm_res.add_state(s)
 	#还原重连
 	for t in data.reconnect_from_transition_res_list :
 		(t as NestedFsmRes.TransitionRes).from_res = data.request_state_res
@@ -768,7 +768,7 @@ func _undo_convert_to_nested(data:Dictionary):
 			c.selected = true
 		elif c is TransitFlow and c.transition_res in data.selected_transition_res_list :
 			c.selected = true
-	has_entry_state()
+#	has_entry_state()
 	
 func action_convert_to_nested(request_node):
 	if request_node and request_node is StateNode and request_node.is_selected():
@@ -785,7 +785,6 @@ func action_convert_to_nested(request_node):
 			"selected_transition_res_list" :[],
 			"exist_entry":null ,
 		}
-		#采集数据
 		for t in graph_edit.get_children():
 			if t is TransitFlow:
 				if t.from == request_node and not t.to.is_selected():
@@ -803,6 +802,8 @@ func action_convert_to_nested(request_node):
 					
 			elif c is TransitFlow and c.is_selected():
 				data.selected_transition_res_list.append(c.transition_res)
+				
+		print("request:",data.request_state_res.state_type)
 		undo_redo.create_action("Convert to nested state machine")
 		undo_redo.add_do_method(message,"set_redo_history",message.History.CONVERT_TO_NESTED_STATE_MACHINE)
 		undo_redo.add_do_method(self , "_redo_convert_to_nested",data)
