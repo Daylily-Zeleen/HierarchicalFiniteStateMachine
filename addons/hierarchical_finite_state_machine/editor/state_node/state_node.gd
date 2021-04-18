@@ -364,6 +364,8 @@ func _on_State_dragged(from, to):
 
 
 func _on_NestedButton_pressed():
+	if hfsm_editor.editing_transit_flow:
+		return
 	if not _get_nested_hfsm_res():
 		_set_nested_hfsm_res(NestedFsmRes.new(_get_state_name() , true))
 	if state_name.length():
