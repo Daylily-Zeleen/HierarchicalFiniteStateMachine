@@ -383,6 +383,9 @@ func update_nested_state_script():
 		if res is StateRes:
 			res.update_nested_state_script()
 	hfsm_editor.the_plugin._on_script_reload_request()
+	var inspector_res = hfsm_editor.current_hfsm._inspector_res
+	if inspector_res:
+		inspector_res._change_script_agents()
 #------------undo redo----------------
 func action_change_state_name(old_name , new_name):
 	undo_redo.create_action("Set state_name")

@@ -201,7 +201,7 @@ func add_state_node(state_res:NestedFsmRes.StateRes = NestedFsmRes.StateRes.new(
 	
 	graph_edit.connect("node_selected" , new_state_node ,"_on_selected",[],CONNECT_PERSIST)
 	graph_edit.connect("node_unselected" , new_state_node ,"_on_unselected",[],CONNECT_PERSIST)
-	
+	get_entry_state_count()
 	return new_state_node
 
 
@@ -683,6 +683,7 @@ func _undo_add_new_state_node(_state_res:NestedFsmRes.StateRes):
 	for c in graph_edit.get_children():
 		if c is StateNode and c.state_res == _state_res :
 			c.delete_self()
+	get_entry_state_count()
 	
 func action_add_new_state_node(_state_res:NestedFsmRes.StateRes):
 	undo_redo.create_action("Add new state")
@@ -738,10 +739,9 @@ func _redo_convert_to_nested(data:Dictionary):
 	#切换状态机
 	current_fsm_button.disabled = false
 	yield(_set_current_nested_fsm_res(data.nested_fsm_res) , "completed")
-#	get_entry_state_count()
+	get_entry_state_count()
 	
 func _undo_convert_to_nested(data:Dictionary):
-	print(data.request_state_res.state_type)
 	#移除拷贝
 	data.request_nested_fsm_res.deleted_state(data.nested_state_res)
 	#更改设定
@@ -776,7 +776,7 @@ func _undo_convert_to_nested(data:Dictionary):
 			c.selected = true
 		elif c is TransitFlow and c.transition_res in data.selected_transition_res_list :
 			c.selected = true
-#	get_entry_state_count()
+	get_entry_state_count()
 	
 func action_convert_to_nested(request_node):
 	if request_node and request_node is StateNode and request_node.is_selected():
@@ -811,7 +811,6 @@ func action_convert_to_nested(request_node):
 			elif c is TransitFlow and c.is_selected():
 				data.selected_transition_res_list.append(c.transition_res)
 				
-		print("request:",data.request_state_res.state_type)
 		undo_redo.create_action("Convert to nested state machine")
 		undo_redo.add_do_method(message,"set_redo_history",message.History.CONVERT_TO_NESTED_STATE_MACHINE)
 		undo_redo.add_do_method(self , "_redo_convert_to_nested",data)
@@ -833,6 +832,7 @@ func _redo_paste(s_state_res_list:Array ,s_transition_res_list :Array ,state_res
 			c.selected = false
 		elif c is TransitFlow and c.transition_res in s_transition_res_list :
 			c.selected = false
+	get_entry_state_count()
 			
 func _undo_paste(s_state_res_list:Array ,s_transition_res_list :Array ,state_res_origin_to_duplicate:Dictionary , d_transition_res_list :Array ) :
 	for c in graph_edit.get_children() :
@@ -846,6 +846,7 @@ func _undo_paste(s_state_res_list:Array ,s_transition_res_list :Array ,state_res
 				c.selected = true
 			elif c.transition_res in d_transition_res_list :
 				c.delete_self()
+	get_entry_state_count()
 		
 		
 func action_duplicate():
@@ -954,7 +955,7 @@ func action_enter_nested(target_nested_res :NestedFsmRes):
 
 
 
-func action_creat_enter_state():
+func action_create_enter_state():
 	var entry_res = NestedFsmRes.StateRes.new(Vector2(200,200),"entry",HfsmConstant.STATE_TYPE_ENTRY)
 	undo_redo.create_action("Add new state")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.ADD_STATE)
@@ -967,5 +968,5 @@ func action_creat_enter_state():
 	message.set_history(Message.History.ADD_STATE)
 
 func _on_Button_pressed():
-	action_creat_enter_state()
+	action_create_enter_state()
 
