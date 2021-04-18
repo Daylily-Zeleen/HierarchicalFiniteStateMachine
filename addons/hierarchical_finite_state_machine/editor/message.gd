@@ -76,7 +76,8 @@ const Error:Dictionary = {
 	NOT_AT_VARIABLE_CONDITION_MODE = "Can't drag to add variable expression,please set at vaiable condition mode.",
 	VARIABLE_EXPRESSION_ALREADY_EXIST = "Can't drag to add variable expression,this variable already exist in this transition.",
 	TRANSITION_ALREADY_EXIST = "Can't connect to this state,already exist a equivalent transition.",
-	NOT_ENTRY_STATE = "Current State Machine has not a entry state."
+	NOT_ENTRY_STATE = "Current State Machine has not a entry state.",
+	MULTI_ENTRY_STATE = "Current State Mchine has multiple entry states."
 }
 const History:Dictionary = {
 	DRAG_OBJECTS = "Drag Objects",
@@ -140,8 +141,8 @@ func _ready():
 	
 var reset_to_default_timer :float= 0
 func _process(delta):
-	if tip.text == Error.NOT_ENTRY_STATE :
-		if hfsm_editor.has_entry_state():
+	if tip.text == Error.NOT_ENTRY_STATE or tip.text == Error.MULTI_ENTRY_STATE:
+		if hfsm_editor.get_entry_state_count() == 1:
 			set_tip(Tip.DEFAULT)
 			set_process(false)
 	reset_to_default_timer -= delta 

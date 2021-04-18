@@ -104,7 +104,7 @@ func _set_current_hfsm(hfsm:HFSM):
 	while current_nested_fsm_res.entered_nested_fsm_res :
 		yield(_set_current_nested_fsm_res(current_nested_fsm_res.entered_nested_fsm_res),"completed")
 	loading = false
-	has_entry_state()
+	get_entry_state_count()
 var editor_selection:EditorSelection
 
 var enable :bool setget _set_enable
@@ -218,12 +218,17 @@ func add_transit_flow(transition_res :NestedFsmRes.TransitionRes) ->TransitFlow:
 	new_transit_flow.comment_visible = transition_comment_visible
 	return new_transit_flow
 
-func has_entry_state():
+func get_entry_state_count():
+	var count :int = 0
 	for s_res in current_nested_fsm_res.state_res_list:
 		if s_res.state_type == HfsmConstant.STATE_TYPE_ENTRY:
-			return true
-	message.set_error(Message.Error.NOT_ENTRY_STATE)
-	return false
+			count += 1
+	if count == 0:
+		message.set_error(Message.Error.NOT_ENTRY_STATE)
+	elif count > 1 :
+		message.set_error(Message.Error.MULTI_ENTRY_STATE)
+	return count
+	
 ## ----------------- Custom Methods ------
 func refresh_state_node():
 	for c in graph_edit.get_children():
@@ -639,7 +644,7 @@ func _redo_deleted(delete_state_res_list:Array , delete_transition_res_list:Arra
 	yield(get_tree(),"idle_frame")
 	yield(get_tree(),"idle_frame")
 	refresh_transition_line()
-	has_entry_state()
+	get_entry_state_count()
 			
 func _undo_deleted(delete_state_res_list:Array , delete_transition_res_list:Array , unselected_transition_res_list:Array):
 	for s in delete_state_res_list :
@@ -651,7 +656,7 @@ func _undo_deleted(delete_state_res_list:Array , delete_transition_res_list:Arra
 	yield(get_tree(),"idle_frame")
 	yield(get_tree(),"idle_frame")
 	refresh_transition_line()
-	has_entry_state()
+	get_entry_state_count()
 		
 func action_delete():
 	var state_res_list :Array
@@ -733,7 +738,7 @@ func _redo_convert_to_nested(data:Dictionary):
 	#切换状态机
 	current_fsm_button.disabled = false
 	yield(_set_current_nested_fsm_res(data.nested_fsm_res) , "completed")
-#	has_entry_state()
+#	get_entry_state_count()
 	
 func _undo_convert_to_nested(data:Dictionary):
 	print(data.request_state_res.state_type)
@@ -771,7 +776,7 @@ func _undo_convert_to_nested(data:Dictionary):
 			c.selected = true
 		elif c is TransitFlow and c.transition_res in data.selected_transition_res_list :
 			c.selected = true
-#	has_entry_state()
+#	get_entry_state_count()
 	
 func action_convert_to_nested(request_node):
 	if request_node and request_node is StateNode and request_node.is_selected():

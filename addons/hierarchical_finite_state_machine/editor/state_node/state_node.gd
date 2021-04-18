@@ -429,7 +429,7 @@ func action_set_state_type(old_type , new_type):
 	undo_redo.add_undo_property(state_res , "state_type" ,old_type)
 	undo_redo.add_undo_method(hfsm_editor.current_nested_fsm_res , "set_unique_entry_state" , old_entry_state_res)
 	undo_redo.add_undo_property(self , "overlay" ,old_overlay)
-	undo_redo.add_undo_method(hfsm_editor , "has_entry_state")
+	undo_redo.add_undo_method(hfsm_editor , "get_entry_state_count")
 	undo_redo.add_undo_method(self , "_fresh_inspector")
 	
 	var new_overlay
@@ -446,7 +446,7 @@ func action_set_state_type(old_type , new_type):
 	if new_type == HfsmConstant.STATE_TYPE_ENTRY:
 		undo_redo.add_do_method(hfsm_editor.current_nested_fsm_res , "set_unique_entry_state" ,state_res)
 	undo_redo.add_do_property(self , "overlay" ,new_overlay)
-	undo_redo.add_do_method(hfsm_editor , "has_entry_state")
+	undo_redo.add_do_method(hfsm_editor , "get_entry_state_count")
 	undo_redo.add_do_method(self , "_fresh_inspector")
 	undo_redo.commit_action()
 	message.set_history(Message.History.SET_STATE_TYPE)
