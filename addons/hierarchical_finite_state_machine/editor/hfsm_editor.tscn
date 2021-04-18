@@ -119,17 +119,47 @@ items = [ "Open", null, 0, false, false, 0, 0, null, "", false, "Create new", nu
 submenu_popup_delay = 0.1
 
 [node name="NotSelectedWarming" type="Label" parent="."]
+visible = false
 anchor_left = 0.000921756
 anchor_right = 1.00092
 anchor_bottom = 1.0
 mouse_filter = 0
 size_flags_horizontal = 4
 custom_styles/normal = SubResource( 1 )
-text = "Please selected a \"FiniteStateMachine\" node to start edit ."
+text = "Please selected a \"HFSM\" node to start edit ."
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": true
+}
+
+[node name="NotStateWarming" type="Label" parent="."]
+anchor_left = 0.000921756
+anchor_top = 0.000742391
+anchor_right = 1.00092
+anchor_bottom = 1.00074
+mouse_filter = 0
+size_flags_horizontal = 4
+custom_styles/normal = SubResource( 1 )
+text = "There has not State in Current Finite State Machine."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Button" type="Button" parent="NotStateWarming"]
+anchor_left = 0.339
+anchor_top = 0.481
+anchor_right = 0.661
+anchor_bottom = 0.548
+margin_left = 102.364
+margin_top = 20.4
+margin_right = -102.364
+margin_bottom = 0.199982
+text = "Create Entry State"
+__meta__ = {
+"_edit_use_anchors_": false
 }
 
 [connection signal="_begin_node_move" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit__begin_node_move"]
@@ -146,3 +176,4 @@ __meta__ = {
 [connection signal="scroll_offset_changed" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_scroll_offset_changed"]
 [connection signal="index_pressed" from="PopupMenu" to="." method="_on_PopupMenu_index_pressed"]
 [connection signal="index_pressed" from="PopupMenu/ScriptPopupMenu" to="." method="_on_ScriptPopupMenu_index_pressed"]
+[connection signal="pressed" from="NotStateWarming/Button" to="." method="_on_Button_pressed"]

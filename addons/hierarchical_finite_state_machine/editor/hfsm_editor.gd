@@ -80,6 +80,7 @@ onready var message:Message = get_node("FsmEditior/Message")
 onready var graph_edit :GraphEdit = get_node("FsmEditior/GraphEdit")
 onready var variable_list :VariableList = get_node("FsmEditior/GraphEdit/VariableList")
 onready var switch_buttons :Node = get_node("FsmEditior/Panel/CenterContainer/SwitchButtons")
+onready var not_state_warming :Node = get_node("NotStateWarming")
 
 #插件
 var the_plugin:EditorPlugin setget _set_the_plugin
@@ -134,10 +135,12 @@ func _set_current_nested_fsm_res(nested_fsm_res :NestedFsmRes):
 		current_nested_fsm_res.entered_nested_fsm_res = null
 	current_fsm_button = add_new_switch_button(nested_fsm_res)
 	yield(_load_state_machine_from_res(),"completed")
-#	yield(get_tree(),"idle_frame")
 	comment_visible_button.pressed = nested_fsm_res.transition_comment_visible
 	_set_transition_comment_visible(nested_fsm_res.transition_comment_visible)
-			
+	if current_nested_fsm_res.state_res_list.size() == 0:
+		not_state_warming.show()
+	else :
+		not_state_warming.hide()
 
 var current_fsm_button :SwithcButton  
 
@@ -946,4 +949,18 @@ func action_enter_nested(target_nested_res :NestedFsmRes):
 
 
 
+func action_creat_enter_state():
+	var entry_res = NestedFsmRes.StateRes.new(Vector2(200,200),"entry",HfsmConstant.STATE_TYPE_ENTRY)
+	undo_redo.create_action("Add new state")
+	undo_redo.add_do_method(message,"set_redo_history",Message.History.ADD_STATE)
+	undo_redo.add_do_method(self , "add_state_node" , entry_res )
+	undo_redo.add_do_property(not_state_warming , "visible" , false)
+	undo_redo.add_undo_method(message,"set_undo_history",Message.History.ADD_STATE)
+	undo_redo.add_undo_method(self , "_undo_add_new_state_node" , entry_res)
+	undo_redo.add_undo_property(not_state_warming , "visible" , true)
+	undo_redo.commit_action()
+	message.set_history(Message.History.ADD_STATE)
+
+func _on_Button_pressed():
+	action_creat_enter_state()
 

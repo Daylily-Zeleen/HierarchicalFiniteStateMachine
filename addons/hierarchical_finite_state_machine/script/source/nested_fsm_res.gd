@@ -270,18 +270,6 @@ func _get_property_list():
 func _init(_fsm_name :String="root" , _is_nested:bool = false):
 	fsm_name =_fsm_name
 	is_nested = _is_nested
-	call_deferred("_deffer")
-	call_deferred("_deffer")
-	call_deferred("_add_default_entry_state")
-func _deffer():
-	return
-	
-func _add_default_entry_state():
-	for state_res in state_res_list:
-		if state_res is StateRes :
-			if state_res.state_type == HfsmConstant.STATE_TYPE_ENTRY:
-				return
-	state_res_list.append(StateRes.new(Vector2(200,200),"entry",HfsmConstant.STATE_TYPE_ENTRY))
 
 func set_unique_entry_state(state_res :StateRes) :
 	if state_res in state_res_list :

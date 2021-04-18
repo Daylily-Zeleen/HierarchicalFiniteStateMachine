@@ -322,7 +322,7 @@ func _load_state_script(path_or_script):
 	
 	var hfsm_inspector_res = hfsm_editor.current_hfsm._inspector_res
 	hfsm_inspector_res.agents = hfsm_inspector_res.agents 
-	
+	update_nested_state_script()
 
 func _on_SCD_script_created(new_script:Script)->void:
 	_load_state_script(new_script)
