@@ -51,7 +51,8 @@
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
+#  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete           
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -400,6 +401,8 @@ func _on_PopupMenu_index_pressed(index):
 			paste(offset)
 		DUPLICATE:
 			action_duplicate()
+		DELETE:
+			action_delete()
 			
 		CONVERT_TO_NESTED_STATE_MACHINE :
 			action_convert_to_nested(get_top_control_or_null_at_pos(_last_right_click_pos))
