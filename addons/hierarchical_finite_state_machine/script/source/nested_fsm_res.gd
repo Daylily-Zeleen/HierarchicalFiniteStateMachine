@@ -132,7 +132,6 @@ class ExpressionTransition:
 		"TranslationServer":TranslationServer ,
 		"JavaClassWrapper":JavaClassWrapper,
 		"JavaScript":JavaScript,
-		"GodotSharp":GodotSharp,
 		"NavigationMeshGenerator":NavigationMeshGenerator,
 		"VisualScriptEditor":VisualScriptEditor,
 		"VisualServer":VisualServer ,
