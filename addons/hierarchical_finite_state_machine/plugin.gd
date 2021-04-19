@@ -137,7 +137,8 @@ func _enter_tree():
 		dir.copy(HfsmConstant.template_default_path , HfsmConstant.template_target_path)
 	if not dir.file_exists(HfsmConstant.ignore_target_path) :
 		dir.copy(HfsmConstant.ignore_default_path , HfsmConstant.ignore_target_path)
-
+	
+	print("HFSM : If you use this plugin first time in this project ,it may push some error ,they are import error,just ignore them.")
 # ----------------- signals -------------
 func _on_scene_changed(scene_root):
 	hfsm_editor_dock.enable = false
