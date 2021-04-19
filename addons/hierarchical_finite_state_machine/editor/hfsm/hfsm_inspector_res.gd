@@ -208,8 +208,6 @@ func _change_script_agents():
 		var tmp_script
 		if s_s is GDScript:
 			tmp_script = GDScript.new()
-		elif s_s is CSharpScript :
-			tmp_script = CSharpScript.new()
 		tmp_script.source_code = code_text
 		
 		var tmp :Resource = Resource.new()

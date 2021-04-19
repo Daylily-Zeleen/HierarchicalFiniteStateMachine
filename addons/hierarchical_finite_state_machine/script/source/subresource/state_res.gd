@@ -131,8 +131,6 @@ func update_nested_state_script():
 			var tmp_script
 			if state_res.state_script is GDScript:
 				tmp_script = GDScript.new()
-			elif state_res.state_script is CSharpScript :
-				tmp_script = CSharpScript.new()
 			tmp_script.source_code = code_text
 			
 			var tmp :Resource = Resource.new()
