@@ -179,18 +179,12 @@ func _get_property_list()->Array:
 
 func _change_script_agents():
 	var agents_text :String = HfsmConstant.AgentsStartMark
-	for custom_class in self._custom_class_list.keys() :
-		if self._custom_class_list[custom_class].is_abs_path():
-			agents_text += "const %s = preload(\"%s\")\n" %[custom_class.substr(0 ,custom_class.find(".")) , self._custom_class_list[custom_class]]
 	for agent_name in self.agents.keys():
 		var obj:Node = hfsm.owner.get_node_or_null(String(self.agents[agent_name]))if hfsm.owner else hfsm.get_node_or_null(String(self.agents[agent_name]))
 		if not obj:
 			obj = hfsm.get_node_or_null(self.agents[agent_name])
 		var obj_class :String 
 		if obj:
-			for custom_class in self._custom_class_list.keys() :
-				if obj .get_script() and obj.get_script().resource_path == self._custom_class_list[custom_class]:
-					obj_class = custom_class
 			if not obj_class :
 				obj_class = obj.get_class()
 			agents_text += "var %s : %s \n"%[agent_name , obj_class]

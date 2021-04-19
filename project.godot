@@ -8,6 +8,11 @@
 
 config_version=4
 
+_global_script_classes=[  ]
+_global_script_class_icons={
+
+}
+
 [application]
 
 config/name="Hierarchical Finite State Machine - Trial version"
@@ -23,7 +28,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/hierarchical_finite_state_machine/plugin.cfg" )
+enabled=PoolStringArray( "hierarchical_finite_state_machine" )
 
 [physics]
 
