@@ -72,9 +72,6 @@ var dock_button:ToolButton
 var inspector :EditorInspector
 var inspector_tab :TabContainer
 func _enter_tree():
-	yield(get_tree(),"idle_frame")
-	while get_editor_interface().get_resource_filesystem().is_scanning():
-		yield(get_tree(),"idle_frame")
 	var fs :EditorFileSystemDirectory
 	while not fs :
 		fs = get_editor_interface().get_resource_filesystem().get_filesystem_path("res://addons/hierarchical_finite_state_machine/editor/icon/")
@@ -91,9 +88,7 @@ func _enter_tree():
 	
 
 	hfsm_editor_dock = load("res://addons/hierarchical_finite_state_machine/editor/hfsm_editor.tscn").instance()
-	print("start")
 	trasition_editor_inspector_plugin= load("res://addons/hierarchical_finite_state_machine/editor/transit_flow/trasition_editor_inspector_plugin.gd").new()
-	print("end")
 	state_editor_inspector_plugin = load("res://addons/hierarchical_finite_state_machine/editor/state_node/state_editor_inspector_plugin.gd").new()
 	hfsm_inspector_plugin= load("res://addons/hierarchical_finite_state_machine/editor/hfsm/hfsm_inspector_plugin.gd").new()
 	

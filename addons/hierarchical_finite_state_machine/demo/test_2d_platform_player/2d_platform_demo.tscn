@@ -208,7 +208,7 @@ transition_res_list = [ SubResource( 10 ), SubResource( 14 ), SubResource( 18 ),
 is_nested = false
 variable_res_list = [ SubResource( 7 ) ]
 variable_list_offset = Vector2( 0, 40 )
-editor_scroll_offset = Vector2( 0, -31 )
+editor_scroll_offset = Vector2( -146, -42 )
 transition_comment_visible = true
 transition_editor_folded = false
 
@@ -482,7 +482,6 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="entered" from="Player/HFSM" to="Player" method="_on_HFSM_entered"]
 [connection signal="physics_updated" from="Player/HFSM" to="Player" method="_on_HFSM_physics_updated"]
 [connection signal="transited" from="Player/HFSM" to="Player" method="_on_HFSM_transited"]

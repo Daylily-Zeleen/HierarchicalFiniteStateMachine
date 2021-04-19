@@ -160,23 +160,23 @@ func _set_variable_type(type:int):
 	match type:
 		VARIABLE_TYPE_TRIGGER :
 			tip = "Trigger"
-			type_text = "Trigger" if is_fold else "T" 
+			type_text = "Trigger " if is_fold else "T " 
 			bg_color = trigger_color
 		VARIABLE_TYPE_BOOLEAN : 
 			tip = "Boolean"
-			type_text = "Boolean" if is_fold else "B"
+			type_text = "Boolean " if is_fold else "B "
 			bg_color = boolean_color
 		VARIABLE_TYPE_INTEGER :
 			tip = "Integer"
-			type_text = "Integer" if is_fold else "I"
+			type_text = "Integer " if is_fold else "I "
 			bg_color = integer_color
 		VARIABLE_TYPE_FLOAT :
 			tip = "Float"
-			type_text = "Float" if is_fold else "F"
+			type_text = "Float " if is_fold else "F "
 			bg_color = float_color
 		VARIABLE_TYPE_STRING :
 			tip = "String"
-			type_text = "String" if is_fold else "S"
+			type_text = "String " if is_fold else "S "
 			bg_color = string_color
 		
 	variable_type_label.text = " " + type_text + " "

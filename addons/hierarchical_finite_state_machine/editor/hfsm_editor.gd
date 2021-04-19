@@ -144,16 +144,16 @@ func _set_current_nested_fsm_res(nested_fsm_res :NestedFsmRes):
 
 var current_fsm_button :SwithcButton  
 
-export(Texture) var icon 
+
 func _ready():
 	popup_menu.set_item_submenu(2,"ScriptPopupMenu")
 	comment_visible_button = ToolButton.new()
 	comment_visible_button.toggle_mode = true
-	comment_visible_button.icon = icon#load("Icon/visiblity_icon.png")
+	comment_visible_button.icon = preload("res://addons/hierarchical_finite_state_machine/editor/icon/visiblity_icon.png")
 	comment_visible_button.connect("toggled",self,"_on_CommentVisibleButton_toggled")
 	for c in graph_edit.get_children():
 		for c_c in c.get_children():
-			if "minimap"in c_c.name:
+			if "HBoxContainer"in c_c.name:
 				for i in c.get_children():
 					if i is HBoxContainer:
 						i.add_child(comment_visible_button)
