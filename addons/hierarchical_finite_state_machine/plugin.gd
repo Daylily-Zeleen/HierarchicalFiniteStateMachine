@@ -59,19 +59,45 @@ tool
 extends EditorPlugin
 
 const HfsmConstant = preload("res://addons/hierarchical_finite_state_machine/script/source/hfsm_constant.gd")
-var hfsm_editor_dock:Control = preload("editor/hfsm_editor.tscn").instance()
-var trasition_editor_inspector_plugin:EditorInspectorPlugin = preload("editor/transit_flow/trasition_editor_inspector_plugin.gd").new()
-var state_editor_inspector_plugin:EditorInspectorPlugin = preload("editor/state_node/state_editor_inspector_plugin.gd").new()
-var hfsm_inspector_plugin :EditorInspectorPlugin = preload("editor/hfsm/hfsm_inspector_plugin.gd").new()
+const HFSM = preload("script/hfsm.gd")
+var hfsm_editor_dock:Control# = preload("editor/hfsm_editor.tscn").instance()
+var trasition_editor_inspector_plugin:EditorInspectorPlugin #= preload("editor/transit_flow/trasition_editor_inspector_plugin.gd").new()
+var state_editor_inspector_plugin:EditorInspectorPlugin# = preload("editor/state_node/state_editor_inspector_plugin.gd").new()
+var hfsm_inspector_plugin :EditorInspectorPlugin #= preload("editor/hfsm/hfsm_inspector_plugin.gd").new()
 var script_create_dialog :ScriptCreateDialog = ScriptCreateDialog.new()
 var script_select_dialog :FileDialog = FileDialog.new()
-const HFSM = preload("script/hfsm.gd")
 var current_hfsm :HFSM
 var dock_button:ToolButton
 
-var inspector :EditorInspector = get_editor_interface().get_inspector()
+var inspector :EditorInspector
 var inspector_tab :TabContainer
 func _enter_tree():
+	yield(get_tree(),"idle_frame")
+	while get_editor_interface().get_resource_filesystem().is_scanning():
+		yield(get_tree(),"idle_frame")
+	var fs :EditorFileSystemDirectory
+	while not fs :
+		fs = get_editor_interface().get_resource_filesystem().get_filesystem_path("res://addons/hierarchical_finite_state_machine/editor/icon/")
+		yield(get_tree(),"idle_frame")
+	while true:
+		var passed :bool = true
+		for i in range(fs.get_file_count()):
+			if not fs.get_file_import_is_valid(i):
+				passed = false
+				yield(get_tree(),"idle_frame")
+				break
+		if passed :
+			break
+	
+
+	hfsm_editor_dock = load("res://addons/hierarchical_finite_state_machine/editor/hfsm_editor.tscn").instance()
+	print("start")
+	trasition_editor_inspector_plugin= load("res://addons/hierarchical_finite_state_machine/editor/transit_flow/trasition_editor_inspector_plugin.gd").new()
+	print("end")
+	state_editor_inspector_plugin = load("res://addons/hierarchical_finite_state_machine/editor/state_node/state_editor_inspector_plugin.gd").new()
+	hfsm_inspector_plugin= load("res://addons/hierarchical_finite_state_machine/editor/hfsm/hfsm_inspector_plugin.gd").new()
+	
+	inspector = get_editor_interface().get_inspector()
 	var p = inspector.get_parent()
 	while not p is TabContainer:
 		p = p.get_parent()
@@ -82,7 +108,7 @@ func _enter_tree():
 	
 	get_editor_interface().get_file_system_dock().connect("file_removed" , self , "_on_FileSystemDock_file_removed" )
 	hfsm_editor_dock.add_child(script_create_dialog)
-	add_custom_type("HFSM", "Node", preload("script/hfsm.gd"), preload("script/icon.svg"))
+	add_custom_type("HFSM", "Node", load("res://addons/hierarchical_finite_state_machine/script/hfsm.gd"), load("res://addons/hierarchical_finite_state_machine/script/icon.svg"))
 
 	
 	dock_button = add_control_to_bottom_panel(hfsm_editor_dock, "HFSM Editor")
@@ -108,6 +134,7 @@ func _enter_tree():
 	
 	connect("scene_changed",self ,"_on_scene_changed")
 	
+
 	var dir := Directory.new()
 	if not dir.file_exists(HfsmConstant.template_target_path):
 		if not dir.file_exists(HfsmConstant.template_folder_path) :

@@ -1,7 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/hierarchical_finite_state_machine/editor/state_node/state_node.gd" type="Script" id=1]
-[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/icon/edit_icon.png" type="Texture" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.215686, 0.215686, 0.215686, 1 )
@@ -66,6 +65,9 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StreamTexture" id=7]
+load_path = "res://.import/edit_icon.png-49c808847c151553137c7c007b7605f2.stex"
 
 [node name="State" type="GraphNode"]
 margin_right = 56.0
@@ -159,12 +161,11 @@ margin_right = 71.0
 margin_bottom = 33.0
 size_flags_vertical = 3
 custom_constants/hseparation = 0
-icon = ExtResource( 2 )
+icon = SubResource( 7 )
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="dragged" from="." to="." method="_on_State_dragged"]
 [connection signal="gui_input" from="." to="." method="_on_State_gui_input"]
 [connection signal="focus_exited" from="MarginContainer/HBoxContainer/NameEdit" to="." method="_on_NameEdit_focus_exited"]

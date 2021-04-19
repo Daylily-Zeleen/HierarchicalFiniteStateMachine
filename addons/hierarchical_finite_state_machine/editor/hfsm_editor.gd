@@ -144,11 +144,12 @@ func _set_current_nested_fsm_res(nested_fsm_res :NestedFsmRes):
 
 var current_fsm_button :SwithcButton  
 
+export(Texture) var icon 
 func _ready():
 	popup_menu.set_item_submenu(2,"ScriptPopupMenu")
 	comment_visible_button = ToolButton.new()
 	comment_visible_button.toggle_mode = true
-	comment_visible_button.icon = preload("Icon/visiblity_icon.png")
+	comment_visible_button.icon = icon#load("Icon/visiblity_icon.png")
 	comment_visible_button.connect("toggled",self,"_on_CommentVisibleButton_toggled")
 	for c in graph_edit.get_children():
 		for c_c in c.get_children():

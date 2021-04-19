@@ -1,10 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/hierarchical_finite_state_machine/editor/hfsm_editor.gd" type="Script" id=1]
 [ext_resource path="res://addons/hierarchical_finite_state_machine/Editor/variable_list.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/hierarchical_finite_state_machine/editor/message.gd" type="Script" id=3]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StreamTexture" id=1]
+flags = 4
+load_path = "res://.import/visiblity_icon.png-7761c27b4d594e40e9a3186f99ce6fff.stex"
+
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.25098, 0.25098, 0.25098, 0.501961 )
 
 [node name="FsmEditorDock" type="Control"]
@@ -16,6 +20,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+icon = SubResource( 1 )
 
 [node name="FsmEditior" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -124,7 +129,7 @@ anchor_right = 1.00092
 anchor_bottom = 1.0
 mouse_filter = 0
 size_flags_horizontal = 4
-custom_styles/normal = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
 text = "Please selected a \"HFSM\" node to start edit ."
 align = 1
 valign = 1
@@ -139,7 +144,7 @@ anchor_right = 1.00092
 anchor_bottom = 1.00074
 mouse_filter = 0
 size_flags_horizontal = 4
-custom_styles/normal = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
 text = "There has not State in Current Finite State Machine."
 align = 1
 valign = 1
@@ -160,7 +165,6 @@ text = "Create Entry State"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="_begin_node_move" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit__begin_node_move"]
 [connection signal="_end_node_move" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit__end_node_move"]
 [connection signal="copy_nodes_request" from="FsmEditior/GraphEdit" to="." method="_on_GraphEdit_copy_nodes_request"]
