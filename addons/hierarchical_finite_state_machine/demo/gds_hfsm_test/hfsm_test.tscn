@@ -1,0 +1,314 @@
+[gd_scene load_steps=46 format=2]
+
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_subresource/auto_condition_res.gd" type="Script" id=1]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/variable_res.gd" type="Script" id=3]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_res.gd" type="Script" id=4]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_subresource/expression_condition_res.gd" type="Script" id=5]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_subresource/variable_expression_res.gd" type="Script" id=6]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/nested_fsm_res.gd" type="Script" id=7]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/state_res.gd" type="Script" id=8]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_subresource/variable_condition_res.gd" type="Script" id=9]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/demo/gds_hfsm_test/hfsm_test.gd" type="Script" id=10]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/demo/gds_hfsm_test/hfsm_state_nested_entry.gd" type="Script" id=11]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/demo/gds_hfsm_test/hfsm_state_nested_fsm.gd" type="Script" id=12]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/hfsm.gd" type="Script" id=13]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 8 )
+state_name = "entry"
+state_type = 1
+is_nested = false
+editor_offset = Vector2( 240, 200 )
+reset_properties_when_entry = true
+reset_nested_fsm_when_entry = false
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 8 )
+state_name = "root_1"
+state_type = 0
+is_nested = false
+editor_offset = Vector2( 560, 120 )
+reset_properties_when_entry = true
+reset_nested_fsm_when_entry = false
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 8 )
+state_name = "nested_entry"
+state_type = 1
+state_script = ExtResource( 11 )
+is_nested = false
+editor_offset = Vector2( 260, 260 )
+reset_properties_when_entry = true
+reset_nested_fsm_when_entry = false
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 8 )
+state_name = "nested_1"
+state_type = 0
+is_nested = false
+editor_offset = Vector2( 480, 120 )
+reset_properties_when_entry = true
+reset_nested_fsm_when_entry = false
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 8 )
+state_name = "nested_exit"
+state_type = 2
+is_nested = false
+editor_offset = Vector2( 820, 200 )
+reset_properties_when_entry = true
+reset_nested_fsm_when_entry = false
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 1 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 5 )
+expression_text = ""
+expression_comment = ""
+expression_text = ""
+expression_comment = ""
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 3 )
+variable_name = "t_pressed"
+variable_type = 0
+variable_comment = ""
+is_deleted = false
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 6 )
+variable_res = SubResource( 8 )
+trigger_mode = 0
+comparation = 0
+value = null
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 9 )
+variable_op_mode = 0
+variable_expression_res_list = [ SubResource( 9 ) ]
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 4 )
+from_res = SubResource( 3 )
+to_res = SubResource( 4 )
+transition_type = 1
+auto_condition_res = SubResource( 6 )
+expression_condition_res = SubResource( 7 )
+variable_condition_res = SubResource( 10 )
+
+[sub_resource type="Resource" id=12]
+script = ExtResource( 1 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 5 )
+expression_text = ""
+expression_comment = ""
+expression_text = ""
+expression_comment = ""
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 6 )
+variable_res = SubResource( 8 )
+trigger_mode = 0
+comparation = 0
+value = null
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 9 )
+variable_op_mode = 0
+variable_expression_res_list = [ SubResource( 14 ) ]
+
+[sub_resource type="Resource" id=16]
+script = ExtResource( 4 )
+from_res = SubResource( 4 )
+to_res = SubResource( 5 )
+transition_type = 1
+auto_condition_res = SubResource( 12 )
+expression_condition_res = SubResource( 13 )
+variable_condition_res = SubResource( 15 )
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 7 )
+fsm_name = "nested_fsm"
+state_res_list = [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ]
+transition_res_list = [ SubResource( 11 ), SubResource( 16 ) ]
+is_nested = true
+variable_list_offset = Vector2( 60, -20 )
+editor_scroll_offset = Vector2( 309, 161 )
+transition_comment_visible = true
+transition_editor_folded = false
+
+[sub_resource type="Resource" id=18]
+script = ExtResource( 8 )
+state_name = "nested_fsm"
+state_type = 0
+state_script = ExtResource( 12 )
+is_nested = true
+nested_fsm_res = SubResource( 17 )
+editor_offset = Vector2( 700, 260 )
+reset_properties_when_entry = true
+reset_nested_fsm_when_entry = false
+
+[sub_resource type="Resource" id=19]
+script = ExtResource( 1 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=20]
+script = ExtResource( 5 )
+expression_text = ""
+expression_comment = ""
+expression_text = ""
+expression_comment = ""
+
+[sub_resource type="Resource" id=21]
+script = ExtResource( 6 )
+variable_res = SubResource( 8 )
+trigger_mode = 0
+comparation = 0
+value = null
+
+[sub_resource type="Resource" id=22]
+script = ExtResource( 9 )
+variable_op_mode = 0
+variable_expression_res_list = [ SubResource( 21 ) ]
+
+[sub_resource type="Resource" id=23]
+script = ExtResource( 4 )
+from_res = SubResource( 1 )
+to_res = SubResource( 2 )
+transition_type = 1
+auto_condition_res = SubResource( 19 )
+expression_condition_res = SubResource( 20 )
+variable_condition_res = SubResource( 22 )
+
+[sub_resource type="Resource" id=24]
+script = ExtResource( 1 )
+auto_transit_mode = 1
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=25]
+script = ExtResource( 5 )
+expression_text = ""
+expression_comment = ""
+expression_text = ""
+expression_comment = ""
+
+[sub_resource type="Resource" id=26]
+script = ExtResource( 6 )
+variable_res = SubResource( 8 )
+trigger_mode = 0
+comparation = 0
+value = null
+
+[sub_resource type="Resource" id=27]
+script = ExtResource( 9 )
+variable_op_mode = 0
+variable_expression_res_list = [ SubResource( 26 ) ]
+
+[sub_resource type="Resource" id=28]
+script = ExtResource( 4 )
+from_res = SubResource( 2 )
+to_res = SubResource( 18 )
+transition_type = 1
+auto_condition_res = SubResource( 24 )
+expression_condition_res = SubResource( 25 )
+variable_condition_res = SubResource( 27 )
+
+[sub_resource type="Resource" id=29]
+script = ExtResource( 1 )
+auto_transit_mode = 1
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=30]
+script = ExtResource( 5 )
+expression_text = ""
+expression_comment = ""
+expression_text = ""
+expression_comment = ""
+
+[sub_resource type="Resource" id=31]
+script = ExtResource( 9 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=32]
+script = ExtResource( 4 )
+from_res = SubResource( 18 )
+to_res = SubResource( 1 )
+transition_type = 0
+auto_condition_res = SubResource( 29 )
+expression_condition_res = SubResource( 30 )
+variable_condition_res = SubResource( 31 )
+
+[sub_resource type="Resource" id=33]
+script = ExtResource( 7 )
+fsm_name = "root"
+state_res_list = [ SubResource( 1 ), SubResource( 2 ), SubResource( 18 ) ]
+transition_res_list = [ SubResource( 23 ), SubResource( 28 ), SubResource( 32 ) ]
+is_nested = false
+variable_res_list = [ SubResource( 8 ) ]
+variable_list_offset = Vector2( -160, 80 )
+editor_scroll_offset = Vector2( 838.414, 215.256 )
+transition_comment_visible = true
+transition_editor_folded = false
+
+[node name="HfsmTest" type="Control"]
+anchor_left = -0.000517339
+anchor_right = 0.999483
+anchor_bottom = 1.0
+script = ExtResource( 10 )
+
+[node name="HFSM" type="Node" parent="."]
+script = ExtResource( 13 )
+active = true
+process_type = 2
+agents = {
+"null": NodePath("")
+}
+_custom_class_list = null
+debug = null
+_disable_rename_to_snake_case = false
+_force_all_state_entry_behavior = 0
+_force_all_fsm_entry_behavior = 0
+_root_fsm_res = SubResource( 33 )
+
+[node name="Button" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -250.5
+margin_top = -66.0
+margin_right = 250.5
+margin_bottom = 66.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="RichTextLabel" parent="CanvasLayer"]
+margin_left = 6.0
+margin_top = 7.0
+margin_right = 512.0
+margin_bottom = 87.0
+rect_scale = Vector2( 2, 2 )
+bbcode_enabled = true
+bbcode_text = "		This Demo is to demostrate the HFSM. Will print the transition flow and current path if you press the buttom.
+		And when your enter the state [color=silver]\"nested_fsm\"[/color], its nested state [color=green]\"Nested_entry\"[/color] will call a test method from [color=silver]\"nested_fsm\"[/color],"
+text = "		This Demo is to demostrate the HFSM. Will print the transition flow and current path if you press the buttom.
+		And when your enter the state \"nested_fsm\", its nested state \"Nested_entry\" will call a test method from \"nested_fsm\","
+
+[connection signal="entered" from="HFSM" to="." method="_on_HFSM_entered"]
+[connection signal="transited" from="HFSM" to="." method="_on_HFSM_transited"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

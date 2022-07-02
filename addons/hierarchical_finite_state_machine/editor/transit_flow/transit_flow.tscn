@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/icon/play_icon.png" type="Texture" id=1]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/Editor/Icon/play_icon.png" type="Texture" id=1]
 [ext_resource path="res://addons/hierarchical_finite_state_machine/editor/transit_flow/transit_flow.gd" type="Script" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -10,7 +10,7 @@ shadow_size = 2
 
 [node name="TransitFlow" type="GraphNode"]
 visible = false
-modulate = Color( 0.75, 0.75, 0.75, 1 )
+modulate = Color( 0.745098, 0.745098, 0.745098, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -119,6 +119,7 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="gui_input" from="." to="." method="_on_TransitFlow_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_TransitFlow_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_TransitFlow_mouse_exited"]

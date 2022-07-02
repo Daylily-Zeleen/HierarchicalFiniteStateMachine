@@ -1,5 +1,5 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
 #                                                  
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
@@ -41,17 +41,18 @@
 #
 #                                    
 #	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
+#	@version  0.8(版本号)                                                       
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
 #                                                                      
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :                                          
 #----------------------------------------------------------------------------
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
+#  2022/07/1~3 | 0.8   | Daylily-Zeleen      |   Bugfix, add new feature.               
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -129,15 +130,22 @@ func _enter_tree():
 	
 	connect("scene_changed",self ,"_on_scene_changed")
 	
-
 	var dir := Directory.new()
-	if not dir.file_exists(HfsmConstant.template_target_path):
-		if not dir.file_exists(HfsmConstant.template_folder_path) :
-			dir.make_dir(HfsmConstant.template_folder_path)
-		dir.copy(HfsmConstant.template_default_path , HfsmConstant.template_target_path)
+	var f :File= File.new()
+	# 模板目录
+	if not dir.file_exists(HfsmConstant.template_folder_path) :
+		dir.make_dir(HfsmConstant.template_folder_path)
+	# gd状态模板
+	if not dir.file_exists(HfsmConstant.gd_state_template_target_path):
+		dir.copy(HfsmConstant.gd_state_template_default_path , HfsmConstant.gd_state_template_target_path)
+	# cs状态模板
+	if not dir.file_exists(HfsmConstant.cs_state_template_target_path):
+		if f.open(HfsmConstant.cs_state_template_target_path, File.WRITE) == OK:
+			f.store_string(HfsmConstant.CSStateTemplate)
+			f.close()
+		
 	if not dir.file_exists(HfsmConstant.ignore_target_path) :
 		dir.copy(HfsmConstant.ignore_default_path , HfsmConstant.ignore_target_path)
-	
 	print("HFSM : If you use this plugin first time in this project ,it may push some error ,they are import error,just ignore them.")
 # ----------------- signals -------------
 func _on_scene_changed(scene_root):
@@ -152,6 +160,7 @@ func _on_editor_selection_changed():
 			_on_inspector_tab_changed(0)
 			if not current_hfsm._inspector_res.is_connected("script_reload_request",self ,"_on_script_reload_request"):
 				current_hfsm._inspector_res.connect("script_reload_request",self ,"_on_script_reload_request")
+			#如果没有资源，则创建资源
 			if not current_hfsm._root_fsm_res :
 				current_hfsm._root_fsm_res = preload("script/source/nested_fsm_res.gd").new()
 			hfsm_editor_dock.current_hfsm = current_hfsm
@@ -191,4 +200,8 @@ func _on_FileSystemDock_file_removed(file:String):
 		if current_hfsm._root_fsm_res.is_deleted_state_script():
 			hfsm_editor_dock.refresh_state_node()
 func _on_script_reload_request():
-	get_editor_interface().get_script_editor()._reload_scripts()
+	var interface := get_editor_interface()
+	interface.get_script_editor().reload_scripts()
+	interface.get_resource_filesystem().scan()
+	interface.get_resource_filesystem().update_script_classes()
+	interface.get_script_editor().notification(Node.NOTIFICATION_WM_FOCUS_IN)

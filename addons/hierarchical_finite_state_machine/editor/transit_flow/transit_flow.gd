@@ -1,5 +1,5 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
 #                                                  
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
@@ -41,17 +41,18 @@
 #
 #                                    
 #	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
+#	@version  0.8(版本号)                                                       
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
 #                                                                      
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :                                             
 #----------------------------------------------------------------------------
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file        
+#  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition  (full version)        
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -205,6 +206,7 @@ func _set_variable_condition_res(variable_res:TransitionRes.VariableConditionRes
 func _get_variable_condition_res():
 	return transition_res.variable_condition_res
 
+
 #----------------------------------------
 onready var arrow:Control = get_node("CenterContainer/Control/Arrow")
 onready var condition_comment :VBoxContainer = get_node("CenterContainer/Control/ConditionComment")
@@ -316,15 +318,10 @@ func update_comment():
 			condition_comment.get_child(0).show()
 			for i in range(1,condition_comment.get_child_count()) :
 				condition_comment.get_child(i).hide()
-	
+		
 	condition_comment.set_deferred("rect_size",Vector2.ZERO)
 #--------------method-------------
 
-const HFSM = preload("res://addons/hierarchical_finite_state_machine/script/hfsm.gd")
-func _process(delta):
-	if not is_selected() or (hfsm_editor.the_plugin.get_editor_interface().get_selection().get_selected_nodes().size() > 0 and not hfsm_editor.the_plugin.get_editor_interface().get_selection().get_selected_nodes()[0] is HFSM):
-		modulate = normal_color
-		set_process(false)
 
 		
 func get_overlaping_transit_flow_or_null():
@@ -378,6 +375,7 @@ func follow_mouse(mouse_offset:Vector2):
 	if from :
 		place_line(from , mouse_offset)
 		visible = true
+
 	
 #------------------signal----------------------
 func _on_VariableExpressionRes_deleted(res):
@@ -426,6 +424,12 @@ func _on_TransitFlow_mouse_entered():
 func _on_TransitFlow_mouse_exited():
 	if not is_selected():
 		modulate = normal_color
+
+const HFSM = preload("res://addons/hierarchical_finite_state_machine/script/hfsm.gd")
+func _process(delta):
+	if not is_selected() or (hfsm_editor.the_plugin.get_editor_interface().get_selection().get_selected_nodes().size() > 0 and not hfsm_editor.the_plugin.get_editor_interface().get_selection().get_selected_nodes()[0] is HFSM):
+		modulate = normal_color
+		set_process(false)
 
 func _on_ConditionComment_resized():
 	place_comment()

@@ -1,5 +1,5 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
 #                                                  
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
@@ -41,18 +41,20 @@
 #
 #                                    
 #	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
+#	@version  0.8(版本号)                                                       
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
 #                                                                      
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :                                       
 #----------------------------------------------------------------------------
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
-#  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete           
+#  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete               
+#  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete  
+#  2022/07/1~3 | 0.8   | Daylily-Zeleen      |   Bugfix, add new feature.                  
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -81,7 +83,6 @@ onready var graph_edit :GraphEdit = get_node("FsmEditior/GraphEdit")
 onready var variable_list :VariableList = get_node("FsmEditior/GraphEdit/VariableList")
 onready var switch_buttons :Node = get_node("FsmEditior/Panel/CenterContainer/SwitchButtons")
 onready var not_state_warming :Node = get_node("NotStateWarming")
-
 #插件
 var the_plugin:EditorPlugin setget _set_the_plugin
 func _set_the_plugin(p :EditorPlugin) :
@@ -141,9 +142,9 @@ func _set_current_nested_fsm_res(nested_fsm_res :NestedFsmRes):
 		not_state_warming.show()
 	else :
 		not_state_warming.hide()
+		
 
 var current_fsm_button :SwithcButton  
-
 
 func _ready():
 	popup_menu.set_item_submenu(2,"ScriptPopupMenu")
@@ -202,6 +203,7 @@ func add_state_node(state_res:NestedFsmRes.StateRes = NestedFsmRes.StateRes.new(
 	
 	graph_edit.connect("node_selected" , new_state_node ,"_on_selected",[],CONNECT_PERSIST)
 	graph_edit.connect("node_unselected" , new_state_node ,"_on_unselected",[],CONNECT_PERSIST)
+	
 	get_entry_state_count()
 	return new_state_node
 
@@ -229,7 +231,10 @@ func get_entry_state_count():
 	elif count > 1 :
 		message.set_error(Message.Error.MULTI_ENTRY_STATE)
 	return count
+
+
 	
+
 ## ----------------- Custom Methods ------
 func refresh_state_node():
 	for c in graph_edit.get_children():
@@ -276,8 +281,8 @@ func paste(offset:Vector2):
 func get_top_control_or_null_at_pos(position:Vector2 = graph_edit.get_local_mouse_position()):
 	var count :int = graph_edit.get_child_count()
 	var mouse_pos :Vector2 = position#graph_edit.get_local_mouse_position()
-	for i in range(count):
-		var current:Control = graph_edit.get_child(count -i -1)
+	for i in range(count-1,-1,-1):
+		var current:Control = graph_edit.get_child(i)
 		if current is StateNode and current.get_rect().has_point(mouse_pos):
 			return current
 		elif current is TransitFlow and current.get_rect().has_point(mouse_pos):
@@ -921,10 +926,12 @@ func _redo_switch_fsm(index:int , target_nested_fsm_res:NestedFsmRes):
 		switch_buttons.get_child(i).delete_self()
 	yield(get_tree() ,"idle_frame")
 	_set_current_nested_fsm_res(target_nested_fsm_res)
+
 	
 func _undo_switch_fsm(res_path:Array):
 	for i in range(1,res_path.size()):
 		yield(_set_current_nested_fsm_res(res_path[i]), "completed")
+	
 		
 func action_switch_fsm(switch_button:SwithcButton):
 	var res_path:Array
@@ -955,7 +962,6 @@ func action_enter_nested(target_nested_res :NestedFsmRes):
 	message.set_history(Message.History.ENTER_NESTED_STATE_MACHINE)
 
 
-
 func action_create_enter_state():
 	var entry_res = NestedFsmRes.StateRes.new(Vector2(200,200),"entry",HfsmConstant.STATE_TYPE_ENTRY)
 	undo_redo.create_action("Add new state")
@@ -970,4 +976,3 @@ func action_create_enter_state():
 
 func _on_Button_pressed():
 	action_create_enter_state()
-

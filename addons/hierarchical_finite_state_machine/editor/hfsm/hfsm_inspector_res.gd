@@ -1,5 +1,5 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
 #                                                  
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
@@ -41,17 +41,18 @@
 #
 #                                    
 #	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
+#	@version  0.8(版本号)                                                       
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
 #                                                                      
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :                                          
 #----------------------------------------------------------------------------
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file      
+#  2022/07/2 | 0.8   | Daylily-Zeleen      | bug fix             
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -61,7 +62,7 @@ signal script_reload_request
 var hfsm
 func _init(_hfsm):
 	hfsm = _hfsm
-
+			
 
 enum ProcessTypes {
 	IDLE_AND_PHYSICS , 
@@ -79,6 +80,8 @@ func set_active(v:bool)->void :
 	hfsm.active = v
 func get_active()->bool :
 	return hfsm.active
+	
+
 
 var process_type :int = ProcessTypes.IDLE_AND_PHYSICS setget set_process_type , get_process_type
 func set_process_type(type :int)->void:
@@ -89,15 +92,17 @@ func get_process_type()->int:
 var agents :Dictionary = {"null" : NodePath("")} setget _set_agents , _get_agents
 func _set_agents(a:Dictionary)->void:
 	for p in hfsm.agents.values():
-		var obj:Node = hfsm.owner.get_node_or_null(String(p)) if hfsm.owner else hfsm.get_node_or_null(String(p))
+		var obj:Node = hfsm.owner.get_node_or_null(String(p)) if hfsm.owner else hfsm.get_node_or_null(String(p)) 
 		if not obj:
 			obj = hfsm.get_node_or_null(p) 
 		if obj:
 			if obj.is_connected("renamed",self,"_on_Agents_node_renamed"):
 				obj.disconnect("renamed",self,"_on_Agents_node_renamed")
+			if obj.is_connected("script_changed",self,"_on_Agents_script_changed"):
+				obj.disconnect("script_changed",self,"_on_Agents_script_changed")
 	var obj_to_path :Dictionary
 	for k in a.keys():
-		var obj = hfsm.owner.get_node_or_null(String(a[k])) if hfsm.owner else hfsm.get_node_or_null(String(a[k]))
+		var obj = hfsm.owner.get_node_or_null(String(a[k])) if hfsm.owner else hfsm.get_node_or_null(String(a[k])) 
 		if not obj:
 			obj = hfsm.get_node_or_null(a[k])
 		if not obj:
@@ -105,6 +110,7 @@ func _set_agents(a:Dictionary)->void:
 		elif not obj in obj_to_path.keys():
 			obj_to_path[obj] = a[k]
 			obj.connect("renamed",self,"_on_Agents_node_renamed")
+			obj.connect("script_changed",self,"_on_Agents_script_changed")
 	var new_agents :Dictionary 
 	for obj in obj_to_path.keys():
 		var node_name :String = obj.name
@@ -127,12 +133,41 @@ func _get_agents()->Dictionary:
 			 a.erase(k)
 	a["null"] = NodePath()
 	return a
+	
+#var _custom_class_list:Dictionary = {"Null":""} setget set_custom_class_list , get_custom_class_list
+#func set_custom_class_list(list:Dictionary):
+#	for k in list.keys() :
+#		if not list[k] is String or not (list[k] as String).is_abs_path():
+#			list.erase(k)
+#	var new_list :Dictionary ={}
+#	for path in list.values():
+#		if not path in new_list.values():
+#			var custom_class_name :String = path.get_file().capitalize().replace(" ","").substr(0 ,path.get_file().find("."))
+#			while custom_class_name in new_list.keys() :
+#				custom_class_name += "_"
+#			new_list[custom_class_name] = path
+#	new_list["Null"] = ""
+#	_custom_class_list = new_list
+#	_change_script_agents()
+#	yield(hfsm.get_tree(),"idle_frame")
+#	property_list_changed_notify()
+#func get_custom_class_list():
+#	var a :Dictionary = _custom_class_list.duplicate()
+#	for k in a.keys():
+#		if k == "Null":
+#			 a.erase(k)
+#	a["Null"] = ""
+#	return a
 
 var _disable_rename_to_snake_case :bool = false setget _set_disable_rename_to_snake_case
 func _set_disable_rename_to_snake_case(b:bool)->void:
 	_disable_rename_to_snake_case = b
 	self.agents = self.agents
 
+	
+var _root_fsm_res :Resource setget  , _get_root_fsm_res
+func _get_root_fsm_res():
+	return hfsm._root_fsm_res
 
 var _force_all_state_entry_behavior :int = 0 setget _set_force_all_state_reset_behavior , _get_force_all_state_reset_behavior
 func  _set_force_all_state_reset_behavior(v:int):
@@ -167,29 +202,70 @@ func _get_property_list()->Array:
 	properties.push_back({name = "active",type = TYPE_BOOL })
 	properties.push_back({name = "process_type",type = TYPE_INT , hint = PROPERTY_HINT_ENUM ,hint_string = process_types_hint_string })
 	properties.push_back({name = "agents",type = TYPE_DICTIONARY })
+#	properties.push_back({name = "_custom_class_list",type = TYPE_DICTIONARY })
+	properties.push_back({name = "debug",type = TYPE_BOOL })
+	
 	
 	properties.push_back({name = "Advanced Setting" , type = TYPE_NIL , usage = PROPERTY_USAGE_GROUP})
 	
 	properties.push_back({name = "_disable_rename_to_snake_case",type = TYPE_BOOL })
 	properties.push_back({name = "_force_all_state_entry_behavior",type = TYPE_INT,hint = PROPERTY_HINT_ENUM , hint_string = reset_option_hint_string })
 	properties.push_back({name = "_force_all_fsm_entry_behavior",type = TYPE_INT,hint = PROPERTY_HINT_ENUM  , hint_string = reset_option_hint_string})
-	properties.push_back({name = "_root_fsm_res",type = TYPE_OBJECT , hint = PROPERTY_HINT_RESOURCE_TYPE ,hint_string ="Resource" ,usage = PROPERTY_USAGE_STORAGE})
+	properties.push_back({name = "_root_fsm_res",type = TYPE_OBJECT , hint = PROPERTY_HINT_RESOURCE_TYPE ,hint_string ="Resource" ,usage = PROPERTY_USAGE_STORAGE })
 	
 	return properties
 
 func _change_script_agents():
-	var agents_text :String = HfsmConstant.AgentsStartMark
+	var agents_text :String = ""
+	## 新获取类脚本逻辑
+	var existed_custom_script_path2class_name := {}
 	for agent_name in self.agents.keys():
-		var obj:Node = hfsm.owner.get_node_or_null(String(self.agents[agent_name]))if hfsm.owner else hfsm.get_node_or_null(String(self.agents[agent_name]))
+		var obj:Node = hfsm.owner.get_node_or_null(String(self.agents[agent_name])) if hfsm.owner else hfsm.get_node_or_null(String(self.agents[agent_name])) 
 		if not obj:
 			obj = hfsm.get_node_or_null(self.agents[agent_name])
-		var obj_class :String 
-		if obj:
-			if not obj_class :
-				obj_class = obj.get_class()
-			agents_text += "var %s : %s \n"%[agent_name , obj_class]
-	agents_text += HfsmConstant.AgentsEndMark
+		if is_instance_valid(obj):
+			var s : Script = obj.get_script()
+			var obj_class_name := ""
+			if is_instance_valid(s):
+				if s.resource_path.is_abs_path() and s.resource_path.count(":") == 1:
+					# 节点外置脚本
+					obj_class_name = existed_custom_script_path2class_name.get(s.resource_path, "")
+					if obj_class_name == "": # 不存在
+						obj_class_name = s.resource_path.get_file()
+						obj_class_name = obj_class_name.substr(0, obj_class_name.length() - obj_class_name.get_extension().length() -1)
+						obj_class_name = obj_class_name.capitalize().replace(" ","")
+#						print(obj_class_name)
+						while obj_class_name in existed_custom_script_path2class_name.values():
+							obj_class_name += "_" # 存在同名不同路径路径， 尾随 "—"
+						existed_custom_script_path2class_name[s.resource_path] = obj_class_name
+				else: # 内置脚本不可获取
+					obj_class_name = s.get_instance_base_type()
+			else: # 无脚本
+				obj_class_name = obj.get_class()
+			agents_text += "var %s : %s \n"%[agent_name, obj_class_name]
+	for path in existed_custom_script_path2class_name:
+		var obj_class_name :String = existed_custom_script_path2class_name[path]
+		agents_text = "const %s = preload(\"%s\")\n"%[obj_class_name, path] + agents_text
 	
+#	print("\n%s\n"%existed_custom_script_path2class_name)
+	agents_text = HfsmConstant.AgentsStartMark + agents_text
+#	## 
+#	for custom_class in self._custom_class_list.keys() :
+#		if self._custom_class_list[custom_class].is_abs_path():
+#			agents_text += "const %s = preload(\"%s\")\n" %[custom_class.substr(0 ,custom_class.find(".")) , self._custom_class_list[custom_class]]
+#	for agent_name in self.agents.keys():
+#		var obj:Node = hfsm.owner.get_node_or_null(String(self.agents[agent_name])) if hfsm.owner else hfsm.get_node_or_null(String(self.agents[agent_name])) 
+#		if not obj:
+#			obj = hfsm.get_node_or_null(self.agents[agent_name])
+#		var obj_class :String 
+#		if obj:
+#			for custom_class in self._custom_class_list.keys() :
+#				if obj.get_script() and obj.get_script().resource_path == self._custom_class_list[custom_class]:
+#					obj_class = custom_class
+#			if not obj_class :
+#				obj_class = obj.get_class()
+#			agents_text += "var %s : %s \n"%[agent_name , obj_class]
+	agents_text += HfsmConstant.AgentsEndMark
 	var state_script_to_state:Dictionary = hfsm._root_fsm_res.get_state_script_to_state()
 	for s_s in state_script_to_state.keys() :
 		var code_text:String = s_s.source_code
@@ -202,12 +278,14 @@ func _change_script_agents():
 		var tmp_script
 		if s_s is GDScript:
 			tmp_script = GDScript.new()
-		tmp_script.source_code = code_text
-		
-		var tmp :Resource = Resource.new()
-		tmp.take_over_path(s_s.resource_path)
-		tmp.resource_path = ""
-		ResourceSaver.save(s_s.resource_path, tmp_script)
+			
+			tmp_script.source_code = code_text
+			
+			var tmp :Resource = Resource.new()
+			tmp.take_over_path(s_s.resource_path)
+			tmp.resource_path = ""
+			ResourceSaver.save(s_s.resource_path, tmp_script)
+		# c# 脚本当前不支持
 			
 	emit_signal("script_reload_request")
 
@@ -217,3 +295,8 @@ func _on_Agents_node_renamed():
 	if size > self.agents.size() :
 		printerr("HFSM :the agent node has been renamed and lost reference , consider to add it again.")
 
+func _on_Agents_script_changed():
+	var size:int = self.agents.size()
+	self.agents = self.agents
+	if size > self.agents.size() :
+		printerr("HFSM :the agent node has been renamed and lost reference , consider to add it again.")

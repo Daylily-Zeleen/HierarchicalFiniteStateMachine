@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/hierarchical_finite_state_machine/editor/variable_list.gd" type="Script" id=1]
-[ext_resource path="res://addons/hierarchical_finite_state_machine/editor/icon/visiblity_icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/Editor/Icon/visiblity_icon.png" type="Texture" id=2]
 
 [node name="VariableList" type="GraphNode"]
 self_modulate = Color( 1, 1, 1, 0.501961 )
@@ -43,6 +43,7 @@ margin_right = 182.0
 margin_bottom = 20.0
 size_flags_horizontal = 10
 text = "Add new variable"
+
 [connection signal="close_request" from="." to="." method="_on_VariableList_close_request"]
 [connection signal="dragged" from="." to="." method="_on_VariableList_dragged"]
 [connection signal="resize_request" from="." to="." method="_on_FsmVariableNode_resize_request"]

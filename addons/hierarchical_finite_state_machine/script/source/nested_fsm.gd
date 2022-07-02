@@ -1,62 +1,55 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com.                                                   
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
+#	Hirerarchical Finite State Machine(HFSM - Full Version).   
 #     
 #                 
-#	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
-#by the Free Software Foundation, either version 3 of the License, or
-#(at your option) any later version.
+#	This file is part of HFSM - Full Version.
+#                                                                                                                       *
+#	HFSM - Full Version is a Godot Plugin that can be used freely except in any 
+#form of dissemination, but the premise is to donate to plugin developers.
+#Please refer to LISENCES.md for more information.
+#                                                                   
+#	HFSM - Full Version是一个除了以任何形式传播之外可以自由使用的Godot插件，前提是向插件开
+#发者进行捐赠，具体许可信息请见 LISENCES.md.
 #
-#	HFSM -Triabl Version is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU Lesser General Public License for more details.
+#	This is HFSM‘s full version ,But there are only a few more unnecessary features 
+#than the trial version(please read the READEME.md to learn difference.).If this 
+#plugin is useful for you,please consider to support me by getting the full version.
+#If you do not want to donate,please consider to use the trial version.
 #
-#	You should have received a copy of the GNU Lesser General Public License
-#along with HFSM -Triabl Version.  If not, see <http://www.gnu.org/licenses/>.                                                                          *
+#	虽然称为HFSM的完整版本，但仅比试用版本多了少许非必要的功能(请阅读README.md了解他们的差异)。
+#如果这个插件对您有帮助，请考虑通过获取完整版本来支持插件开发者，如果您不想进行捐赠，请考虑使
+#用试用版本。
 #
-#	HFSM -Triabl Version是一个自由Godot插件，您可以自由分发、修改其中的源
-#代码或者重新发布它，新的任何修改后的重新发布版必须同样在遵守LGPL3或更后续的
-#版本协议下发布.关于LGPL协议的细则请参考COPYING、COPYING.LESSER文件，
-#	您可以在HFSM -Triabl Version的相关目录中获得LGPL协议的副本，
-#如果没有找到，请连接到 http://www.gnu.org/licenses/ 查看。
-#
-#
-#	This is HFSM‘s triable version ,but it contain almost features of the full version
-#(please read the READEME.md to learn difference.).If this plugin is useful for you,
-#please consider to support me by getting the full version.
-#
-#	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
-#插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
+# Trail version link : 
+#	https://gitee.com/y3y3y3y33/HierarchicalFiniteStateMachine
+#	https://github.com/Daylily-Zeleen/HierarchicalFiniteStateMachine
+# Sponsor link : 
 #	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
-#
+#	https://godotmarketplace.com/?post_type=product&p=37138    
 #                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@author   Daylily-Zeleen                                                       
+#	@email    daylily-zeleen@qq.com                                              
+#	@version  0.8(版本号)                                                     
+#	@license  Custom License(Read LISENCES.TXT for more details)
 #                                                                      
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :                                           
 #----------------------------------------------------------------------------
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file        
+#  2022/07/02 | 0.8   | Daylily-Zeleen      | Bug fix         
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
 extends Reference
 
+#const State = preload("state.gd")
 const Transition = preload("transition.gd")
 
 var _hfsm
@@ -120,16 +113,18 @@ func _entry(entry_state = null)->void:
 		is_running = true
 		_hfsm._transited(null , _current_state.state_name ,_path.duplicate())
 		_hfsm._entered(_current_state.state_name,_path.duplicate())
-		
+
 func _check_transit_and_get_update_queue()->Array:
 	var update_queue:Array
 	for transition in _current_state._transition_list:
 		if transition.check():
 			if not _current_state.is_exited :
-				_current_state._exit()
+				assert(_current_state.has_method("_exit"))
+				_current_state._exit(false)
 			_hfsm._transited(_current_state.state_name , transition.to_state.state_name ,_path)
 			_current_state = transition.to_state
 			_current_state._entry()
+			_hfsm._entered(_current_state.state_name,_path.duplicate())
 			if _current_state in _current_exit_state_list:
 				_exit()
 			break
@@ -147,7 +142,34 @@ func _update(delta:float)->void:
 func _physics_update(delta:float)->void:
 	_current_state._physics_update(delta)
 	_hfsm._physic_updated( _current_state.state_name , delta , _path.duplicate())
+
+func _force_transit(target_state:String)->bool:
+	var target = _get_state(target_state)
+	if target :
+		if _current_state and not _current_state.is_exited:
+			_current_state._exit()
+		_hfsm._transited(_current_state.state_name , target_state , _path.duplicate())
+		_current_state = target
+		_current_state._entry()
+		_hfsm._entered(_current_state.state_name,_path.duplicate())
+		return true
+	return false
 	
+func _is_valid_path(path:Array , index :int = 0 ) ->bool:
+	if path[index] == _path.back() :
+		index += 1
+		if path[index] != "":#未达终点
+			var next_state = _get_state(path[index])
+			if next_state :
+				var next_fsm = next_state._nested_fsm
+				if next_fsm:
+					return next_fsm._is_valid_path(path ,index)
+				elif next_state.state_name == path[index + 1]:
+					return true
+		else :
+			return true
+	return false
+			
 func _exit()-> void:
 	_current_state._exit()
 #	if _current_state._nested_fsm and _current_state._nested_fsm.is_running:
@@ -155,6 +177,7 @@ func _exit()-> void:
 	is_running = false
 	_hfsm._exited(_current_state.state_name , _path.duplicate())
 	_hfsm._transited(_current_state.state_name , null , _path.duplicate())
+
 	
 func _exit_by_state()->void:
 	is_running = false
@@ -167,3 +190,39 @@ func _get_state(state_name:String) :
 			return state
 	return null
 		
+func _set_entry_state(state_name:String)->bool :
+	for state in _state_list :
+		if state.state_name == state_name :
+			_current_entry_state = state
+			return true
+	return false
+	
+func _set_exit_state(state_name:String)->bool :
+	if _current_entry_state.state_name == state_name:
+		return false
+	for state in _state_list :
+		if state.state_name == state_name :
+			if not state in _current_exit_state_list:
+				_current_exit_state_list.append(state)
+			return true 
+	return false
+
+func _set_normal_state(state_name:String) -> bool:
+	if _current_entry_state.state_name == state_name:
+		return false
+	var target_state = _get_state(state_name)
+	if not target_state: 
+		return false
+	if target_state in _current_exit_state_list:
+		_current_exit_state_list.erase(target_state)
+	return true
+	
+func _set_unique_exit_state(state_name:String)->bool :
+	if _current_entry_state.state_name == state_name :
+		return false
+	for state in _state_list :
+		if state.state_name == state_name :
+			_current_exit_state_list.clear()
+			_current_exit_state_list.append(state)
+			return true 
+	return false

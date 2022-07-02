@@ -1,5 +1,5 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
 #                                                  
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
@@ -41,17 +41,18 @@
 #
 #                                    
 #	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
+#	@version  0.8(版本号)                                                       
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
 #                                                                      
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :                                      
 #----------------------------------------------------------------------------
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file    
+#  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition(full version)                
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -162,6 +163,7 @@ func _get_variable_expression_res_list():
 	return inspector_res.variable_condition_res.variable_expression_res_list 
 
 
+
 onready var auto_mode_button :OptionButton = get_node("Editor/AutoEditor/Panel/VBoxContainer/Title/AutoModeButton")
 onready var times_edit :LineEdit = get_node("Editor/AutoEditor/Panel/VBoxContainer/TimesEditor/TimesEdit")
 onready var delay_time_edit : LineEdit = get_node("Editor/AutoEditor/Panel/VBoxContainer/DelayTimerEditor/DelayTimerEdit")
@@ -190,10 +192,13 @@ func add_variable_expression(variable_expression_res :VariableExpressionRes,pos 
 	inspector_res.update_comment()
 	
 	
+	
+	
 func delete_variable_expression_and_res(variable_expression_res :VariableExpressionRes):
 	for c in variable_expression_editor_list.get_children() :
 		if c is VariableExpressionEditor and c.variable_expression_res == variable_expression_res:
 			(c as VariableExpressionEditor).delete_self()
+
 
 func init(_inspector_res :TransitflowInspectorRes):
 	self.inspector_res = _inspector_res
@@ -209,6 +214,8 @@ func init(_inspector_res :TransitflowInspectorRes):
 	
 	get_node("Editor/AutoEditor").visible = true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_AUTO else false
 	get_node("Editor/AutoEditor/Panel/VBoxContainer/TipLabel").text = _get_tip_text(inspector_res.transition_type)
+	
+#	get_node()
 	transition_type_button.select(inspector_res.transition_type)
 	#auto
 	auto_mode_button.select(inspector_res.auto_condition_res.auto_transit_mode)
@@ -236,7 +243,7 @@ func _add_variable_expression_editor() -> VariableExpressionEditor:
 	variable_expression_editor_list.add_child(new_expression)
 	new_expression.connect("params_updated" , self , "_uptate_transition_comment")
 	if inspector_res:
-		inspector_res.variable_condition_res.add_variable_expression_res(new_expression)
+		inspector_res.variable_condition_res.add_variable_expression_res(VariableExpressionRes.new())
 	return new_expression
 
 
@@ -315,17 +322,20 @@ func action_set_transition_type(old_type , new_type):
 	undo_redo.create_action("Set transition_type")
 	
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.SET_TRANSITION_TYPE)
-	undo_redo.add_do_property(inspector_res , "transition_type" , new_type)
+	undo_redo.add_do_property(inspector_res , "transition_type" , new_type)	
+	undo_redo.add_do_property(get_node("Editor/ScriptEditior") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_SCRIPT else false)
 	undo_redo.add_do_property(get_node("Editor/ExpressionEditior") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_EXPRESSION else false)
 	undo_redo.add_do_property(get_node("Editor/VariableEditor") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
 	undo_redo.add_do_property(get_node("Editor/AutoEditor") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_AUTO else false)
 	undo_redo.add_do_property(fold_button , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
+	
 	undo_redo.add_do_method(transition_type_button , "select" , new_type )
 	undo_redo.add_do_method(inspector_res , "update_comment" )
 	
 	
 	undo_redo.add_undo_method(message,"set_undo_history",Message.History.SET_TRANSITION_TYPE)
 	undo_redo.add_undo_property(inspector_res , "transition_type" , old_type)
+	undo_redo.add_undo_property(get_node("Editor/ScriptEditior") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_SCRIPT else false)
 	undo_redo.add_undo_property(get_node("Editor/ExpressionEditior") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_EXPRESSION else false)
 	undo_redo.add_undo_property(get_node("Editor/VariableEditor") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
 	undo_redo.add_undo_property(get_node("Editor/AutoEditor") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_AUTO else false)
@@ -439,4 +449,5 @@ func _on_FoldButton_toggled(button_pressed):
 	for c in variable_expression_editor_list.get_children():
 		if c is VariableExpressionEditor:
 			c.is_fold = button_pressed
+
 

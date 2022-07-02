@@ -1,5 +1,5 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
 #                                                  
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
@@ -41,17 +41,18 @@
 #
 #                                    
 #	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
+#	@version  0.8(版本号)                                                       
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
 #                                                                      
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :                                             
 #----------------------------------------------------------------------------
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
+#  2021/07/2 | 0.1   | Daylily-Zeleen      | Support C# state script     
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -199,7 +200,7 @@ func create_new_script():
 	var folder_path :String = res_path.substr(0,res_path.find("::")).get_base_dir()
 	var dir :Directory = Directory.new()
 	var new_name :String = "hfsm_state_" + _get_state_name()
-	while dir.file_exists(folder_path + "/"+new_name+".gd" ):
+	while dir.file_exists(folder_path + "/"+new_name+".gd" ) or dir.file_exists(folder_path + "/"+new_name+".cs" ) :
 		new_name += "_"
 	scd.config(HfsmConstant.ExtendsPath , folder_path.plus_file(new_name))
 	for n in _get_children(scd):
@@ -314,10 +315,12 @@ func _load_state_script(path_or_script):
 		else:
 			new_script = null
 	if new_script and ("::" in new_script.resource_path or not (HfsmConstant.Extends in new_script.source_code.replace(" ","") or HfsmConstant.Extends_ in new_script.source_code.replace(" ",""))):
-		if not HfsmConstant.AgentsStartMark in new_script.source_code or not HfsmConstant.AgentsEndMark in new_script.source_code or not HfsmConstant.NestedFsmStateStartMark in new_script.source_code or not HfsmConstant.NestedFsmStateEndMark in new_script.source_code :
+		if new_script is GDScript and (not HfsmConstant.AgentsStartMark in new_script.source_code or not HfsmConstant.AgentsEndMark in new_script.source_code or not HfsmConstant.NestedFsmStateStartMark in new_script.source_code or not HfsmConstant.NestedFsmStateEndMark in new_script.source_code ):
 			create_new_script()
 			printerr("HFSM : attach script faild,the script is not obey the 'Hfsm State Template'.")
 			return
+		elif new_script.get_class() == "CSharpScript":
+			print("HFSM: attach a c# script, currently can't check it is valid or not, please ensure your script is inhirt from HFSM.State.")
 	action_set_state_script(_get_state_script() , new_script)
 	
 	var hfsm_inspector_res = hfsm_editor.current_hfsm._inspector_res
@@ -384,8 +387,8 @@ func update_nested_state_script():
 			res.update_nested_state_script()
 	hfsm_editor.the_plugin._on_script_reload_request()
 	var inspector_res = hfsm_editor.current_hfsm._inspector_res
-	if inspector_res:
-		inspector_res._change_script_agents()
+	if is_instance_valid(inspector_res):
+		inspector_res.call_deferred("_change_script_agents")
 #------------undo redo----------------
 func action_change_state_name(old_name , new_name):
 	undo_redo.create_action("Set state_name")

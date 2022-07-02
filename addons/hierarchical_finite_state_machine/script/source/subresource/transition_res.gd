@@ -1,57 +1,49 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com.                                                   
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
+#	Hirerarchical Finite State Machine(HFSM - Full Version).   
 #     
 #                 
-#	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
-#by the Free Software Foundation, either version 3 of the License, or
-#(at your option) any later version.
+#	This file is part of HFSM - Full Version.
+#                                                                                                                       *
+#	HFSM - Full Version is a Godot Plugin that can be used freely except in any 
+#form of dissemination, but the premise is to donate to plugin developers.
+#Please refer to LISENCES.md for more information.
+#                                                                   
+#	HFSM - Full Version是一个除了以任何形式传播之外可以自由使用的Godot插件，前提是向插件开
+#发者进行捐赠，具体许可信息请见 LISENCES.md.
 #
-#	HFSM -Triabl Version is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU Lesser General Public License for more details.
+#	This is HFSM‘s full version ,But there are only a few more unnecessary features 
+#than the trial version(please read the READEME.md to learn difference.).If this 
+#plugin is useful for you,please consider to support me by getting the full version.
+#If you do not want to donate,please consider to use the trial version.
 #
-#	You should have received a copy of the GNU Lesser General Public License
-#along with HFSM -Triabl Version.  If not, see <http://www.gnu.org/licenses/>.                                                                          *
+#	虽然称为HFSM的完整版本，但仅比试用版本多了少许非必要的功能(请阅读README.md了解他们的差异)。
+#如果这个插件对您有帮助，请考虑通过获取完整版本来支持插件开发者，如果您不想进行捐赠，请考虑使
+#用试用版本。
 #
-#	HFSM -Triabl Version是一个自由Godot插件，您可以自由分发、修改其中的源
-#代码或者重新发布它，新的任何修改后的重新发布版必须同样在遵守LGPL3或更后续的
-#版本协议下发布.关于LGPL协议的细则请参考COPYING、COPYING.LESSER文件，
-#	您可以在HFSM -Triabl Version的相关目录中获得LGPL协议的副本，
-#如果没有找到，请连接到 http://www.gnu.org/licenses/ 查看。
-#
-#
-#	This is HFSM‘s triable version ,but it contain almost features of the full version
-#(please read the READEME.md to learn difference.).If this plugin is useful for you,
-#please consider to support me by getting the full version.
-#
-#	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
-#插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
+# Trail version link : 
+#	https://gitee.com/y3y3y3y33/HierarchicalFiniteStateMachine
+#	https://github.com/Daylily-Zeleen/HierarchicalFiniteStateMachine
+# Sponsor link : 
 #	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
-#
+#	https://godotmarketplace.com/?post_type=product&p=37138    
 #                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@author   Daylily-Zeleen                                            
+#	@email    daylily-zeleen@qq.com                                              
+#	@version  0.8(版本号)                                                     
+#	@license  Custom License(Read LISENCES.TXT for more details)
 #                                                                      
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :                                         
 #----------------------------------------------------------------------------
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file     
+#  2022/07/02 | 0.8   | Daylily-Zeleen      | Implement script_condition           
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -63,6 +55,7 @@ const StateRes = preload("state_res.gd")
 const AutoConditionRes  = preload("transition_subresource/auto_condition_res.gd")
 const ExpressionConditionRes = preload("transition_subresource/expression_condition_res.gd")
 const VariableConditionRes = preload("transition_subresource/variable_condition_res.gd")
+
 
 var from_res :StateRes = StateRes.new()
 var to_res :StateRes = StateRes.new()
@@ -82,6 +75,7 @@ func _get_property_list():
 	properties.push_back({name = "auto_condition_res",type = TYPE_OBJECT,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
 	properties.push_back({name = "expression_condition_res",type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
 	properties.push_back({name = "variable_condition_res",type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
+	properties.push_back({name = "script_condition_res",type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
 	
 	return properties
 func _init(
@@ -90,7 +84,7 @@ func _init(
 		_transition_type :int = HfsmConstant.TRANSITION_TYPE_AUTO ,
 		_auto_condition_res :AutoConditionRes = AutoConditionRes.new() , 
 		_expression_condition_res :ExpressionConditionRes = ExpressionConditionRes.new() ,
-		_variable_condition_res :VariableConditionRes = VariableConditionRes.new() 
+		_variable_condition_res :VariableConditionRes = VariableConditionRes.new()
 		):
 	from_res = _from_res
 	to_res = _to_res

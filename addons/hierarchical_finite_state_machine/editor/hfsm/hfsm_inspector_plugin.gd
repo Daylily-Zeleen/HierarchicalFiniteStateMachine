@@ -1,5 +1,5 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
 #                                                  
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
@@ -41,9 +41,9 @@
 #
 #                                    
 #	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
+#	@version  0.8(版本号)                                                       
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
 #                                                                      
 #----------------------------------------------------------------------------
 #  Remark         :                                            
@@ -51,7 +51,8 @@
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
+#  2022/07/2 | 0.8   | Daylily-Zeleen      | remove  _custom_class_list                
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -69,6 +70,12 @@ func parse_property(object, type, path, hint, hint_text, usage):
 	elif path == "process_type" :
 		return false
 	elif path == "agents":
+		return false
+#	elif path == "_custom_class_list" :
+#		return false
+	elif path == "_root_fsm_res" :
+		return false
+	elif path == "debug" :
 		return false
 	elif path == "_disable_rename_to_snake_case" :
 		return false

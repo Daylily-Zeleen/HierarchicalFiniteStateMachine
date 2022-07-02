@@ -1,5 +1,5 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com. 
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
 #                                                  
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
@@ -41,17 +41,17 @@
 #
 #                                    
 #	@author   Daylily-Zeleen                                                      
-#	@email    735170336@qq.com                                              
-#	@version  0.1(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)                                
+#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
+#	@version  0.8(版本号)                                                       
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
 #                                                                      
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :                                           
 #----------------------------------------------------------------------------
 #  Change History :                                                          
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -160,23 +160,23 @@ func _set_variable_type(type:int):
 	match type:
 		VARIABLE_TYPE_TRIGGER :
 			tip = "Trigger"
-			type_text = "Trigger " if is_fold else "T " 
+			type_text = "Trigger" if is_fold else "T" 
 			bg_color = trigger_color
 		VARIABLE_TYPE_BOOLEAN : 
 			tip = "Boolean"
-			type_text = "Boolean " if is_fold else "B "
+			type_text = "Boolean" if is_fold else "B"
 			bg_color = boolean_color
 		VARIABLE_TYPE_INTEGER :
 			tip = "Integer"
-			type_text = "Integer " if is_fold else "I "
+			type_text = "Integer" if is_fold else "I"
 			bg_color = integer_color
 		VARIABLE_TYPE_FLOAT :
 			tip = "Float"
-			type_text = "Float " if is_fold else "F "
+			type_text = "Float" if is_fold else "F"
 			bg_color = float_color
 		VARIABLE_TYPE_STRING :
 			tip = "String"
-			type_text = "String " if is_fold else "S "
+			type_text = "String" if is_fold else "S"
 			bg_color = string_color
 		
 	variable_type_label.text = " " + type_text + " "

@@ -1,0 +1,486 @@
+[gd_scene load_steps=44 format=2]
+
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_res.gd" type="Script" id=1]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_subresource/auto_condition_res.gd" type="Script" id=2]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/variable_res.gd" type="Script" id=3]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_subresource/variable_expression_res.gd" type="Script" id=4]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_subresource/expression_condition_res.gd" type="Script" id=5]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/transition_subresource/variable_condition_res.gd" type="Script" id=6]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/subresource/state_res.gd" type="Script" id=7]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/source/nested_fsm_res.gd" type="Script" id=9]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/demo/gds_callback_style_2d_platform_player/Player.gd" type="Script" id=10]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/script/hfsm.gd" type="Script" id=11]
+[ext_resource path="res://addons/hierarchical_finite_state_machine/demo/godot_icon.png" type="Texture" id=12]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 7 )
+state_name = "idle"
+state_type = 1
+is_nested = false
+editor_offset = Vector2( 40, 360 )
+reset_properties_when_entry = true
+reset_nested_fsm_when_entry = false
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 7 )
+state_name = "move"
+state_type = 0
+is_nested = false
+editor_offset = Vector2( 1080, 320 )
+reset_properties_when_entry = true
+reset_nested_fsm_when_entry = false
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 7 )
+state_name = "jump"
+state_type = 0
+is_nested = false
+editor_offset = Vector2( 500, 100 )
+reset_properties_when_entry = true
+reset_nested_fsm_when_entry = false
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 2 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 5 )
+expression_text = ""
+expression_comment = ""
+expression_text = ""
+expression_comment = ""
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 3 )
+variable_name = "velocity_length"
+variable_type = 3
+variable_comment = ""
+is_deleted = false
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 4 )
+variable_res = SubResource( 7 )
+trigger_mode = 0
+comparation = 2
+value = 1.0
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 6 )
+variable_op_mode = 0
+variable_expression_res_list = [ SubResource( 8 ) ]
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 1 )
+from_res = SubResource( 2 )
+to_res = SubResource( 3 )
+transition_type = 1
+auto_condition_res = SubResource( 5 )
+expression_condition_res = SubResource( 6 )
+variable_condition_res = SubResource( 9 )
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 2 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=12]
+script = ExtResource( 5 )
+expression_text = "Input.is_action_just_pressed(\"ui_select\") or not player.is_on_floor()"
+expression_comment = ""
+expression_text = "Input.is_action_just_pressed(\"ui_select\") or not player.is_on_floor()"
+expression_comment = ""
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 6 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 1 )
+from_res = SubResource( 2 )
+to_res = SubResource( 4 )
+transition_type = 2
+auto_condition_res = SubResource( 11 )
+expression_condition_res = SubResource( 12 )
+variable_condition_res = SubResource( 13 )
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 2 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=16]
+script = ExtResource( 5 )
+expression_text = "Input.is_action_just_pressed(\"ui_select\") or not player.is_on_floor()"
+expression_comment = ""
+expression_text = "Input.is_action_just_pressed(\"ui_select\") or not player.is_on_floor()"
+expression_comment = ""
+
+[sub_resource type="Resource" id=17]
+script = ExtResource( 6 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=18]
+script = ExtResource( 1 )
+from_res = SubResource( 3 )
+to_res = SubResource( 4 )
+transition_type = 2
+auto_condition_res = SubResource( 15 )
+expression_condition_res = SubResource( 16 )
+variable_condition_res = SubResource( 17 )
+
+[sub_resource type="Resource" id=19]
+script = ExtResource( 2 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=20]
+script = ExtResource( 5 )
+expression_text = "player.is_on_floor() and player.velocity.y >= 0"
+expression_comment = ""
+expression_text = "player.is_on_floor() and player.velocity.y >= 0"
+expression_comment = ""
+
+[sub_resource type="Resource" id=21]
+script = ExtResource( 6 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=22]
+script = ExtResource( 1 )
+from_res = SubResource( 4 )
+to_res = SubResource( 3 )
+transition_type = 2
+auto_condition_res = SubResource( 19 )
+expression_condition_res = SubResource( 20 )
+variable_condition_res = SubResource( 21 )
+
+[sub_resource type="Resource" id=23]
+script = ExtResource( 2 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=24]
+script = ExtResource( 5 )
+expression_text = ""
+expression_comment = ""
+expression_text = ""
+expression_comment = ""
+
+[sub_resource type="Resource" id=25]
+script = ExtResource( 4 )
+variable_res = SubResource( 7 )
+trigger_mode = 0
+comparation = 5
+value = 1.0
+
+[sub_resource type="Resource" id=26]
+script = ExtResource( 6 )
+variable_op_mode = 0
+variable_expression_res_list = [ SubResource( 25 ) ]
+
+[sub_resource type="Resource" id=27]
+script = ExtResource( 1 )
+from_res = SubResource( 3 )
+to_res = SubResource( 2 )
+transition_type = 1
+auto_condition_res = SubResource( 23 )
+expression_condition_res = SubResource( 24 )
+variable_condition_res = SubResource( 26 )
+
+[sub_resource type="Resource" id=28]
+script = ExtResource( 9 )
+fsm_name = "root"
+state_res_list = [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
+transition_res_list = [ SubResource( 10 ), SubResource( 14 ), SubResource( 18 ), SubResource( 22 ), SubResource( 27 ) ]
+is_nested = false
+variable_res_list = [ SubResource( 7 ) ]
+variable_list_offset = Vector2( 0, 40 )
+editor_scroll_offset = Vector2( 14.5421, -31 )
+transition_comment_visible = true
+transition_editor_folded = false
+
+[sub_resource type="RectangleShape2D" id=29]
+extents = Vector2( 50.97, 26 )
+
+[sub_resource type="QuadMesh" id=30]
+size = Vector2( 1000, 50 )
+
+[sub_resource type="RectangleShape2D" id=31]
+extents = Vector2( 5.09, 10 )
+
+[sub_resource type="QuadMesh" id=32]
+size = Vector2( 100, 20 )
+
+[node name="Scene" type="Node2D"]
+position = Vector2( 400.655, 346.478 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( -269.376, 146.116 )
+z_index = 1
+script = ExtResource( 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Player"]
+texture = ExtResource( 12 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="HFSM" type="Node" parent="Player"]
+script = ExtResource( 11 )
+active = true
+process_type = 0
+agents = {
+"null": NodePath(""),
+"player": NodePath("Player")
+}
+_custom_class_list = null
+debug = null
+_disable_rename_to_snake_case = false
+_force_all_state_entry_behavior = 0
+_force_all_fsm_entry_behavior = 0
+_root_fsm_res = SubResource( 28 )
+
+[node name="StateLabel" type="Label" parent="Player"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -37.0418
+margin_top = -50.0565
+margin_right = 39.9582
+margin_bottom = -36.0565
+align = 1
+valign = 1
+
+[node name="VelocityLengthLabel" type="Label" parent="Player"]
+margin_left = -62.0
+margin_top = -75.0
+margin_right = 52.0
+margin_bottom = -61.0
+align = 1
+valign = 1
+
+[node name="Static" type="Node" parent="."]
+
+[node name="Floor" type="StaticBody2D" parent="Static"]
+position = Vector2( 512.661, 574.637 )
+scale = Vector2( 1.036, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/Floor"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 29 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Static/Floor"]
+modulate = Color( 0.752941, 0.752941, 0.752941, 1 )
+mesh = SubResource( 30 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Ceiling" type="StaticBody2D" parent="Static"]
+position = Vector2( 512.661, -26.8735 )
+scale = Vector2( 1.031, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/Ceiling"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 29 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Static/Ceiling"]
+mesh = SubResource( 30 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="LeftWall" type="StaticBody2D" parent="Static"]
+position = Vector2( -29.7263, 279.155 )
+rotation = 1.5708
+scale = Vector2( 0.639, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/LeftWall"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 29 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="RightWall" type="StaticBody2D" parent="Static"]
+position = Vector2( 1053.55, 279.155 )
+rotation = 1.5708
+scale = Vector2( 0.639, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/RightWall"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 29 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Platform1" type="StaticBody2D" parent="Static"]
+position = Vector2( 344.854, 462.407 )
+scale = Vector2( 1.036, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/Platform1"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 31 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Static/Platform1"]
+modulate = Color( 0.384314, 0.552941, 0.529412, 1 )
+mesh = SubResource( 32 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Platform2" type="StaticBody2D" parent="Static"]
+position = Vector2( 527.992, 407.704 )
+scale = Vector2( 1.036, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/Platform2"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 31 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Static/Platform2"]
+modulate = Color( 0.384314, 0.552941, 0.529412, 1 )
+mesh = SubResource( 32 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Platform3" type="StaticBody2D" parent="Static"]
+position = Vector2( 718.265, 363.703 )
+scale = Vector2( 1.036, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/Platform3"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 31 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Static/Platform3"]
+modulate = Color( 0.384314, 0.552941, 0.529412, 1 )
+mesh = SubResource( 32 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Platform4" type="StaticBody2D" parent="Static"]
+position = Vector2( 904.971, 322.081 )
+scale = Vector2( 1.036, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/Platform4"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 31 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Static/Platform4"]
+modulate = Color( 0.384314, 0.552941, 0.529412, 1 )
+mesh = SubResource( 32 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Platform5" type="StaticBody2D" parent="Static"]
+position = Vector2( 711.13, 232.89 )
+scale = Vector2( 1.036, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/Platform5"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 31 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Static/Platform5"]
+modulate = Color( 0.384314, 0.552941, 0.529412, 1 )
+mesh = SubResource( 32 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Platform6" type="StaticBody2D" parent="Static"]
+position = Vector2( 398.369, 254.296 )
+scale = Vector2( 1.036, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/Platform6"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 31 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Static/Platform6"]
+modulate = Color( 0.384314, 0.552941, 0.529412, 1 )
+mesh = SubResource( 32 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Platform7" type="StaticBody2D" parent="Static"]
+position = Vector2( 202.15, 172.241 )
+scale = Vector2( 1.036, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Static/Platform7"]
+scale = Vector2( 9.83214, 1 )
+shape = SubResource( 31 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Static/Platform7"]
+modulate = Color( 0.384314, 0.552941, 0.529412, 1 )
+mesh = SubResource( 32 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Label" type="RichTextLabel" parent="CanvasLayer"]
+margin_left = 11.0
+margin_top = 8.0
+margin_right = 518.0
+margin_bottom = 85.0
+rect_scale = Vector2( 2, 2 )
+bbcode_enabled = true
+bbcode_text = "	To demostrate the [color=aqua]signal callaback[/color] design style of HFSM. It means that all player logic is controlled by HFSM's signals callback method.
+	[color=red]Note!![/color] The \"HFSM\" node has a agent node which refer to \"Player\" node. And the HFSM's transitions have expression conditions.
+	[color=lime]Left arrow[/color] and [color=lime]Right arrow[/color] to move, [color=lime]Space bar[/color] to jump."
+text = "	To demostrate the signal callaback design style of HFSM. It means that all player logic is controlled by HFSM's signals callback method.
+	Note!! The \"HFSM\" node has a agent node which refer to \"Player\" node. And the HFSM's transitions have expression conditions.
+	Left arrow and Right arrow to move, Space bar to jump."
+
+[connection signal="entered" from="Player/HFSM" to="Player" method="_on_HFSM_entered"]
+[connection signal="exited" from="Player/HFSM" to="Player" method="_on_HFSM_exited"]
+[connection signal="physics_updated" from="Player/HFSM" to="Player" method="_on_HFSM_physics_updated"]
+[connection signal="transited" from="Player/HFSM" to="Player" method="_on_HFSM_transited"]
+[connection signal="updated" from="Player/HFSM" to="Player" method="_on_HFSM_updated"]
