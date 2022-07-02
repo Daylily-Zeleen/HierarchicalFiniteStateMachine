@@ -9,6 +9,8 @@
 3. Diversified transition plans 
 4. Two development modes: signal callback and attached state script
 5. Develop base GDscript, compatible with Godot basic version and mono version
+6. **Allows `C#`script to attached as state script( New).**
+7. **Suppoets `GDscript` and `C#` script to implement the logic of transition( New, full version only). **
 
 # HFSM structure:
 
