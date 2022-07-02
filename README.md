@@ -12,6 +12,11 @@
 6. **Allows `C#`script to attached as state script( New).**
 7. **Suppoets `GDscript` and `C#` script to implement the logic of transition( New, full version only). **
 
+
+# Full version links:
+  1. https://afdian.net/@Daylily-Zeleen
+  2. https://godotmarketplace.com/?post_type=product&p=37138   
+
 # HFSM structure:
 
 ![](DOCUMENT.assets/strusture.png)
@@ -40,7 +45,7 @@
 >      	2. `new_feature_csharp_script_condition_transition_2d_platiform_player`
 >      	3. `new_feature_gd_script_condition_transiton_2d_platform_player`
 
-​		Read [document](Document_en.md) for more.
+​		**Read [document](Document_en.md) for more.**
 
 
 
@@ -54,7 +59,7 @@
 >      2. `new_feature_csharp_script_condition_transition_2d_platiform_player`
 >      3. `new_feature_gd_script_condition_transiton_2d_platform_player`
 
-​		[中文文档](Document_cn.md)请点击这里
+​		**[中文文档](Document_cn.md)请点击这里**
 
 
 
