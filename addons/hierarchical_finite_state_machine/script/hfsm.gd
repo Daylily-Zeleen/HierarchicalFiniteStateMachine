@@ -510,7 +510,7 @@ func _process(delta:float)->void:
 		for fsm in _active_fsm_list:
 			fsm._update(delta)
 			if process_type == 1 :
-				_root_fsm._physics_update(delta)
+				fsm._physics_update(delta)
 func _physics_process(delta:float)->void:
 	if active and is_inited():
 		_active_fsm_list = _root_fsm._check_transit_and_get_update_queue()
