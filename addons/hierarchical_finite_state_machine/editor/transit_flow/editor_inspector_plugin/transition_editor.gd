@@ -1,40 +1,49 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.                                                   
-#
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
+#                                                  
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine(HFSM - Full Version).   
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
 #     
 #                 
-#	This file is part of HFSM - Full Version.
-#                                                                                                                       *
-#	HFSM - Full Version is a Godot Plugin that can be used freely except in any 
-#form of dissemination, but the premise is to donate to plugin developers.
-#Please refer to LISENCES.md for more information.
-#                                                                   
-#	HFSM - Full Version是一个除了以任何形式传播之外可以自由使用的Godot插件，前提是向插件开
-#发者进行捐赠，具体许可信息请见 LISENCES.md.
+#	This file is part of HFSM - Trial Version.
+#                                                                
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
+#modify it under the terms of the GNU Lesser General Public License as published 
+#by the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
 #
-#	This is HFSM‘s full version ,But there are only a few more unnecessary features 
-#than the trial version(please read the READEME.md to learn difference.).If this 
-#plugin is useful for you,please consider to support me by getting the full version.
-#If you do not want to donate,please consider to use the trial version.
+#	HFSM -Triabl Version is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU Lesser General Public License for more details.
 #
-#	虽然称为HFSM的完整版本，但仅比试用版本多了少许非必要的功能(请阅读README.md了解他们的差异)。
-#如果这个插件对您有帮助，请考虑通过获取完整版本来支持插件开发者，如果您不想进行捐赠，请考虑使
-#用试用版本。
+#	You should have received a copy of the GNU Lesser General Public License
+#along with HFSM -Triabl Version.  If not, see <http://www.gnu.org/licenses/>.                                                                          *
 #
-# Trail version link : 
-#	https://gitee.com/y3y3y3y33/HierarchicalFiniteStateMachine
-#	https://github.com/Daylily-Zeleen/HierarchicalFiniteStateMachine
-# Sponsor link : 
+#	HFSM -Triabl Version是一个自由Godot插件，您可以自由分发、修改其中的源
+#代码或者重新发布它，新的任何修改后的重新发布版必须同样在遵守LGPL3或更后续的
+#版本协议下发布.关于LGPL协议的细则请参考COPYING、COPYING.LESSER文件，
+#	您可以在HFSM -Triabl Version的相关目录中获得LGPL协议的副本，
+#如果没有找到，请连接到 http://www.gnu.org/licenses/ 查看。
+#
+#
+#	This is HFSM‘s triable version ,but it contain almost features of the full version
+#(please read the READEME.md to learn difference.).If this plugin is useful for you,
+#please consider to support me by getting the full version.
+#
+#	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
+#插件对您有帮助，请考虑通过获取完整版本来支持我。
+#	
+# Sponsor link (赞助链接): 
 #	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138    
+#	https://godotmarketplace.com/?post_type=product&p=37138   
+#
 #                                    
-#	@author   Daylily-Zeleen                                    
-#	@email    daylily-zeleen@foxmail.com                                              
-#	@version  0.8(版本号)                                                        
-#	@license  Custom License(Read LISENCES.TXT for more details)
+#	@author   Daylily-Zeleen                                                      
+#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
+#	@version  0.9(版本号)                                                       
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
 #                                                                      
 #----------------------------------------------------------------------------
 #  Remark         :                                      
@@ -43,7 +52,8 @@
 #  <Date>     | <Version> | <Author>       | <Description>                   
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file    
-#  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition                
+#  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition(full version)           
+#  2021/09/18 | 0.9   | Daylily-Zeleen      | fix trail version bug: can't change transition type.                
 #----------------------------------------------------------------------------
 #                                                                            
 ##############################################################################
@@ -153,13 +163,6 @@ func _set_variable_expression_res_list(res_list:Array) :
 func _get_variable_expression_res_list():
 	return inspector_res.variable_condition_res.variable_expression_res_list 
 
-#----------------------script condition  properties---------------------------------
-var script_condition_res:NestedFsmRes.TransitionRes.ScriptConditionRes setget _set_script_condition_res, _get_script_condition_res
-func _set_script_condition_res(v):
-	inspector_res.script_condition_res = v
-	_uptate_transition_comment()
-func _get_script_condition_res():
-	return inspector_res.script_condition_res
 
 
 onready var auto_mode_button :OptionButton = get_node("Editor/AutoEditor/Panel/VBoxContainer/Title/AutoModeButton")
@@ -198,19 +201,13 @@ func delete_variable_expression_and_res(variable_expression_res :VariableExpress
 			(c as VariableExpressionEditor).delete_self()
 
 
-func init(_inspector_res :TransitflowInspectorRes, script_picker:EditorScriptPicker):
-	get_node("Editor/ScriptEditior/VBoxContainer/HBoxContainer").add_child(script_picker)
-	script_picker.size_flags_horizontal = SIZE_EXPAND_FILL
-#	script_picker.script_owner = self
-	script_picker.connect("resource_changed",self,"_on_condition_script_changed")
-	
+func init(_inspector_res :TransitflowInspectorRes):
 	self.inspector_res = _inspector_res
 	undo_redo = inspector_res.transit_flow.undo_redo
 	message = inspector_res.transit_flow.message
 	if not is_inside_tree() :
 		yield(self,"ready")
 	#type
-	get_node("Editor/ScriptEditior").visible = true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_SCRIPT else false
 	get_node("Editor/ExpressionEditior").visible = true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_EXPRESSION else false
 	
 	get_node("Editor/VariableEditor").visible = true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false
@@ -219,8 +216,6 @@ func init(_inspector_res :TransitflowInspectorRes, script_picker:EditorScriptPic
 	get_node("Editor/AutoEditor").visible = true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_AUTO else false
 	get_node("Editor/AutoEditor/Panel/VBoxContainer/TipLabel").text = _get_tip_text(inspector_res.transition_type)
 	
-	# script
-	script_picker.edited_resource = inspector_res.script_condition_res.condition_script
 #	get_node()
 	transition_type_button.select(inspector_res.transition_type)
 	#auto
@@ -328,8 +323,9 @@ func action_set_transition_type(old_type , new_type):
 	undo_redo.create_action("Set transition_type")
 	
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.SET_TRANSITION_TYPE)
-	undo_redo.add_do_property(inspector_res , "transition_type" , new_type)	
-	undo_redo.add_do_property(get_node("Editor/ScriptEditior") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_SCRIPT else false)
+	undo_redo.add_do_property(inspector_res , "transition_type" , new_type)
+	if get_node_or_null("Editor/ScriptEditior"):
+		undo_redo.add_do_property(get_node("Editor/ScriptEditior") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_SCRIPT else false)
 	undo_redo.add_do_property(get_node("Editor/ExpressionEditior") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_EXPRESSION else false)
 	undo_redo.add_do_property(get_node("Editor/VariableEditor") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
 	undo_redo.add_do_property(get_node("Editor/AutoEditor") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_AUTO else false)
@@ -341,7 +337,8 @@ func action_set_transition_type(old_type , new_type):
 	
 	undo_redo.add_undo_method(message,"set_undo_history",Message.History.SET_TRANSITION_TYPE)
 	undo_redo.add_undo_property(inspector_res , "transition_type" , old_type)
-	undo_redo.add_undo_property(get_node("Editor/ScriptEditior") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_SCRIPT else false)
+	if get_node_or_null("Editor/ScriptEditior"):
+		undo_redo.add_undo_property(get_node("Editor/ScriptEditior") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_SCRIPT else false)
 	undo_redo.add_undo_property(get_node("Editor/ExpressionEditior") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_EXPRESSION else false)
 	undo_redo.add_undo_property(get_node("Editor/VariableEditor") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
 	undo_redo.add_undo_property(get_node("Editor/AutoEditor") , "visible" ,true if old_type == HfsmConstant.TRANSITION_TYPE_AUTO else false)
@@ -441,16 +438,7 @@ func action_set_variable_condition_operate_mode(old_mode , new_mode):
 	undo_redo.commit_action()
 	message.set_history(Message.History.SET_VARIABLE_CONDITION_OPERATION_MODE)
 	
-func action_set_condition_script(old_script, new_script):
-	undo_redo.create_action("Set condition_script")
-	undo_redo.add_do_method(message,"set_redo_history",Message.History.SET_CONDITION_SCRIPT)
-	undo_redo.add_do_property(inspector_res.script_condition_res, "condition_script", new_script)
-	undo_redo.add_do_method(inspector_res , "update_comment" )
-	undo_redo.add_undo_method(message,"set_undo_history",Message.History.SET_CONDITION_SCRIPT)
-	undo_redo.add_undo_property(inspector_res.script_condition_res, "condition_script", old_script)
-	undo_redo.add_undo_method(inspector_res , "update_comment" )
-	undo_redo.commit_action()
-	message.set_history(Message.History.SET_CONDITION_SCRIPT)
+
 
 func _on_VariableExpressionEditorList_gui_input(event):
 	if event is InputEventMouseButton:
@@ -465,7 +453,4 @@ func _on_FoldButton_toggled(button_pressed):
 		if c is VariableExpressionEditor:
 			c.is_fold = button_pressed
 
-func _on_condition_script_changed(script: Script)-> void:
-	if not is_instance_valid(script) or script is GDScript or script.get_class() == "CSharpScript" :
-		action_set_condition_script(_get_script_condition_res().condition_script, script)
 
