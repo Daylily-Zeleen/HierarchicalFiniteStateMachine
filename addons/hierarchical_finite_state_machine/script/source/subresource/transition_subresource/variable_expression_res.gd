@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,26 +34,26 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.8(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                        
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 tool
 extends Resource
@@ -63,7 +63,7 @@ const HfsmConstant = preload("./../../../../script/source/hfsm_constant.gd")
 
 signal deleted(deleted_variable_variable_expression_res )
 var variable_res :VariableRes
-var trigger_mode :int = HfsmConstant.TRIGGER_MODE_FORCE 
+var trigger_mode :int = HfsmConstant.TRIGGER_MODE_FORCE
 var comparation :int = HfsmConstant.COMPARATION_EQUEAL
 var value setget _set_value ,_get_value
 func _set_value(v) :
@@ -75,12 +75,12 @@ func _get_value():
 		HfsmConstant.VARIABLE_TYPE_STRING:
 			return value
 		HfsmConstant.VARIABLE_TYPE_INTEGER:
-			return int(value) 
+			return int(value)
 		HfsmConstant.VARIABLE_TYPE_FLOAT:
 			return float(value)
 func _get_property_list():
 	var properties :Array
-	
+
 	properties.push_back({name = "variable_res",type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE,hint_string = "Resource" })
 	properties.push_back({name = "trigger_mode",type = TYPE_INT })
 	properties.push_back({name = "comparation",type = TYPE_INT })
@@ -94,13 +94,13 @@ func _init(_variable_res:VariableRes = null, _trigger_mode :int = HfsmConstant.T
 	trigger_mode = _trigger_mode
 	comparation = _comparation
 	value = str(_value)
-	
+
 func _on_VariableRes_deleted(variable_res):
 	emit_signal("deleted" , self)
-	
+
 func deleted_self():
 	emit_signal("deleted" , self)
 
 func is_valid():
 	return false if variable_res.is_deleted else true
-	
+

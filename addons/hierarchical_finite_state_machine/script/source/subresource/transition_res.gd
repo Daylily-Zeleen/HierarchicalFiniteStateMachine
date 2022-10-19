@@ -1,22 +1,22 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com.                                                   
+#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com.
 #
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine(HFSM - Full Version).   
-#     
-#                 
+#	Hirerarchical Finite State Machine(HFSM - Full Version).
+#
+#
 #	This file is part of HFSM - Full Version.
 #                                                                                                                       *
-#	HFSM - Full Version is a Godot Plugin that can be used freely except in any 
+#	HFSM - Full Version is a Godot Plugin that can be used freely except in any
 #form of dissemination, but the premise is to donate to plugin developers.
 #Please refer to LISENCES.md for more information.
-#                                                                   
+#
 #	HFSM - Full Version是一个除了以任何形式传播之外可以自由使用的Godot插件，前提是向插件开
 #发者进行捐赠，具体许可信息请见 LISENCES.md.
 #
-#	This is HFSM‘s full version ,But there are only a few more unnecessary features 
-#than the trial version(please read the READEME.md to learn difference.).If this 
+#	This is HFSM‘s full version ,But there are only a few more unnecessary features
+#than the trial version(please read the READEME.md to learn difference.).If this
 #plugin is useful for you,please consider to support me by getting the full version.
 #If you do not want to donate,please consider to use the trial version.
 #
@@ -24,28 +24,28 @@
 #如果这个插件对您有帮助，请考虑通过获取完整版本来支持插件开发者，如果您不想进行捐赠，请考虑使
 #用试用版本。
 #
-# Trail version link : 
+# Trail version link :
 #	https://gitee.com/y3y3y3y33/HierarchicalFiniteStateMachine
 #	https://github.com/Daylily-Zeleen/HierarchicalFiniteStateMachine
-# Sponsor link : 
+# Sponsor link :
 #	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138    
-#                                    
-#	@author   Daylily-Zeleen                                            
-#	@email    daylily-zeleen@qq.com                                              
-#	@version  0.8(版本号)                                                     
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@qq.com
+#	@version  0.8(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
-#                                                                      
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                         
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file     
-#  2022/07/02 | 0.8   | Daylily-Zeleen      | Implement script_condition           
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2022/07/02 | 0.8   | Daylily-Zeleen      | Implement script_condition
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 tool
 extends Resource
@@ -62,13 +62,13 @@ var to_res :StateRes = StateRes.new()
 var transition_type :int = HfsmConstant.TRANSITION_TYPE_AUTO
 
 var auto_condition_res :AutoConditionRes =null
-var expression_condition_res :ExpressionConditionRes = null 
-var variable_condition_res :VariableConditionRes = null 
+var expression_condition_res :ExpressionConditionRes = null
+var variable_condition_res :VariableConditionRes = null
 
 func _get_property_list():
 	var properties :Array
 #		properties.push_back({name = "TransitionRes",type = TYPE_NIL,usage = PROPERTY_USAGE_CATEGORY  })
-	
+
 	properties.push_back({name = "from_res" , type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE, hint_string = "Resource" })
 	properties.push_back({name = "to_res",type = TYPE_OBJECT,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
 	properties.push_back({name = "transition_type",type = TYPE_INT  })
@@ -76,13 +76,13 @@ func _get_property_list():
 	properties.push_back({name = "expression_condition_res",type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
 	properties.push_back({name = "variable_condition_res",type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
 	properties.push_back({name = "script_condition_res",type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
-	
+
 	return properties
 func _init(
 		_from_res :StateRes = null ,
-		_to_res:StateRes  = null, 
+		_to_res:StateRes  = null,
 		_transition_type :int = HfsmConstant.TRANSITION_TYPE_AUTO ,
-		_auto_condition_res :AutoConditionRes = AutoConditionRes.new() , 
+		_auto_condition_res :AutoConditionRes = AutoConditionRes.new() ,
 		_expression_condition_res :ExpressionConditionRes = ExpressionConditionRes.new() ,
 		_variable_condition_res :VariableConditionRes = VariableConditionRes.new()
 		):

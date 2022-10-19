@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,27 +34,27 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.8(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
-#  2022/07/2 | 0.8   | Daylily-Zeleen      | remove  _custom_class_list                
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2022/07/2 | 0.8   | Daylily-Zeleen      | remove  _custom_class_list
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 extends EditorInspectorPlugin
 

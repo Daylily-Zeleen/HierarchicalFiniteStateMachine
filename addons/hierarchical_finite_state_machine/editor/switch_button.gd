@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,39 +34,39 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.8(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                          
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 extends Button
 
 signal switch_fsm_request(switch_button)
 
-const NestedFsmRes = preload("../script/source/nested_fsm_res.gd") 
-var hfsm_editor 
+const NestedFsmRes = preload("../script/source/nested_fsm_res.gd")
+var hfsm_editor
 var nested_fsm_res:NestedFsmRes
 
 
 func delete_self():
 	queue_free()
-	
+
 func _init(_hfsm_editor , _nested_fsm_res:NestedFsmRes):
 	hfsm_editor = _hfsm_editor
 	nested_fsm_res = _nested_fsm_res
@@ -74,10 +74,10 @@ func _init(_hfsm_editor , _nested_fsm_res:NestedFsmRes):
 	name = nested_fsm_res.fsm_name
 	nested_fsm_res.connect("fsm_name_changed" , self , "_on_fsm_name_changed")
 	connect("pressed",self ,"_on_pressed")
-	
+
 func _on_fsm_name_changed(new_name:String):
 	text = new_name
 	name = new_name
-	
+
 func _on_pressed():
 	emit_signal("switch_fsm_request" ,self)

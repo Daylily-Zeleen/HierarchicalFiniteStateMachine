@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,26 +34,26 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.8(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                          
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 tool
 extends GraphNode
@@ -67,7 +67,7 @@ const Message = preload("message.gd")
 var undo_redo :UndoRedo
 var message :Message
 
-var the_plugin :EditorPlugin 
+var the_plugin :EditorPlugin
 
 var hfsm_editor
 var _root_fsm_res :NestedFsmRes setget _set_root_fsm_res
@@ -82,7 +82,7 @@ func _load_variables():
 		for v in _root_fsm_res.variable_res_list :
 			if v is NestedFsmRes.VariableRes and not v in get_children():
 				add_new_variable_editor(v)
-	
+
 #初始化设置
 func init(_hfsm_editor,_root_fsm_res :NestedFsmRes):
 	for i in get_children() :
@@ -93,18 +93,18 @@ func init(_hfsm_editor,_root_fsm_res :NestedFsmRes):
 	undo_redo = _hfsm_editor.undo_redo
 	_set_root_fsm_res(_root_fsm_res)
 	set_deferred("rect_size",Vector2.ZERO)
-	
-	
+
+
 func deleted_variable_editor_and_res(variable_res:VariableEditor.VariableRes):
 	for c in get_children() :
 		if c is VariableEditor :
 			if c.variable_res == variable_res :
 				c.deleted_self()
-		
+
 func _process(delta):
 	if not the_plugin and hfsm_editor and hfsm_editor.the_plugin :
 		the_plugin = hfsm_editor.the_plugin
-		
+
 	if hfsm_editor and hfsm_editor.enable :
 		var exist_name :Array
 		for c in get_children() :
@@ -114,7 +114,7 @@ func _process(delta):
 				else:
 					c.set_warning(false)
 					exist_name.append(c.name_edit.text)
-			
+
 func _on_FsmVariableNode_resize_request(new_minsize):
 	set_deferred("rect_size" , new_minsize)
 
@@ -137,17 +137,17 @@ func add_new_variable_editor(res:NestedFsmRes.VariableRes,pos:int = -1)->Variabl
 	new_variable_editor.init( res)
 
 	return new_variable_editor
-	
-		
+
+
 func _on_AddButton_pressed():
 	var variable_res :NestedFsmRes.VariableRes = NestedFsmRes.VariableRes.new()
 	action_add_new_variable(variable_res)
-	
+
 var is_fold :bool = true
 onready var fold_button :Button = get_node("OpButtons/FoldButton")
 func _on_FoldButton_pressed():
 	action_switch_is_fold(!is_fold)
-	
+
 func switch_is_fold(_is_fold:bool) :
 	is_fold = _is_fold
 	if is_fold :
@@ -162,7 +162,7 @@ func switch_is_fold(_is_fold:bool) :
 
 func _on_VariableList_close_request():
 	switch_visible(false)
-	
+
 func switch_visible(visible :bool, _offset:Vector2 = offset):
 	action_switch_visible(visible ,_offset)
 #----------------undo redo--------------------
@@ -178,7 +178,7 @@ func action_switch_visible(new:bool , _offset:Vector2):
 	undo_redo.add_undo_property(self , "selected", true )
 	undo_redo.commit_action()
 	message.set_history(Message.History.SWITCH_VARIABLE_LIST_VISIBLE)
-	
+
 func action_switch_is_fold(new:bool ):
 	undo_redo.create_action("Switch is_fold")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.SWITCH_VARIABLE_LIST_FOLDING_STATE)
@@ -193,7 +193,7 @@ func _undo_add_new_variable_editor(res:NestedFsmRes.VariableRes):
 	for c in get_children():
 		if c is VariableEditor and c.variable_res == res:
 			c._on_DeletButton_pressed()
-			
+
 func action_add_new_variable(variable_res : NestedFsmRes.VariableRes):
 	undo_redo.create_action("Add new variable")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.ADD_VARIABLE)
@@ -220,7 +220,7 @@ func do_delete_related_expression(data_dict:Dictionary):
 		for v_e in data_dict[t_res] :
 			t_res.variable_condition_res._on_variable_expression_res_deleted(v_e)
 	hfsm_editor.refresh_transition_comment()
-			
+
 func undo_delete_related_expression(data_dict:Dictionary):
 	for t_res in data_dict.keys() :
 		for v_e in data_dict[t_res] :

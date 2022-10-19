@@ -3,6 +3,8 @@
 .import/
 export.cfg
 export_presets.cfg
+script_templates/
+*.import
 
 # Mono-specific ignores
 .mono/

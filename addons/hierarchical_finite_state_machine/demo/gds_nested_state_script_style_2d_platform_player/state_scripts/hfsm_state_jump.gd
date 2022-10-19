@@ -5,7 +5,7 @@ extends "res://addons/hierarchical_finite_state_machine/script/source/state.gd"
 
 ###agents list-start# please not modify this line.
 const Player = preload("res://addons/hierarchical_finite_state_machine/demo/gds_nested_state_script_style_2d_platform_player/Player.gd")
-var player : Player 
+var player : Player
 ###agents list-end# please not modify this line.
 ###nested fsm state-start# please not modify this line.
 ###nested fsm state-end# please not modify this line.
@@ -42,13 +42,13 @@ func entry()->void:
 #(In order to ensure the function completeness)
 #Note that this method will not be called if this state is an exit state
 func update(delta:float)->void:
-	# Move control, different state's move logic are controlled at here. 
+	# Move control, different state's move logic are controlled at here.
 	var dir := Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 
 	player.velocity.x = lerp(player.velocity.x , dir * player.move_speed, delta *player. float_horizon_accel)
 	player.velocity.y += player.gravity * delta
 	player.velocity = player.move_and_slide(player.velocity,Vector2.UP)
-	
+
 	# Set hfsm's variable for transtion condition check.
 	# Just for the transitions between "move" and "idle".
 	# Others transitions is controlled by expression conditions, please refer the hfsm's graph for more.

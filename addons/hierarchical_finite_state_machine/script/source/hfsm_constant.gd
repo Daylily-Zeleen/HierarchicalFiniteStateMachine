@@ -1,22 +1,22 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com.                                                   
+#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com.
 #
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine(HFSM - Full Version).   
-#     
-#                 
+#	Hirerarchical Finite State Machine(HFSM - Full Version).
+#
+#
 #	This file is part of HFSM - Full Version.
 #                                                                                                                       *
-#	HFSM - Full Version is a Godot Plugin that can be used freely except in any 
+#	HFSM - Full Version is a Godot Plugin that can be used freely except in any
 #form of dissemination, but the premise is to donate to plugin developers.
 #Please refer to LISENCES.md for more information.
-#                                                                   
+#
 #	HFSM - Full Version是一个除了以任何形式传播之外可以自由使用的Godot插件，前提是向插件开
 #发者进行捐赠，具体许可信息请见 LISENCES.md.
 #
-#	This is HFSM‘s full version ,But there are only a few more unnecessary features 
-#than the trial version(please read the READEME.md to learn difference.).If this 
+#	This is HFSM‘s full version ,But there are only a few more unnecessary features
+#than the trial version(please read the READEME.md to learn difference.).If this
 #plugin is useful for you,please consider to support me by getting the full version.
 #If you do not want to donate,please consider to use the trial version.
 #
@@ -24,39 +24,39 @@
 #如果这个插件对您有帮助，请考虑通过获取完整版本来支持插件开发者，如果您不想进行捐赠，请考虑使
 #用试用版本。
 #
-# Trail version link : 
+# Trail version link :
 #	https://gitee.com/y3y3y3y33/HierarchicalFiniteStateMachine
 #	https://github.com/Daylily-Zeleen/HierarchicalFiniteStateMachine
-# Sponsor link : 
+# Sponsor link :
 #	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138    
-#                                    
-#	@author   Daylily-Zeleen                                               
-#	@email    daylily-zeleen@qq.com                                              
-#	@version  0.8(版本号)                                                               
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@qq.com
+#	@version  0.8(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
-#                                                                      
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                             
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file           
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/02 | 0.8   | Daylily-Zeleen      | Add C# script template code
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 #状态类型
 enum {
-	STATE_TYPE_NORMAL , 
+	STATE_TYPE_NORMAL ,
 	STATE_TYPE_ENTRY ,
-	STATE_TYPE_EXIT , 
+	STATE_TYPE_EXIT ,
 }
 #TansitionConditionType
 enum {
 	TRANSITION_TYPE_AUTO ,
-	TRANSITION_TYPE_VARIABLE , 
+	TRANSITION_TYPE_VARIABLE ,
 	TRANSITION_TYPE_EXPRESSION ,
 }
 enum {
@@ -74,28 +74,28 @@ enum{
 #变量类型
 enum {
 	VARIABLE_TYPE_TRIGGER ,
-	VARIABLE_TYPE_BOOLEAN , 
+	VARIABLE_TYPE_BOOLEAN ,
 	VARIABLE_TYPE_INTEGER ,
 	VARIABLE_TYPE_FLOAT ,
 	VARIABLE_TYPE_STRING ,
 }
 #触发器类型
 enum {
-	TRIGGER_MODE_FORCE , 
-	TRIGGER_MODE_NORMAL , 
+	TRIGGER_MODE_FORCE ,
+	TRIGGER_MODE_NORMAL ,
 }
 #变量条件比较类型
 enum {
-	COMPARATION_EQUEAL , 
-	COMPARATION_UNEQUEAL ,  
-	COMPARATION_GREATER_THAN , 
-	COMPARATION_GREATER_THAN_OR_EQUAL , 
-	COMPARATION_LESS_THAN , 
-	COMPARATION_LESS_THAN_OR_EQUAL , 
+	COMPARATION_EQUEAL ,
+	COMPARATION_UNEQUEAL ,
+	COMPARATION_GREATER_THAN ,
+	COMPARATION_GREATER_THAN_OR_EQUAL ,
+	COMPARATION_LESS_THAN ,
+	COMPARATION_LESS_THAN_OR_EQUAL ,
 }
 #布尔
 enum {
-	BOOL_TRUE , 
+	BOOL_TRUE ,
 	BOOL_FALSE ,
 }
 #
@@ -136,10 +136,10 @@ const Extends_ :String = "extends'res://addons/hierarchical_finite_state_machine
 const ExtendsPath:String = "\"res://addons/hierarchical_finite_state_machine/script/source/state.gd\""
 
 enum ProcessMode{
-	IDLE , 
+	IDLE ,
 	PHYSICS ,
-	IDLE_AND_PHYSICS , 
-	MAMUAL , 
+	IDLE_AND_PHYSICS ,
+	MAMUAL ,
 }
 
 
@@ -147,12 +147,12 @@ const CSStateTemplate ="""
 /*
 	You can use 'Hfsm' to call the HFSM which contain this state , and call it's menbers.
 	Please browse document to find API.
-	
-	== Note!! == 
+
+	== Note!! ==
 	C# template can't auto replace class name, because the Template PlaceHolder grammar will be recognaize as C# grammar errs.
 	Please Repalce you state class name Manually!!!
-	
-	== 注意！！== 
+
+	== 注意！！==
 	C# 模板不能自动替换类名，因为模板占位符在会被识别为C#语法错误。
 	请在创建改脚本后手动替换类名！！！
 */
@@ -164,11 +164,11 @@ public class PlaceHolder: HFSM.State
 	/*
 		CSharpScript State version unsupport auto append agents and the state which is nest this state.
 		Because Godot can't get latest CSharpScript.source_code without reboot project( event if after build).
-		This feature will be considered to add if godot fix this bug. 
+		This feature will be considered to add if godot fix this bug.
 
 		C# 状态脚本不支持自动添加 代理变量 和 内嵌该状态的状态变量。
 		因为Godot不能获取最新的C#脚本代码，除非重启项目(即使在build之后)。
-		只有Godot修复了这个bug，该特性才会被考虑添加进来。 
+		只有Godot修复了这个bug，该特性才会被考虑添加进来。
 
 		You can add them mamually as follow:
 
@@ -177,23 +177,23 @@ public class PlaceHolder: HFSM.State
 		//     (HFSM -> Inspector-> Advanced Setting-> check Disable Rename To Snake Case)
 		public Node agent_node_name{set;get;}
 		public Node agent_node_name_other{set;get;}
-		
-		// "Reference" can be repalce as the class name of state which is nest this state if it is coded in C#, 
+
+		// "Reference" can be repalce as the class name of state which is nest this state if it is coded in C#,
 		// "fsm_nested_state_name" must be a name "'fsm_'+ the state name of state which is nest this state."
-		public Reference fsm_nested_state_name{set;get;} 
+		public Reference fsm_nested_state_name{set;get;}
 
 		// "Node"可以被替换为代理节点的具体类名.
 		// "agent_node_name"必须是代理节点的snake_case名称，但是当禁用HFSM重命名代理节点名称为snake_case的功能时，你可以将其替换为代理节点的名称（通常为PascalCase）。
 		//     (HFSM -> 监视器 -> Advanced Setting-> 勾选 Disable Rename To Snake Case)
 		public Node agent_node_name{set;get;}
 		public Node agent_node_name_other{set;get;}
-		
-		// 如果嵌套该状态的状态附加了C#编写的脚本，"Reference"可以被替换为具体的类名。 
+
+		// 如果嵌套该状态的状态附加了C#编写的脚本，"Reference"可以被替换为具体的类名。
 		// "fsm_nested_state_name"必须是 "'fsm_'+被该状态嵌套的父级状态名称."
-		public Reference fsm_nested_state_name{set;get;} 
+		public Reference fsm_nested_state_name{set;get;}
 	*/
-	
-	
+
+
 	/// <summary>
 	/// This funcion will be called just once when the hfsm is generated.
 	/// </summary>

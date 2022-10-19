@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,27 +34,27 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.8(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                             
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
-#  2021/07/2 | 0.1   | Daylily-Zeleen      | Support C# state script     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2021/07/2 | 0.1   | Daylily-Zeleen      | Support C# state script
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 tool
 extends GraphNode
@@ -68,7 +68,7 @@ signal entry_nested_request(state_node)
 #-------------------标识函数-------------------
 func StateNode()->void:
 	pass
-	
+
 #--------properties----------------
 var hfsm_editor :Node
 var undo_redo :UndoRedo
@@ -81,7 +81,7 @@ func _set_state_res(res :StateRes) :
 	state_res = res
 	if not state_res.is_connected("param_updated" , self ,"_on_StateRes_param_updated") :
 		state_res.connect("param_updated" , self ,"_on_StateRes_param_updated")
-		
+
 	(hfsm_editor.current_nested_fsm_res as NestedFsmRes).add_state(res)
 	if state_res :
 		set_offset(state_res.editor_offset)
@@ -96,8 +96,8 @@ var inspector_res :StateNodeInspectRes
 
 var state_name :String = "state" setget _set_state_name ,_get_state_name
 func _set_state_name(n :String):
-	if n.length() > 0: 
-		
+	if n.length() > 0:
+
 		state_name = n
 		name = n
 		state_res.state_name = n
@@ -108,7 +108,7 @@ func _get_state_name() ->String:
 
 export(int ,"Normal" , "ENTRY" , "EXIT") var state_type :int = HfsmConstant.STATE_TYPE_NORMAL setget  _set_state_type,_get_state_type
 func _set_state_type(t :int):
-	state_res.state_type = t 
+	state_res.state_type = t
 
 	match t:
 		HfsmConstant.STATE_TYPE_NORMAL:
@@ -117,7 +117,7 @@ func _set_state_type(t :int):
 			overlay = OVERLAY_BREAKPOINT
 		HfsmConstant.STATE_TYPE_EXIT :
 			overlay = OVERLAY_POSITION
-	
+
 func _get_state_type():
 	return state_res.state_type
 
@@ -126,28 +126,28 @@ var nested_fsm_res :NestedFsmRes setget _set_nested_hfsm_res, _get_nested_hfsm_r
 func _set_nested_hfsm_res(nested_fsm_res :NestedFsmRes) :
 	state_res.nested_fsm_res = nested_fsm_res
 func _get_nested_hfsm_res():
-	return state_res.nested_fsm_res 
-		
+	return state_res.nested_fsm_res
+
 #是否嵌套状态机
 export(bool)var is_nested :bool = false setget _set_is_nested,_get_is_nested
 func _set_is_nested(v:bool):
-	state_res.is_nested = v 
+	state_res.is_nested = v
 	if nested_button:
 		nested_button.visible = v
 		set_deferred("rect_size",Vector2.ZERO)
 	if not nested_fsm_res:
 		nested_fsm_res = NestedFsmRes.new(_get_state_name() , true)
 func _get_is_nested():
-	return state_res.is_nested 
+	return state_res.is_nested
 
 #状态脚本
 export(Script) var state_script:Script setget _set_state_script,_get_state_script
 func _set_state_script(new_script:Script):
 	if new_script and new_script.resource_path != "" :
-		state_res.state_script = new_script 
+		state_res.state_script = new_script
 		get_node("MarginContainer/ScriptTip").show()
 	else :
-		state_res.state_script = null 
+		state_res.state_script = null
 		get_node("MarginContainer/ScriptTip").hide()
 func _get_state_script():
 	return state_res.state_script
@@ -157,7 +157,7 @@ func _set_disable_properties_reset_when_entry(v:bool):
 	state_res.reset_properties_when_entry = v
 func _get_disable_properties_reset_when_entry():
 	return state_res.reset_properties_when_entry
-	
+
 export(bool) var reset_nested_fsm_when_entry:bool setget _set_nested_fsm_force_reset_when_entry,_get_nested_fsm_force_reset_when_entry
 func _set_nested_fsm_force_reset_when_entry(v:bool):
 	state_res.reset_nested_fsm_when_entry = v
@@ -165,7 +165,7 @@ func _get_nested_fsm_force_reset_when_entry():
 	return state_res.reset_nested_fsm_when_entry
 #
 #-----------Nodes-------------
-onready var name_edit:LineEdit = get_node("MarginContainer/HBoxContainer/NameEdit") 
+onready var name_edit:LineEdit = get_node("MarginContainer/HBoxContainer/NameEdit")
 onready var nested_button :Button =get_node("MarginContainer/HBoxContainer/NestedButton")
 #
 func init(editor , _state_res:NestedFsmRes.StateRes = NestedFsmRes.StateRes.new() ):
@@ -177,7 +177,7 @@ func init(editor , _state_res:NestedFsmRes.StateRes = NestedFsmRes.StateRes.new(
 
 
 func make_state_name_unique():
-	var exist_name_list :Array 
+	var exist_name_list :Array
 	for s_res in hfsm_editor.current_nested_fsm_res.state_res_list:
 		if s_res is StateRes and s_res !=  state_res:
 			exist_name_list.append(s_res.state_name)
@@ -193,7 +193,7 @@ func _get_children(node:Node)->Array:
 			for c_c in _get_children(c) :
 				list.append(c_c)
 	return list
-		
+
 func create_new_script():
 	var scd :ScriptCreateDialog = hfsm_editor.the_plugin.script_create_dialog
 	var res_path :String = hfsm_editor.current_hfsm._root_fsm_res.resource_path
@@ -216,10 +216,10 @@ func create_new_script():
 			break
 	scd.popup_centered()
 	if not scd.is_connected("script_created",self ,"_on_SCD_script_created") :
-		scd.connect("script_created",self ,"_on_SCD_script_created") 
+		scd.connect("script_created",self ,"_on_SCD_script_created")
 	if not scd.is_connected("popup_hide",self , "_on_SCD_script_popup_hide") :
-		scd.connect("popup_hide",self , "_on_SCD_script_popup_hide") 
-		
+		scd.connect("popup_hide",self , "_on_SCD_script_popup_hide")
+
 func attach_exist_script():
 	var ssd :FileDialog = hfsm_editor.the_plugin.script_select_dialog
 	if not ssd.is_connected("file_selected", self, "_on_script_file_selected") :
@@ -238,10 +238,10 @@ func _on_StateRes_param_updated():
 			overlay = OVERLAY_BREAKPOINT
 		HfsmConstant.STATE_TYPE_EXIT :
 			overlay = OVERLAY_POSITION
-	
+
 	nested_button.visible = state_res.is_nested
 	set_deferred("rect_size",Vector2.ZERO)
-	
+
 func _on_NameEdit_text_changed(new_text :String):
 	if new_text.length()>0 :
 		state_name = new_text
@@ -249,7 +249,7 @@ func _on_NameEdit_text_changed(new_text :String):
 		state_res.state_name = new_text
 	set_deferred("rect_size",Vector2.ZERO)
 	(hfsm_editor.the_plugin as EditorPlugin).get_editor_interface().get_inspector().refresh()
-	
+
 func _on_NameEdit_focus_exited():
 	name_edit.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	name_edit.selecting_enabled = false
@@ -288,7 +288,7 @@ func _on_State_gui_input(event):
 			double_click_flag = true
 		elif not event.pressed and event.button_index ==BUTTON_LEFT :
 			if double_click_flag :
-				double_click_flag = false 
+				double_click_flag = false
 				var state_script :Script = _get_state_script()
 				if state_script :
 					#双击打开脚本
@@ -296,14 +296,14 @@ func _on_State_gui_input(event):
 				else :
 					#没有脚本则弹出选择对话框
 					attach_exist_script()
-					
+
 			else :
 				if name_edit.get_rect().has_point(name_edit.get_parent().get_local_mouse_position()) :
 					yield(get_tree().create_timer(1) ,"timeout")
 					name_edit.mouse_filter = Control.MOUSE_FILTER_STOP
 
 func _load_state_script(path_or_script):
-	var new_script :Script 
+	var new_script :Script
 	if path_or_script is String:
 		if not path_or_script.empty():
 			new_script = load(path_or_script)
@@ -322,18 +322,18 @@ func _load_state_script(path_or_script):
 		elif new_script.get_class() == "CSharpScript":
 			print("HFSM: attach a c# script, currently can't check it is valid or not, please ensure your script is inhirt from HFSM.State.")
 	action_set_state_script(_get_state_script() , new_script)
-	
+
 	var hfsm_inspector_res = hfsm_editor.current_hfsm._inspector_res
-	hfsm_inspector_res.agents = hfsm_inspector_res.agents 
+	hfsm_inspector_res.agents = hfsm_inspector_res.agents
 	update_nested_state_script()
 
 func _on_SCD_script_created(new_script:Script)->void:
 	_load_state_script(new_script)
 func _on_SCD_script_popup_hide():
 	var scd :ScriptCreateDialog = hfsm_editor.the_plugin.script_create_dialog
-	scd.disconnect("script_created",self ,"_on_SCD_script_created") 
-	scd.disconnect("popup_hide",self , "_on_SCD_script_popup_hide") 
-	
+	scd.disconnect("script_created",self ,"_on_SCD_script_created")
+	scd.disconnect("popup_hide",self , "_on_SCD_script_popup_hide")
+
 func _on_script_file_selected(file_path:String):
 	_load_state_script(file_path)
 	hfsm_editor.the_plugin.script_select_dialog.disconnect("file_selected", self, "_on_script_file_selected")
@@ -341,7 +341,7 @@ func _on_script_file_selected(file_path:String):
 func _on_script_select_dialog_popup_hide():
 	hfsm_editor.the_plugin.script_select_dialog.disconnect("file_selected", self, "_on_script_file_selected")
 	hfsm_editor.the_plugin.script_select_dialog.disconnect("popup_hide", self, "_on_script_select_dialog_popup_hide")
-	
+
 var old_name:String
 func _on_NameEdit_gui_input(event):
 	if hfsm_editor.editing_transit_flow :
@@ -399,7 +399,7 @@ func action_change_state_name(old_name , new_name):
 	undo_redo.add_do_property(self,"rect_size" , Vector2.ZERO)
 	undo_redo.add_do_method(self , "update_nested_state_script")
 	undo_redo.add_do_method(self , "_fresh_inspector")
-	
+
 	undo_redo.add_undo_method(message,"set_undo_history",Message.History.SET_STATE_NAME)
 	undo_redo.add_undo_property(state_res,"state_name" , old_name)
 	undo_redo.add_undo_property(self,"state_name" , old_name)
@@ -417,7 +417,7 @@ func action_set_state_script(old_script , new_script):
 	undo_redo.add_do_property(get_node("MarginContainer/ScriptTip") , "visible", true if new_script else false)
 	undo_redo.add_do_method(self , "update_nested_state_script")
 	undo_redo.add_do_method(self , "_fresh_inspector")
-	
+
 	undo_redo.add_undo_method(message,"set_undo_history",Message.History.SET_STATE_SCRIPT)
 	undo_redo.add_undo_property(state_res , "state_script", old_script)
 	undo_redo.add_undo_property(get_node("MarginContainer/ScriptTip") , "visible", true if old_script else false)
@@ -429,7 +429,7 @@ func action_set_state_script(old_script , new_script):
 func action_set_state_type(old_type , new_type):
 	var old_entry_state_res = (hfsm_editor.current_nested_fsm_res as NestedFsmRes).get_exist_entry_res()
 	undo_redo.create_action("Set state_type")
-	
+
 	var old_overlay = overlay
 	undo_redo.add_undo_method(message,"set_undo_history",Message.History.SET_STATE_TYPE)
 	undo_redo.add_undo_property(state_res , "state_type" ,old_type)
@@ -437,7 +437,7 @@ func action_set_state_type(old_type , new_type):
 	undo_redo.add_undo_property(self , "overlay" ,old_overlay)
 	undo_redo.add_undo_method(hfsm_editor , "get_entry_state_count")
 	undo_redo.add_undo_method(self , "_fresh_inspector")
-	
+
 	var new_overlay
 	match new_type:
 		HfsmConstant.STATE_TYPE_NORMAL:
@@ -446,7 +446,7 @@ func action_set_state_type(old_type , new_type):
 			new_overlay = OVERLAY_BREAKPOINT
 		HfsmConstant.STATE_TYPE_EXIT :
 			new_overlay = OVERLAY_POSITION
-			
+
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.SET_STATE_TYPE)
 	undo_redo.add_do_property(state_res , "state_type",new_type)
 	if new_type == HfsmConstant.STATE_TYPE_ENTRY:
@@ -456,7 +456,7 @@ func action_set_state_type(old_type , new_type):
 	undo_redo.add_do_method(self , "_fresh_inspector")
 	undo_redo.commit_action()
 	message.set_history(Message.History.SET_STATE_TYPE)
-	
+
 func action_set_is_nested(old , new) :
 	undo_redo.create_action("Set is_nested")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.SET_STATE_IS_NESTED)
@@ -471,7 +471,7 @@ func action_set_is_nested(old , new) :
 	undo_redo.add_undo_method(self , "_fresh_inspector")
 	undo_redo.commit_action()
 	message.set_history(Message.History.SET_STATE_IS_NESTED)
-	
+
 func action_set_reset_properties_when_entry(new:bool):
 	undo_redo.create_action("Set reset_properties_when_entry")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.SET_STATE_AUTO_RESET)
@@ -482,7 +482,7 @@ func action_set_reset_properties_when_entry(new:bool):
 	undo_redo.add_undo_method(self , "_fresh_inspector")
 	undo_redo.commit_action()
 	message.set_history(Message.History.SET_STATE_AUTO_RESET)
-	
+
 func action_set_reset_nested_fsm_when_entry(new:bool):
 	undo_redo.create_action("Set action_set_reset_nested_fsm_when_entry")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.SET_STATE_NESTED_FSM_AUTO_RESET)

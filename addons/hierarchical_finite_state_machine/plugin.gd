@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,27 +34,27 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.8(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                          
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
-#  2022/07/1~3 | 0.8   | Daylily-Zeleen      |   Bugfix, add new feature.               
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2022/07/1~3 | 0.8   | Daylily-Zeleen      |   Bugfix, add new feature.
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 tool
 extends EditorPlugin
@@ -86,13 +86,13 @@ func _enter_tree():
 				break
 		if passed :
 			break
-	
+
 
 	hfsm_editor_dock = load("res://addons/hierarchical_finite_state_machine/editor/hfsm_editor.tscn").instance()
 	trasition_editor_inspector_plugin= load("res://addons/hierarchical_finite_state_machine/editor/transit_flow/trasition_editor_inspector_plugin.gd").new()
 	state_editor_inspector_plugin = load("res://addons/hierarchical_finite_state_machine/editor/state_node/state_editor_inspector_plugin.gd").new()
 	hfsm_inspector_plugin= load("res://addons/hierarchical_finite_state_machine/editor/hfsm/hfsm_inspector_plugin.gd").new()
-	
+
 	inspector = get_editor_interface().get_inspector()
 	var p = inspector.get_parent()
 	while not p is TabContainer:
@@ -100,36 +100,36 @@ func _enter_tree():
 	inspector_tab = p
 	if not inspector_tab.is_connected("tab_changed" , self , "_on_inspector_tab_changed"):
 		inspector_tab.connect("tab_changed" , self , "_on_inspector_tab_changed")
-		
-	
+
+
 	get_editor_interface().get_file_system_dock().connect("file_removed" , self , "_on_FileSystemDock_file_removed" )
 	hfsm_editor_dock.add_child(script_create_dialog)
 	add_custom_type("HFSM", "Node", load("res://addons/hierarchical_finite_state_machine/script/hfsm.gd"), load("res://addons/hierarchical_finite_state_machine/script/icon.svg"))
 
-	
+
 	dock_button = add_control_to_bottom_panel(hfsm_editor_dock, "HFSM Editor")
 	dock_button.hide()
-	
+
 	hfsm_editor_dock.the_plugin = self
 	hfsm_editor_dock.connect("node_selected" , self , "_on_FsmEditor_node_selected")
-	
+
 
 	script_select_dialog.mode = FileDialog.MODE_OPEN_FILE
 	script_select_dialog.set_filters(PoolStringArray(["*.gd ; GD Script","*.cs ; CSharp Script"]))
 	script_select_dialog.set_title("open script file")
 	script_select_dialog.resizable = true
 	script_select_dialog.rect_min_size = Vector2(720 , 420)
-	
+
 	get_editor_interface().get_base_control().add_child(script_select_dialog)
 
 	add_inspector_plugin(trasition_editor_inspector_plugin)
 	add_inspector_plugin(state_editor_inspector_plugin)
 	add_inspector_plugin(hfsm_inspector_plugin)
-	
+
 	get_editor_interface().get_selection().connect("selection_changed", self, "_on_editor_selection_changed")
-	
+
 	connect("scene_changed",self ,"_on_scene_changed")
-	
+
 	var dir := Directory.new()
 	var f :File= File.new()
 	# 模板目录
@@ -143,7 +143,7 @@ func _enter_tree():
 		if f.open(HfsmConstant.cs_state_template_target_path, File.WRITE) == OK:
 			f.store_string(HfsmConstant.CSStateTemplate)
 			f.close()
-		
+
 	if not dir.file_exists(HfsmConstant.ignore_target_path) :
 		dir.copy(HfsmConstant.ignore_default_path , HfsmConstant.ignore_target_path)
 	print("HFSM : If you use this plugin first time in this project ,it may push some error ,they are import error,just ignore them.")
@@ -151,7 +151,7 @@ func _enter_tree():
 func _on_scene_changed(scene_root):
 	hfsm_editor_dock.enable = false
 
-	
+
 func _on_editor_selection_changed():
 	var ns:Array = get_editor_interface().get_selection().get_selected_nodes()
 	if ns.size() > 0:
@@ -165,7 +165,7 @@ func _on_editor_selection_changed():
 				current_hfsm._root_fsm_res = preload("script/source/nested_fsm_res.gd").new()
 			hfsm_editor_dock.current_hfsm = current_hfsm
 			hfsm_editor_dock.enable = true
-			
+
 			dock_button.pressed = true
 			dock_button.show()
 
@@ -177,13 +177,13 @@ func _on_inspector_tab_changed(indx:int):
 				get_editor_interface().inspect_object(ns[0]._inspector_res)
 			elif inspector_tab.get_current_tab_control().name == "Node" :
 				get_editor_interface().inspect_object(ns[0])
-			
+
 func _exit_tree():
 	remove_custom_type("HFSM")
-	
+
 	remove_control_from_bottom_panel(hfsm_editor_dock)
 	hfsm_editor_dock.queue_free()
-	
+
 	get_editor_interface().get_base_control().remove_child(script_select_dialog)
 	script_select_dialog.queue_free()
 

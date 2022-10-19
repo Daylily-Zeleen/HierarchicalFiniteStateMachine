@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,38 +34,38 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.8(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file  
-#  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition (full version)                     
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition (full version)
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 extends Resource
 
 const TransitionRes = preload("../../script/source/nested_fsm_res.gd").TransitionRes
-var transit_flow 
+var transit_flow
 #-------------------
 var from_state setget ,get_from_state
 func get_from_state():
 	if transit_flow:
 		return transit_flow.from.state_name
-	return "Null" 
+	return "Null"
 var to_state setget ,get_to_state
 func get_to_state():
 	if transit_flow:
@@ -88,7 +88,7 @@ func _set_auto_condition_res(auto_res:TransitionRes.AutoConditionRes ) :
 func _get_auto_condition_res():
 	if transit_flow:
 		return transit_flow.auto_condition_res
-		
+
 var expression_condition_res :TransitionRes.ExpressionConditionRes = TransitionRes.ExpressionConditionRes.new() setget _set_expression_condition_res , _get_expression_condition_res
 func _set_expression_condition_res(expresstion_res :TransitionRes.ExpressionConditionRes):
 	if transit_flow:
@@ -96,7 +96,7 @@ func _set_expression_condition_res(expresstion_res :TransitionRes.ExpressionCond
 func _get_expression_condition_res():
 	if transit_flow:
 		return transit_flow.expression_condition_res
-		
+
 var variable_condition_res :TransitionRes.VariableConditionRes = TransitionRes.VariableConditionRes.new() setget _set_variable_condition_res , _get_variable_condition_res
 func _set_variable_condition_res(variable_res:TransitionRes.VariableConditionRes):
 	if transit_flow:
@@ -115,14 +115,14 @@ func _init(_transit_flow):
 func _get_property_list():
 	var properties :Array
 	properties.push_back({name = "Transition",type = TYPE_NIL,usage = PROPERTY_USAGE_CATEGORY  })
-	
+
 	properties.push_back({name = "from_state",type = TYPE_STRING })
 	properties.push_back({name = "to_state",type = TYPE_STRING })
 	properties.push_back({name = "condition_type",type = TYPE_INT })
-	
-	
+
+
 	return properties
-	
+
 func update_comment():
 	if transit_flow :
 		transit_flow.update_comment()

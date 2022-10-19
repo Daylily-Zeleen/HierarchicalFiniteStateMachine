@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,28 +34,28 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.9(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.9(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                      
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file    
-#  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition(full version)           
-#  2021/09/18 | 0.9   | Daylily-Zeleen      | fix trail version bug: can't change transition type.                
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition(full version)
+#  2021/09/18 | 0.9   | Daylily-Zeleen      | fix trail version bug: can't change transition type.
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 tool
 extends VBoxContainer
@@ -67,7 +67,7 @@ const TransitflowInspectorRes =preload("../transit_flow_inspector_res.gd")
 const NestedFsmRes = preload("../../../script/source/nested_fsm_res.gd")
 const TransitionRes = NestedFsmRes.TransitionRes
 const VariableExpressionRes = TransitionRes.VariableConditionRes.VariableExpressionRes
-var root_fsm_res :NestedFsmRes 
+var root_fsm_res :NestedFsmRes
 var inspector_res :TransitflowInspectorRes setget _set_inspector_res
 func _set_inspector_res(res):
 	inspector_res = res
@@ -91,7 +91,7 @@ func _on_connect_state_updated():
 		if inspector_res.transit_flow.from :
 			from_label.text ="From : " + inspector_res.transit_flow.from.state_name
 		else :
-			from_label.text ="From : NULL" 
+			from_label.text ="From : NULL"
 		if inspector_res.transit_flow.to :
 			to_label.text ="To   : "+ inspector_res.transit_flow.to.state_name
 		else :
@@ -100,9 +100,9 @@ func _on_connect_state_updated():
 var transition_type :int = HfsmConstant.TRANSITION_TYPE_AUTO setget _set_transition_type ,_get_transition_type
 func _set_transition_type(type)->void:
 	action_set_transition_type(_get_transition_type() , type)
-		
+
 func _get_transition_type():
-	return inspector_res.transition_type 
+	return inspector_res.transition_type
 
 
 
@@ -110,7 +110,7 @@ func _get_transition_type():
 var auto_transit_mode :int = HfsmConstant.AUTO_TRANSIT_MODE_DELAY_TIMER setget _set_auto_transit_mode , _get_auto_transit_mode
 func _set_auto_transit_mode (t:int):
 	action_auto_transit_mode(_get_auto_transit_mode() , t)
-	
+
 func _get_auto_transit_mode() :
 	return inspector_res.auto_condition_res.auto_transit_mode
 
@@ -139,11 +139,11 @@ func _get_expression_string():
 
 var expression_comment :String setget _set_expression_comment , _get_expression_comment
 func _set_expression_comment(comment:String):
-	inspector_res.expression_condition_res.expression_comment = comment 
+	inspector_res.expression_condition_res.expression_comment = comment
 	_uptate_transition_comment()
 func _get_expression_comment():
 	return inspector_res.expression_condition_res.expression_comment
-	
+
 #--------------------------variable properties------------------------------------------------
 var variable_condition_res :NestedFsmRes.TransitionRes.VariableConditionRes setget _set_variable_condition_res , _get_variable_condition_res
 func _set_variable_condition_res(v):
@@ -155,13 +155,13 @@ var variable_op_mode :int = HfsmConstant.VARIABLE_CONDITION_OP_MODE_AND setget _
 func _set_variable_op_mode(mode :int) :
 	action_set_variable_condition_operate_mode(_get_variable_op_mode() ,mode )
 func _get_variable_op_mode() :
-	return inspector_res.variable_condition_res.variable_op_mode 
-var variable_expression_res_list :Array = [] setget _set_variable_expression_res_list , _get_variable_expression_res_list  
+	return inspector_res.variable_condition_res.variable_op_mode
+var variable_expression_res_list :Array = [] setget _set_variable_expression_res_list , _get_variable_expression_res_list
 func _set_variable_expression_res_list(res_list:Array) :
-	inspector_res.variable_condition_res.variable_expression_res_list = res_list 
+	inspector_res.variable_condition_res.variable_expression_res_list = res_list
 	_uptate_transition_comment()
 func _get_variable_expression_res_list():
-	return inspector_res.variable_condition_res.variable_expression_res_list 
+	return inspector_res.variable_condition_res.variable_expression_res_list
 
 
 
@@ -191,10 +191,10 @@ func add_variable_expression(variable_expression_res :VariableExpressionRes,pos 
 		variable_expression_res.connect("deleted",inspector_res.transit_flow ,"_on_VariableExpressionRes_deleted",[],CONNECT_PERSIST)
 	message.set_tip(Message.Tip.ADD_VARIABLE_EXPRESSION_SUCCESS)
 	inspector_res.update_comment()
-	
-	
-	
-	
+
+
+
+
 func delete_variable_expression_and_res(variable_expression_res :VariableExpressionRes):
 	for c in variable_expression_editor_list.get_children() :
 		if c is VariableExpressionEditor and c.variable_expression_res == variable_expression_res:
@@ -209,13 +209,13 @@ func init(_inspector_res :TransitflowInspectorRes):
 		yield(self,"ready")
 	#type
 	get_node("Editor/ExpressionEditior").visible = true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_EXPRESSION else false
-	
+
 	get_node("Editor/VariableEditor").visible = true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false
 	get_node("InspectTitle/HBoxContainer/FoldButton").visible = true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false
-	
+
 	get_node("Editor/AutoEditor").visible = true if inspector_res.transition_type == HfsmConstant.TRANSITION_TYPE_AUTO else false
 	get_node("Editor/AutoEditor/Panel/VBoxContainer/TipLabel").text = _get_tip_text(inspector_res.transition_type)
-	
+
 #	get_node()
 	transition_type_button.select(inspector_res.transition_type)
 	#auto
@@ -238,7 +238,7 @@ func init(_inspector_res :TransitflowInspectorRes):
 			_add_variable_expression_editor().init(self ,variable_expression_res)
 		else :
 			inspector_res.variable_condition_res._on_variable_expression_res_deleted(variable_expression_res)
-			
+
 func _add_variable_expression_editor() -> VariableExpressionEditor:
 	var new_expression = preload("variable_expression_editor.tscn").instance()
 	variable_expression_editor_list.add_child(new_expression)
@@ -265,9 +265,9 @@ func _on_Expression_text_changed():
 func _on_Comment_text_changed():
 	if comment.text and comment.text != "" :
 		var last_ascii:int= comment.text.substr(comment.text.length()-1).to_ascii()[0]
-		if not(("a".to_ascii()[0]<= last_ascii and last_ascii<="z".to_ascii()[0]) or 
-			("A".to_ascii()[0]<= last_ascii and last_ascii<="Z".to_ascii()[0]) or 
-			("0".to_ascii()[0]<= last_ascii and last_ascii<="9".to_ascii()[0]) or 
+		if not(("a".to_ascii()[0]<= last_ascii and last_ascii<="z".to_ascii()[0]) or
+			("A".to_ascii()[0]<= last_ascii and last_ascii<="Z".to_ascii()[0]) or
+			("0".to_ascii()[0]<= last_ascii and last_ascii<="9".to_ascii()[0]) or
 			last_ascii == "_".to_ascii()[0]):
 			old_comment = comment.text
 	else:
@@ -286,23 +286,23 @@ func _on_AutoModeButton_item_selected(index):
 func _on_DelayTimerEdit_text_changed(new_text):
 	if not new_text.substr(new_text.length()-1) == ".":
 		delay_time_edit.text = str(float(new_text))
-		delay_time_edit.caret_position = delay_time_edit.text.length() 
+		delay_time_edit.caret_position = delay_time_edit.text.length()
 	_uptate_transition_comment()
-	
+
 func _on_DelayTimerEdit_text_entered(new_text):
 	delay_time_edit.release_focus()
-	
+
 func _on_DelayTimerEdit_focus_exited():
 	delay_time_edit.text = str(float(delay_time_edit.text))
 	if not "." in delay_time_edit.text:
 		delay_time_edit.text += ".0"
 	_set_delay_time(float(delay_time_edit.text))
-	
+
 func _on_TimesEdit_text_changed(new_text):
 	times_edit.text = str(int(new_text))
-	times_edit.caret_position = times_edit.text.length() 
+	times_edit.caret_position = times_edit.text.length()
 	_uptate_transition_comment()
-	
+
 
 func _on_TimesEdit_text_entered(new_text):
 	times_edit.release_focus()
@@ -321,7 +321,7 @@ func _on_VariableOpModeButton_item_selected(index):#改变表达式运行类型
 #------------------undo redo ----------------------------
 func action_set_transition_type(old_type , new_type):
 	undo_redo.create_action("Set transition_type")
-	
+
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.SET_TRANSITION_TYPE)
 	undo_redo.add_do_property(inspector_res , "transition_type" , new_type)
 	if get_node_or_null("Editor/ScriptEditior"):
@@ -330,11 +330,11 @@ func action_set_transition_type(old_type , new_type):
 	undo_redo.add_do_property(get_node("Editor/VariableEditor") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
 	undo_redo.add_do_property(get_node("Editor/AutoEditor") , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_AUTO else false)
 	undo_redo.add_do_property(fold_button , "visible" ,true if new_type == HfsmConstant.TRANSITION_TYPE_VARIABLE else false)
-	
+
 	undo_redo.add_do_method(transition_type_button , "select" , new_type )
 	undo_redo.add_do_method(inspector_res , "update_comment" )
-	
-	
+
+
 	undo_redo.add_undo_method(message,"set_undo_history",Message.History.SET_TRANSITION_TYPE)
 	undo_redo.add_undo_property(inspector_res , "transition_type" , old_type)
 	if get_node_or_null("Editor/ScriptEditior"):
@@ -370,7 +370,7 @@ func action_auto_transit_mode(old_mode , new_mode):
 	undo_redo.add_do_property(get_node("Editor/AutoEditor/Panel/VBoxContainer/TipLabel") , "text" ,tip_text)
 	undo_redo.add_do_method(auto_mode_button , "select" , new_mode )
 	undo_redo.add_do_method(inspector_res , "update_comment" )
-	
+
 	tip_text = _get_tip_text(old_mode)
 	undo_redo.add_undo_method(message,"set_undo_history",Message.History.SET_AUTO_CONDITION_MODE)
 	undo_redo.add_undo_property(inspector_res.auto_condition_res , "auto_transit_mode" , old_mode)
@@ -379,7 +379,7 @@ func action_auto_transit_mode(old_mode , new_mode):
 	undo_redo.add_undo_property(get_node("Editor/AutoEditor/Panel/VBoxContainer/TipLabel") , "text" , tip_text )
 	undo_redo.add_undo_method(auto_mode_button , "select" , old_mode )
 	undo_redo.add_undo_method(inspector_res , "update_comment" )
-	
+
 	undo_redo.commit_action()
 	message.set_history(Message.History.SET_AUTO_CONDITION_MODE)
 
@@ -409,7 +409,7 @@ func action_set_times(old_times , new_times) :
 	undo_redo.commit_action()
 	message.set_history(Message.History.SET_AUTO_CONDITION_TIMES)
 
-	
+
 var old_comment:String = ""
 func action_update_expression_comment(new_text):
 	undo_redo.create_action("Update expression_comment")
@@ -423,7 +423,7 @@ func action_update_expression_comment(new_text):
 	undo_redo.add_undo_method(inspector_res , "update_comment" )
 	undo_redo.commit_action()
 	message.set_history(Message.History.EDIT_EXPRESSTION_CONDITION_COMMENT)
-	
+
 
 func action_set_variable_condition_operate_mode(old_mode , new_mode):
 	undo_redo.create_action("Set variable_condition_operate_mode")
@@ -437,7 +437,7 @@ func action_set_variable_condition_operate_mode(old_mode , new_mode):
 	undo_redo.add_undo_method(inspector_res , "update_comment" )
 	undo_redo.commit_action()
 	message.set_history(Message.History.SET_VARIABLE_CONDITION_OPERATION_MODE)
-	
+
 
 
 func _on_VariableExpressionEditorList_gui_input(event):

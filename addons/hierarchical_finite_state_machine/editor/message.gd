@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,27 +34,27 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.8(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                            
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file        
-#  2022/07/1 | 0.8   | Daylily-Zeleen      |  Add new action const for script trantion         
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2022/07/1 | 0.8   | Daylily-Zeleen      |  Add new action const for script trantion
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 tool
 extends HBoxContainer
@@ -88,22 +88,22 @@ const History:Dictionary = {
 	ENTER_NESTED_STATE_MACHINE = "Enter nested State Machine",
 	SWITCH_TRANSITION_COMMENT_VISIBLE = "Switch Transition comment visible",
 	DELETE_OBJECT = "Delete Objects",
-	
+
 	COPY = "Copy",
-	PASTE = "Paste" , 
+	PASTE = "Paste" ,
 	DUPLICATE = "Duplicate" ,
-	
+
 	SWITCH_VARIABLE_LIST_VISIBLE = "Switch Variable List visible",
-	
+
 	MOVE_VARIABLE_UP = "Move Variable up" ,
 	MOVE_VARIABLE_DOWN = "Move Variable down",
-	
-	ADD_VARIABLE = "Add variable" , 
+
+	ADD_VARIABLE = "Add variable" ,
 	SET_VARIABLE_TYPE = "Set Variable type",
 	EDIT_VARIABLE_NAME = "Edit Variable name",
 	EDIT_VARIABLE_COMMENT = "Edit Variable comment",
 	DELETED_VARIABLE = "Delete Variable",
-	 
+
 	ADD_STATE = "Add State",
 	SET_STATE_NAME = "Set State name",
 	SET_STATE_TYPE = "Set State type",
@@ -113,19 +113,19 @@ const History:Dictionary = {
 	SET_STATE_NESTED_FSM_AUTO_RESET = "Set State'Nested Fsm auto reset when entry",
 	CREATE_TRANSITION = "Create Transition",
 	RECONNECT_TRANSITION = "Rconnect Transition",
-	
+
 	SWITCH_VARIABLE_LIST_FOLDING_STATE = "Set Variable List foling state",
-	
+
 	SET_TRANSITION_TYPE = "Set Transition type",
-	
+
 	SET_AUTO_CONDITION_MODE = "Set Auto Condition mode",
 	SET_AUTO_CONDITION_DELAY_TIME = "Set Auto Condition delay time",
 	SET_AUTO_CONDITION_TIMES = "Set Auto Condition times",
-	
-	
+
+
 	EDIT_EXPRESSTION_CONDITION_TEXT = "Edit Expression Condition text",
 	EDIT_EXPRESSTION_CONDITION_COMMENT = "Edit Expression Condition Comment",
-	
+
 	MOVE_VARIABLE_EXPRESSION_UP = "Move Variable Expression up",
 	MOVE_VARIABLE_EXPRESSION_DOWN = "Move Variable Expression down",
 	SET_VARIABLE_CONDITION_OPERATION_MODE = "Set Variable Condition operation mode",
@@ -140,18 +140,18 @@ const History:Dictionary = {
 func _ready():
 	set_tip(Tip.DEFAULT)
 	set_history("")
-	
+
 var reset_to_default_timer :float= 0
 func _process(delta):
 	if tip.text == Error.NOT_ENTRY_STATE or tip.text == Error.MULTI_ENTRY_STATE:
 		if hfsm_editor.get_entry_state_count() == 1:
 			set_tip(Tip.DEFAULT)
 			set_process(false)
-	reset_to_default_timer -= delta 
+	reset_to_default_timer -= delta
 	if reset_to_default_timer <= 0 :
 		set_tip(Tip.DEFAULT)
 		set_process(false)
-		
+
 func set_tip(text:String):
 	tip.self_modulate = Color.white
 	tip.text = text
@@ -162,14 +162,14 @@ func set_tip(text:String):
 func set_error(text:String):
 	tip.self_modulate = Color.crimson
 	tip.text = text
-	reset_to_default_timer = 5 
+	reset_to_default_timer = 5
 	set_process(true)
-	
+
 func set_history(text :String):
 	history.text = text
 func set_undo_history(text:String):
 	history.text = "Undo: " + text
 func set_redo_history(text:String):
 	history.text = "Redo: " + text
-	
+
 

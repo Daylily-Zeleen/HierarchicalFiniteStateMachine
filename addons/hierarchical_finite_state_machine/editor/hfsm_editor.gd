@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,29 +34,29 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  0.8(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                       
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file                 
-#  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete               
-#  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete  
-#  2022/07/1~3 | 0.8   | Daylily-Zeleen      |   Bugfix, add new feature.                  
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete
+#  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete
+#  2022/07/1~3 | 0.8   | Daylily-Zeleen      |   Bugfix, add new feature.
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 tool
 extends Control
@@ -78,7 +78,7 @@ const Message = preload("message.gd")
 onready var comment_visible_button :ToolButton
 onready var popup_menu:PopupMenu = get_node("PopupMenu")
 onready var script_popup_menu:PopupMenu = get_node("PopupMenu/ScriptPopupMenu")
-onready var message:Message = get_node("FsmEditior/Message") 
+onready var message:Message = get_node("FsmEditior/Message")
 onready var graph_edit :GraphEdit = get_node("FsmEditior/GraphEdit")
 onready var variable_list :VariableList = get_node("FsmEditior/GraphEdit/VariableList")
 onready var switch_buttons :Node = get_node("FsmEditior/Panel/CenterContainer/SwitchButtons")
@@ -88,7 +88,7 @@ var the_plugin:EditorPlugin setget _set_the_plugin
 func _set_the_plugin(p :EditorPlugin) :
 	the_plugin = p
 	undo_redo = p.get_undo_redo()
-var undo_redo :UndoRedo 
+var undo_redo :UndoRedo
 
 var loading := false
 var current_hfsm :HFSM setget _set_current_hfsm
@@ -115,15 +115,15 @@ func _set_enable(v:bool) :
 		get_node("NotSelectedWarming").hide()
 	else :
 		get_node("NotSelectedWarming").show()
-		
-var transition_comment_visible :bool = true setget _set_transition_comment_visible 
+
+var transition_comment_visible :bool = true setget _set_transition_comment_visible
 func _set_transition_comment_visible (v:bool):
 	if current_nested_fsm_res:
 		current_nested_fsm_res.transition_comment_visible = v
 	for i in graph_edit.get_children():
 		if i is TransitFlow :
 			i.comment_visible = v
-		
+
 
 var current_nested_fsm_res:NestedFsmRes setget _set_current_nested_fsm_res
 func _set_current_nested_fsm_res(nested_fsm_res :NestedFsmRes):
@@ -142,9 +142,9 @@ func _set_current_nested_fsm_res(nested_fsm_res :NestedFsmRes):
 		not_state_warming.show()
 	else :
 		not_state_warming.hide()
-		
 
-var current_fsm_button :SwithcButton  
+
+var current_fsm_button :SwithcButton
 
 func _ready():
 	popup_menu.set_item_submenu(2,"ScriptPopupMenu")
@@ -161,7 +161,7 @@ func _ready():
 						break
 				break
 	_set_enable(false)
-	
+
 func _load_state_machine_from_res():
 	#移除
 	if current_nested_fsm_res :
@@ -178,14 +178,14 @@ func _load_state_machine_from_res():
 		if state_res is NestedFsmRes.StateRes :
 			add_state_node(state_res)
 	yield(get_tree(),"idle_frame")
-	#载入TransitFlow 
+	#载入TransitFlow
 	for transition_res in current_nested_fsm_res.transition_res_list :
 		if transition_res is NestedFsmRes.TransitionRes:
 			add_transit_flow(transition_res)
-	
+
 func _get_mouse_pos_offset() -> Vector2:
 	return  graph_edit.get_local_mouse_position() + graph_edit.scroll_offset
-	
+
 
 func get_state_node_by_state_name_or_null(state_name : String):
 	for s in graph_edit.get_children() :
@@ -193,22 +193,22 @@ func get_state_node_by_state_name_or_null(state_name : String):
 			if s.state_name == state_name :
 				return s
 	return null
-	
-	
+
+
 func add_state_node(state_res:NestedFsmRes.StateRes = NestedFsmRes.StateRes.new()):
 	var new_state_node = preload("state_node/state_node.tscn").instance()
 	graph_edit.add_child(new_state_node)
 	new_state_node.init(self ,state_res )
 	new_state_node.connect("entry_nested_request",self , "_on_entry_nested_request",[],CONNECT_PERSIST)
-	
+
 	graph_edit.connect("node_selected" , new_state_node ,"_on_selected",[],CONNECT_PERSIST)
 	graph_edit.connect("node_unselected" , new_state_node ,"_on_unselected",[],CONNECT_PERSIST)
-	
+
 	get_entry_state_count()
 	return new_state_node
 
 
-	
+
 func add_transit_flow(transition_res :NestedFsmRes.TransitionRes) ->TransitFlow:
 	var new_transit_flow :TransitFlow = preload("transit_flow/transit_flow.tscn").instance()
 	graph_edit.add_child(new_transit_flow)
@@ -217,7 +217,7 @@ func add_transit_flow(transition_res :NestedFsmRes.TransitionRes) ->TransitFlow:
 	connect("multiple_select_updated" , new_transit_flow,"_on_graph_edit_multiple_select_updated",[],CONNECT_PERSIST)
 	graph_edit.connect("node_selected" , new_transit_flow ,"_on_self_selected",[],CONNECT_PERSIST)
 	graph_edit.connect("node_unselected" , new_transit_flow ,"_on_self_unselected",[],CONNECT_PERSIST)
-	
+
 	new_transit_flow.comment_visible = transition_comment_visible
 	return new_transit_flow
 
@@ -233,14 +233,14 @@ func get_entry_state_count():
 	return count
 
 
-	
+
 
 ## ----------------- Custom Methods ------
 func refresh_state_node():
 	for c in graph_edit.get_children():
 		if c is StateNode:
 			c.state_res = c.state_res
-			
+
 func refresh_transition_comment():
 	for c in graph_edit.get_children():
 		if c is TransitFlow:
@@ -249,7 +249,7 @@ func refresh_transition_line() :
 	for c in graph_edit.get_children():
 		if c is TransitFlow:
 			c.place_line()
-			
+
 func add_new_switch_button(nested_fsm_res:NestedFsmRes) -> SwithcButton:
 	if current_fsm_button and current_fsm_button is SwithcButton:
 		current_fsm_button.disabled = false
@@ -260,11 +260,11 @@ func add_new_switch_button(nested_fsm_res:NestedFsmRes) -> SwithcButton:
 	current_fsm_button = n_b
 	current_fsm_button.disabled = true
 	return n_b
-	
+
 func _on_switch_fsm_request(switch_button:SwithcButton):
 	action_switch_fsm(switch_button)
 
-var copy_state_list :Array 
+var copy_state_list :Array
 var copy_transition_list :Array
 func copy():
 	copy_state_list.clear()
@@ -316,14 +316,14 @@ func convert_to_nested(request_node):
 					t.to = nested_state_node
 				elif (t.from.is_selected() and not t.to.is_selected()) or (not t.from.is_selected() and t.to.is_selected()) :
 					emit_signal("delete_request",t)
-					
+
 		for c in graph_edit.get_children() :
 			if c is StateNode and c.is_selected():
 				nested_fsm_res.state_res_list.append(c.state_res)
 				current_nested_fsm_res.deleted_state(c.state_res)
 				if c == request_node :
 					(c as StateNode).state_type = HfsmConstant.STATE_TYPE_ENTRY
-				
+
 			elif c is TransitFlow and c.is_selected():
 				nested_fsm_res.transition_res_list.append(c.transition_res)
 				current_nested_fsm_res.delete_transition(c.transition_res)
@@ -339,7 +339,7 @@ func _on_GraphEdit_popup_request(position):
 	#首先处理transitFlow编辑模式
 	if editing_transit_flow :
 		return
-		
+
 	var top = get_top_control_or_null_at_pos()
 	if top and (top is StateNode or top is TransitFlow):
 		top.selected = true
@@ -351,7 +351,7 @@ func _on_GraphEdit_popup_request(position):
 			break
 	if not has_selected:
 		for c in graph_edit.get_children():
-			if c is TransitFlow and c.is_selected(): 
+			if c is TransitFlow and c.is_selected():
 				has_selected = true
 				break
 	popup_menu.set_item_disabled(CREATE_TRANSITION ,false if top and top is StateNode else true)
@@ -370,7 +370,7 @@ func _on_GraphEdit_popup_request(position):
 	popup_menu.set_item_disabled(CONVERT_TO_NESTED_STATE_MACHINE ,false if has_selected_state else true)
 	popup_menu.set_global_position(position)
 	popup_menu.popup()
-		
+
 enum {
 	ADD_STATE,
 	CREATE_TRANSITION,
@@ -379,7 +379,7 @@ enum {
 	PASTE,
 	DUPLICATE,
 	DELETE,
-	
+
 	CONVERT_TO_NESTED_STATE_MACHINE = 8,
 	SHOW_VARIABLE_LIST_AT_HERE,
 }
@@ -400,7 +400,7 @@ func _on_PopupMenu_index_pressed(index):
 		CREATE_TRANSITION :
 			var top = get_top_control_or_null_at_pos(_last_right_click_pos)
 			if top is StateNode:
-				var transition_res :TransitFlow.TransitionRes = TransitFlow.TransitionRes.new( top.state_res , null ) 
+				var transition_res :TransitFlow.TransitionRes = TransitFlow.TransitionRes.new( top.state_res , null )
 				editing_transit_flow = add_transit_flow(transition_res)
 				message.set_tip(Message.Tip.CONNECT)
 		COPY:
@@ -417,7 +417,7 @@ func _on_PopupMenu_index_pressed(index):
 			action_duplicate()
 		DELETE:
 			action_delete()
-			
+
 		CONVERT_TO_NESTED_STATE_MACHINE :
 			action_convert_to_nested(get_top_control_or_null_at_pos(_last_right_click_pos))
 		SHOW_VARIABLE_LIST_AT_HERE:
@@ -453,17 +453,17 @@ func _on_GraphEdit_gui_input(event):
 						is_multiple_select = true
 				else :
 					is_multiple_select = false
-					
+
 				if Input.is_key_pressed(KEY_SHIFT):
 					var top_state:StateNode = the_top_control
-		
+
 		if not mouse_button_event.pressed :#松开
 			if mouse_button_event.button_index == BUTTON_LEFT:#左键
 				is_multiple_select = false#在信号中处理多选，此处仅复位
 				if editing_transit_flow:
 					yield(get_tree(),"idle_frame")#等待PlaceLine
 					yield(get_tree(),"idle_frame")
-					
+
 			if mouse_button_event.button_index == BUTTON_RIGHT :
 				if editing_transit_flow:
 					graph_edit.move_child(editing_transit_flow,0)
@@ -475,12 +475,12 @@ func _on_GraphEdit_gui_input(event):
 						message.set_tip(Message.Tip.CANCEL_RECONNECT)
 						editing_transit_flow.place_line()
 					editing_transit_flow = null
-				
+
 	elif event is InputEventMouseMotion :
 		var mouse_moution_event :InputEventMouseMotion = event
 		if editing_transit_flow :
 			editing_transit_flow.follow_mouse(_get_mouse_pos_offset())
-			
+
 	elif event is InputEventKey :
 		var key_event :InputEventKey = event
 		if key_event.pressed and not key_event.echo and key_event.scancode == KEY_ESCAPE :
@@ -492,11 +492,11 @@ func _on_GraphEdit_gui_input(event):
 func _on_GraphEdit_node_selected(node):
 	if not is_multiple_select and Engine.editor_hint:
 		emit_signal("node_selected" , node )
-	#	
+	#
 	if node is StateNode:
 		if not editing_transit_flow :
 			if Input.is_key_pressed(KEY_SHIFT):
-				var transition_res :TransitFlow.TransitionRes = TransitFlow.TransitionRes.new( node.state_res , null ) 
+				var transition_res :TransitFlow.TransitionRes = TransitFlow.TransitionRes.new( node.state_res , null )
 				editing_transit_flow = add_transit_flow(transition_res)
 				message.set_tip(Message.Tip.CONNECT)
 		else :
@@ -539,7 +539,7 @@ func iterator_return_children(node:Node):
 			for c_c in  iterator_return_children(c):
 				children.append(c_c)
 	return children
-	
+
 func duplicate_node(node:Node , parent:Node) ->Node:
 	var d_n:Node = node.duplicate()
 	parent.add_child(d_n)
@@ -554,7 +554,7 @@ func duplicate_node(node:Node , parent:Node) ->Node:
 			if node[p.name] is Node:
 				#如果属性是节点内部的子节点,让复制节点重新获取其内部的相同节点
 				if node[p.name] in iterator_return_children(node) or node[p.name] == node:
-					d_n[p.name] = d_n.get_node(node.get_path_to(node[p.name])) 
+					d_n[p.name] = d_n.get_node(node.get_path_to(node[p.name]))
 				#如果属性是节点外部的节点，将改外部节点赋给复制节点
 				elif node[p.name]:
 					d_n[p.name] = node[p.name]
@@ -575,7 +575,7 @@ func duplicate_node(node:Node , parent:Node) ->Node:
 func _on_state_node_mouse_entery(node):
 	if editing_transit_flow :
 		editing_transit_flow.to = node
-		
+
 func _on_GraphEdit_copy_nodes_request():
 	copy()
 
@@ -601,7 +601,7 @@ func _on_GraphEdit_scroll_offset_changed(ofs):
 
 func _on_entry_nested_request(nested_state: StateNode):
 	action_enter_nested(nested_state.nested_fsm_res)
-	
+
 var previous_os_low_processor_usage_mode :bool
 func _on_GraphEdit_mouse_entered():
 	previous_os_low_processor_usage_mode = OS.low_processor_usage_mode
@@ -632,7 +632,7 @@ func _on_GraphEdit__end_node_move():
 	undo_redo.add_undo_method(self, "action_drag" , state_res_to_from_to, false )
 	undo_redo.commit_action()
 	message.set_history(Message.History.DRAG_OBJECTS)
-	
+
 
 #--------------------undo redo sub ------------------------
 func action_switch_comment_visible(v:bool):
@@ -651,19 +651,19 @@ func _redo_deleted(delete_state_res_list:Array , delete_transition_res_list:Arra
 	yield(get_tree(),"idle_frame")
 	refresh_transition_line()
 	get_entry_state_count()
-			
+
 func _undo_deleted(delete_state_res_list:Array , delete_transition_res_list:Array , unselected_transition_res_list:Array):
 	for s in delete_state_res_list :
 		add_state_node(s).selected = true
 	for t in delete_transition_res_list :
 		var t_f = add_transit_flow(t)
 		if not t in unselected_transition_res_list :
-			t_f.selected = true 
+			t_f.selected = true
 	yield(get_tree(),"idle_frame")
 	yield(get_tree(),"idle_frame")
 	refresh_transition_line()
 	get_entry_state_count()
-		
+
 func action_delete():
 	var state_res_list :Array
 	var transition_res_list :Array
@@ -676,21 +676,21 @@ func action_delete():
 			transition_res_list.append(c.transition_res)
 			if not c.is_selected():
 				unselected_transition_res_list.append(c.transition_res)
-				
+
 	undo_redo.create_action("Delete objects")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.DELETE_OBJECT)
 	undo_redo.add_do_method(self , "_redo_deleted" , state_res_list , transition_res_list)
 	undo_redo.add_undo_method(message,"set_undo_history",Message.History.DELETE_OBJECT)
 	undo_redo.add_undo_method(self  , "_undo_deleted" , state_res_list , transition_res_list , unselected_transition_res_list)
-	undo_redo.commit_action()	
+	undo_redo.commit_action()
 	message.set_history(Message.History.DELETE_OBJECT)
-	
+
 func _undo_add_new_state_node(_state_res:NestedFsmRes.StateRes):
 	for c in graph_edit.get_children():
 		if c is StateNode and c.state_res == _state_res :
 			c.delete_self()
 	get_entry_state_count()
-	
+
 func action_add_new_state_node(_state_res:NestedFsmRes.StateRes):
 	undo_redo.create_action("Add new state")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.ADD_STATE)
@@ -699,12 +699,12 @@ func action_add_new_state_node(_state_res:NestedFsmRes.StateRes):
 	undo_redo.add_undo_method(self , "_undo_add_new_state_node" , _state_res)
 	undo_redo.commit_action()
 	message.set_history(Message.History.ADD_STATE)
-	
+
 func _undo_add_new_transit_flow(_transition_res:NestedFsmRes.TransitionRes):
 	for c in graph_edit.get_children():
 		if c is TransitFlow and c.transition_res == _transition_res :
 			c.delete_self()
-	
+
 func action_add_new_transit_flow(_transition_res:NestedFsmRes.TransitionRes) :
 	undo_redo.create_action("Creat new transition")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.CREATE_TRANSITION)
@@ -713,7 +713,7 @@ func action_add_new_transit_flow(_transition_res:NestedFsmRes.TransitionRes) :
 	undo_redo.add_undo_method(self , "_undo_add_new_transit_flow" , _transition_res)
 	undo_redo.commit_action()
 	message.set_history(Message.History.CREATE_TRANSITION)
-	
+
 func _redo_convert_to_nested(data:Dictionary):
 	#重连
 	for t in data.reconnect_from_transition_res_list :
@@ -733,10 +733,10 @@ func _redo_convert_to_nested(data:Dictionary):
 		data.request_nested_fsm_res.delete_transition(t)
 	#更改设定
 	data.nested_state_res.state_type = data.request_state_res.state_type
-	
+
 	data.nested_state_res.is_nested = true
 	data.nested_state_res.nested_fsm_res = data.nested_fsm_res
-	
+
 	data.request_state_res.state_type = HfsmConstant.STATE_TYPE_ENTRY
 	if data.exist_entry :
 		data.exist_entry.state_type = HfsmConstant.STATE_TYPE_NORMAL
@@ -746,13 +746,13 @@ func _redo_convert_to_nested(data:Dictionary):
 	current_fsm_button.disabled = false
 	yield(_set_current_nested_fsm_res(data.nested_fsm_res) , "completed")
 	get_entry_state_count()
-	
+
 func _undo_convert_to_nested(data:Dictionary):
 	#移除拷贝
 	data.request_nested_fsm_res.deleted_state(data.nested_state_res)
 	#更改设定
 	data.request_state_res.state_type = data.request_state_type
-	
+
 	if data.exist_entry :
 		data.exist_entry.state_type = HfsmConstant.STATE_TYPE_ENTRY
 	#还原多余
@@ -783,7 +783,7 @@ func _undo_convert_to_nested(data:Dictionary):
 		elif c is TransitFlow and c.transition_res in data.selected_transition_res_list :
 			c.selected = true
 	get_entry_state_count()
-	
+
 func action_convert_to_nested(request_node):
 	if request_node and request_node is StateNode and request_node.is_selected():
 		var data :Dictionary ={
@@ -791,7 +791,7 @@ func action_convert_to_nested(request_node):
 			"request_state_res" : request_node.state_res ,
 			"request_state_type" : request_node.state_res.state_type ,
 			"nested_fsm_res" : NestedFsmRes.new(request_node.state_name , true) ,
-			"nested_state_res" : NestedFsmRes.StateRes.new(request_node.offset , request_node.state_name) , 
+			"nested_state_res" : NestedFsmRes.StateRes.new(request_node.offset , request_node.state_name) ,
 			"reconnect_from_transition_res_list" : [] ,
 			"reconnect_to_transition_res_list" : [] ,
 			"delete_transition_res_list" : [],
@@ -813,10 +813,10 @@ func action_convert_to_nested(request_node):
 				data.selected_stata_res_list.append(c.state_res)
 				if c.state_res.state_type == HfsmConstant.STATE_TYPE_ENTRY:
 					data.exist_entry = c.state_res
-					
+
 			elif c is TransitFlow and c.is_selected():
 				data.selected_transition_res_list.append(c.transition_res)
-				
+
 		undo_redo.create_action("Convert to nested state machine")
 		undo_redo.add_do_method(message,"set_redo_history",message.History.CONVERT_TO_NESTED_STATE_MACHINE)
 		undo_redo.add_do_method(self , "_redo_convert_to_nested",data)
@@ -827,7 +827,7 @@ func action_convert_to_nested(request_node):
 
 func _redo_paste(s_state_res_list:Array ,s_transition_res_list :Array ,state_res_origin_to_duplicate:Dictionary , d_transition_res_list :Array ):
 	for s in state_res_origin_to_duplicate.values() :
-		current_nested_fsm_res.add_state(s) 
+		current_nested_fsm_res.add_state(s)
 		current_nested_fsm_res.make_state_name_unique(s)
 		add_state_node(s).selected = true
 	for t in d_transition_res_list:
@@ -839,12 +839,12 @@ func _redo_paste(s_state_res_list:Array ,s_transition_res_list :Array ,state_res
 		elif c is TransitFlow and c.transition_res in s_transition_res_list :
 			c.selected = false
 	get_entry_state_count()
-			
+
 func _undo_paste(s_state_res_list:Array ,s_transition_res_list :Array ,state_res_origin_to_duplicate:Dictionary , d_transition_res_list :Array ) :
 	for c in graph_edit.get_children() :
 		if c is StateNode :
 			if c.state_res in s_state_res_list :
-				c.selected = true 
+				c.selected = true
 			elif c.state_res in state_res_origin_to_duplicate.values() :
 				c.delete_self()
 		elif c is TransitFlow:
@@ -853,20 +853,20 @@ func _undo_paste(s_state_res_list:Array ,s_transition_res_list :Array ,state_res
 			elif c.transition_res in d_transition_res_list :
 				c.delete_self()
 	get_entry_state_count()
-		
-		
+
+
 func action_duplicate():
 	var s_state_res_list:Array
-	var s_transition_res_list :Array 
+	var s_transition_res_list :Array
 	var state_res_origin_to_duplicate:Dictionary
-	var d_transition_res_list :Array 
-	
+	var d_transition_res_list :Array
+
 	for c in graph_edit.get_children() :
 		if c is StateNode and c.is_selected() :
 			s_state_res_list.append(c.state_res)
 		elif c is TransitFlow and c.is_selected():
 			s_transition_res_list.append(c.transition_res)
-	
+
 	for s in s_state_res_list :
 		state_res_origin_to_duplicate[s] = s.duplicate_self()
 		state_res_origin_to_duplicate[s].editor_offset += Vector2(30,20)
@@ -884,7 +884,7 @@ func action_duplicate():
 		undo_redo.add_undo_method(self , "_undo_paste",s_state_res_list ,s_transition_res_list ,state_res_origin_to_duplicate , d_transition_res_list )
 		undo_redo.commit_action()
 		message.set_history(Message.History.DUPLICATE)
-	
+
 func action_drag(state_res_to_from_to :Dictionary,do:bool ):
 	for s in graph_edit.get_children() :
 		if s is StateNode and s.state_res in state_res_to_from_to.keys():
@@ -893,16 +893,16 @@ func action_drag(state_res_to_from_to :Dictionary,do:bool ):
 			else :
 				s.offset = state_res_to_from_to[s.state_res][0]
 			(s.state_res as NestedFsmRes.StateRes).editor_offset = s.offset
-	
+
 func action_paste(offset:Vector2) :
 	var s_state_res_list:Array
-	var s_transition_res_list :Array 
+	var s_transition_res_list :Array
 	var state_res_origin_to_duplicate:Dictionary
-	var d_transition_res_list :Array 
-	
+	var d_transition_res_list :Array
+
 	s_state_res_list = copy_state_list.duplicate()
 	s_transition_res_list = copy_transition_list.duplicate()
-	
+
 	for s in s_state_res_list :
 		state_res_origin_to_duplicate[s] = s.duplicate_self()
 		state_res_origin_to_duplicate[s].editor_offset += offset
@@ -927,17 +927,17 @@ func _redo_switch_fsm(index:int , target_nested_fsm_res:NestedFsmRes):
 	yield(get_tree() ,"idle_frame")
 	_set_current_nested_fsm_res(target_nested_fsm_res)
 
-	
+
 func _undo_switch_fsm(res_path:Array):
 	for i in range(1,res_path.size()):
 		yield(_set_current_nested_fsm_res(res_path[i]), "completed")
-	
-		
+
+
 func action_switch_fsm(switch_button:SwithcButton):
 	var res_path:Array
 	for i in range(switch_button.get_index() , switch_buttons.get_child_count()):
 		res_path.append(switch_buttons.get_child(i).nested_fsm_res)
-	
+
 	undo_redo.create_action("Switch Finite State Machine")
 	undo_redo.add_do_method(message,"set_redo_history",Message.History.SWITCH_CURRENT_STATE_MACHINE)
 	undo_redo.add_do_method(self ,"_redo_switch_fsm" , switch_button.get_index() , switch_button.nested_fsm_res)

@@ -1,22 +1,22 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com.                                                   
+#	Copyright (C) 2021 Daylily-Zeleen  735170336@qq.com.
 #
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine(HFSM - Full Version).   
-#     
-#                 
+#	Hirerarchical Finite State Machine(HFSM - Full Version).
+#
+#
 #	This file is part of HFSM - Full Version.
 #                                                                                                                       *
-#	HFSM - Full Version is a Godot Plugin that can be used freely except in any 
+#	HFSM - Full Version is a Godot Plugin that can be used freely except in any
 #form of dissemination, but the premise is to donate to plugin developers.
 #Please refer to LISENCES.md for more information.
-#                                                                   
+#
 #	HFSM - Full Version是一个除了以任何形式传播之外可以自由使用的Godot插件，前提是向插件开
 #发者进行捐赠，具体许可信息请见 LISENCES.md.
 #
-#	This is HFSM‘s full version ,But there are only a few more unnecessary features 
-#than the trial version(please read the READEME.md to learn difference.).If this 
+#	This is HFSM‘s full version ,But there are only a few more unnecessary features
+#than the trial version(please read the READEME.md to learn difference.).If this
 #plugin is useful for you,please consider to support me by getting the full version.
 #If you do not want to donate,please consider to use the trial version.
 #
@@ -24,35 +24,35 @@
 #如果这个插件对您有帮助，请考虑通过获取完整版本来支持插件开发者，如果您不想进行捐赠，请考虑使
 #用试用版本。
 #
-# Trail version link : 
+# Trail version link :
 #	https://gitee.com/y3y3y3y33/HierarchicalFiniteStateMachine
 #	https://github.com/Daylily-Zeleen/HierarchicalFiniteStateMachine
-# Sponsor link : 
+# Sponsor link :
 #	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138    
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@qq.com                                              
-#	@version  0.8(版本号)                                                     
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@qq.com
+#	@version  0.8(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
-#                                                                      
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                          
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file        
-#  2022/07/02 | 0.8   | Daylily-Zeleen      | Bug fix , implement script transition (full version)             
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2022/07/02 | 0.8   | Daylily-Zeleen      | Bug fix , implement script transition (full version)
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 tool
 extends Resource
 signal fsm_name_changed(new_name)
 
 const HfsmConstant = preload("../../script/source/hfsm_constant.gd")
-const StateRes = preload("subresource/state_res.gd")	
+const StateRes = preload("subresource/state_res.gd")
 const VariableRes = preload("subresource/variable_res.gd")
 const TransitionRes = preload("subresource/transition_res.gd")
 
@@ -78,7 +78,7 @@ class AutotTransition :
 			auto_condition = [3,auto_condition_res.times , 0]
 		elif auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_PHYSICS_UPDATE_TIMES :
 			auto_condition = [4,auto_condition_res.times , 0]
-	
+
 	func refresh()->void:
 		if auto_condition[0] == 0 :
 			auto_condition[2] = false
@@ -93,7 +93,7 @@ class AutotTransition :
 		elif auto_condition[0] == 1:
 			return true if from_state._nested_fsm and not from_state._nested_fsm.is_running else false
 		elif auto_condition[0] == 2:
-			return true if from_state.is_exited else false 
+			return true if from_state.is_exited else false
 		elif auto_condition[0] == 3:
 			if not Engine.is_in_physics_frame():
 				auto_condition[2] += 1
@@ -132,15 +132,15 @@ class ExpressionTransition:
 		"Physics2DServer":Physics2DServer,
 		"ARVRServer":ARVRServer,
 		"CameraServer":CameraServer,
-	} 
-	
+	}
+
 	func _set_from_state(new_state):
 		from_state = new_state
 		name_to_obj["from_state"] = from_state
 	func _set_to_state(new_state):
 		to_state = new_state
 		name_to_obj["to_state"] = to_state
-		
+
 	func _init(hfsm:Node,expression_condition_res:ExpressionConditionRes).(hfsm)->void:
 		expression_text = expression_condition_res.expression_text
 		name_to_obj["hfsm"] = hfsm
@@ -162,22 +162,22 @@ class ExpressionTransition:
 					if result :
 						return true
 					else :
-						return false 
+						return false
 			else :
 				push_warning("HFSM: The ExpressionTransition '%s'->'%s' of '%s/%s' has execute failed,please check it."% [from_state.state_name , to_state.state_name , _hfsm.owner.name if _hfsm.owner else "" ,_hfsm.name ])
 				return false
 #-------------Variable-----------------
 class VariableTransition:
 	extends Transition
-#	var hfsm 
-	var is_and_mode:bool = true 
-	var force_trigger_list:Array 
-	var variable_expression_list:Array 
+#	var hfsm
+	var is_and_mode:bool = true
+	var force_trigger_list:Array
+	var variable_expression_list:Array
 	const VariableConditionRes = preload("subresource/transition_subresource/variable_condition_res.gd")
 	func _init(hfsm:Node , variable_condition_res:VariableConditionRes).(hfsm)->void:
 #		_hfsm = hfsm
 		if variable_condition_res.variable_op_mode >0:
-			is_and_mode = false 
+			is_and_mode = false
 		for e in variable_condition_res.variable_expression_res_list:
 			if e is VariableConditionRes.VariableExpressionRes:
 				if e.variable_res.variable_type == VariableConditionRes.HfsmConstant.VARIABLE_TYPE_TRIGGER :
@@ -187,7 +187,7 @@ class VariableTransition:
 						variable_expression_list.append([e.variable_res.variable_name,VariableConditionRes.HfsmConstant.COMPARATION_EQUEAL ,true])
 				else :
 					variable_expression_list.append([e.variable_res.variable_name,e.comparation ,e.value])
-					
+
 	func check()->bool:
 		var variables :Dictionary = _hfsm.variables
 		for force_trigger in force_trigger_list:
@@ -213,7 +213,7 @@ class VariableTransition:
 				return false
 			elif not is_and_mode and current_result :
 				return true
-				
+
 			if current_result:
 				has_true = true
 		return true if has_true else false
@@ -223,16 +223,16 @@ class VariableTransition:
 
 var fsm_name :String = "root" setget _set_fsm_name
 func _set_fsm_name(n:String):
-	fsm_name = n 
+	fsm_name = n
 	emit_signal("fsm_name_changed" ,n)
 
-var state_res_list :Array 
-	
+var state_res_list :Array
+
 var transition_res_list :Array
 
 var variable_res_list:Array
 
-var is_nested:bool = false 
+var is_nested:bool = false
 
 var variable_list_offset :Vector2 = Vector2(0,50)
 var editor_scroll_offset :Vector2 = Vector2.ZERO
@@ -251,13 +251,13 @@ func _get_property_list():
 	properties.push_back({name = "is_nested",type = TYPE_BOOL , usage = PROPERTY_USAGE_STORAGE})
 	if not is_nested :
 		properties.push_back({name = "variable_res_list",type = TYPE_ARRAY , usage = PROPERTY_USAGE_DEFAULT })
-	
+
 	properties.push_back({name = "variable_list_offset",type = TYPE_VECTOR2 , usage = PROPERTY_USAGE_STORAGE })
 	properties.push_back({name = "editor_scroll_offset",type = TYPE_VECTOR2 , usage = PROPERTY_USAGE_STORAGE })
 	properties.push_back({name = "transition_comment_visible",type = TYPE_BOOL , usage = PROPERTY_USAGE_STORAGE })
 	properties.push_back({name = "entered_nested_hfsm_editor",type = TYPE_OBJECT, hint = PROPERTY_HINT_RESOURCE_TYPE ,hint_string = "Resource", usage = PROPERTY_USAGE_STORAGE })
 	properties.push_back({name = "transition_editor_folded",type = TYPE_BOOL, usage = PROPERTY_USAGE_STORAGE })
-	
+
 	return properties
 
 
@@ -272,14 +272,14 @@ func set_unique_entry_state(state_res :StateRes) :
 				s.state_type = HfsmConstant.STATE_TYPE_NORMAL
 		state_res.state_type = HfsmConstant.STATE_TYPE_ENTRY
 
-		
+
 func get_exist_entry_res()->StateRes :
 	for s in state_res_list :
 		if s.state_type == HfsmConstant.STATE_TYPE_ENTRY :
 			return s
 	state_res_list[0].state_type = HfsmConstant.STATE_TYPE_ENTRY
 	return state_res_list[0]
-		
+
 func add_state(new_state_res:StateRes) :
 	if new_state_res and not new_state_res in state_res_list :
 		state_res_list.append(new_state_res)
@@ -291,11 +291,11 @@ func add_state(new_state_res:StateRes) :
 			return
 	if not has_entry :
 		new_state_res.state_type = HfsmConstant.STATE_TYPE_ENTRY
-	
+
 func deleted_state(deleted_state_res:StateRes):
 	if deleted_state_res and deleted_state_res in state_res_list:
 		state_res_list.erase(deleted_state_res)
-		
+
 func make_state_name_unique(state_res:StateRes):
 	var exist_list :Array
 	for s in state_res_list:
@@ -303,18 +303,18 @@ func make_state_name_unique(state_res:StateRes):
 			exist_list.append(s.state_name)
 	while state_res.state_name in exist_list :
 		state_res.state_name += "_"
-		
+
 
 func add_transition(new_transition_res:TransitionRes):
 	if new_transition_res and not new_transition_res in transition_res_list:
 		transition_res_list.append(new_transition_res)
-		
+
 func delete_transition(deleted_transition_res:TransitionRes):
 	if deleted_transition_res and deleted_transition_res in transition_res_list:
 		transition_res_list.erase(deleted_transition_res)
-		
-		
-		
+
+
+
 #添加变量
 func add_variable(new_variable_res :VariableRes , pos :int = -1):
 	if new_variable_res :
@@ -349,7 +349,7 @@ func duplicate_self():
 			d.state_res_list.append(s.duplicate_self())
 		for t in transition_res_list:
 			d.transition_res_list.append(t.duplicate_self())
-		return d 
+		return d
 	return null
 
 func get_state_script_to_state()->Dictionary :
@@ -373,14 +373,14 @@ func is_deleted_state_script():
 			script_to_state[s].state_script = null
 			is_deleted = true
 	return is_deleted
-					
+
 ##########################
 func generate_state_list(hfsm:Node , parent_path:Array, nested_state)->Array:
 	var state_self_property_name_list:Array
 	for p in State.get_script_property_list():
 		state_self_property_name_list.append(p.name)
 	var state_list :Array
-	var nested_fsm_state_name :String 
+	var nested_fsm_state_name :String
 	if nested_state:
 		nested_fsm_state_name = "fsm_"+nested_state.state_name.capitalize().to_lower().replace(" ","_")
 	for state_res in state_res_list:
@@ -395,7 +395,7 @@ func generate_state_list(hfsm:Node , parent_path:Array, nested_state)->Array:
 							if not property.name in state_self_property_name_list and property.name in hfsm.agents.keys():
 								state.set(property.name, hfsm.agents[property.name])
 						if nested_state:
-							state.set(nested_fsm_state_name, nested_state) 
+							state.set(nested_fsm_state_name, nested_state)
 					else :
 						state = State.new()
 						printerr("HFSM : The state script of %s is error , has not inhearit from the correct directory,please check it.")
@@ -406,8 +406,8 @@ func generate_state_list(hfsm:Node , parent_path:Array, nested_state)->Array:
 						if not property.name in state_self_property_name_list and property.name in hfsm.agents.keys():
 							state.set(property.name, hfsm.agents[property.name])
 					if nested_state:
-						state.set(nested_fsm_state_name, nested_state) 
-					
+						state.set(nested_fsm_state_name, nested_state)
+
 			else :
 				state = State.new()
 			state.hfsm = hfsm
@@ -422,7 +422,7 @@ func generate_state_list(hfsm:Node , parent_path:Array, nested_state)->Array:
 				state._reset_when_entry = false
 			if state_res.is_nested and state_res.nested_fsm_res:
 				state._nested_fsm = NestedFsm.new(hfsm,state_res.nested_fsm_res,parent_path,state)
-				
+
 				var n = state._nested_fsm
 				n._reset_when_entry = state_res.reset_properties_when_entry
 				if hfsm._force_all_fsm_entry_behavior == 1:
@@ -433,14 +433,14 @@ func generate_state_list(hfsm:Node , parent_path:Array, nested_state)->Array:
 
 	for transition_res in transition_res_list :
 		if transition_res is TransitionRes :
-			var transition :Transition 
+			var transition :Transition
 			if transition_res.transition_type == HfsmConstant.TRANSITION_TYPE_AUTO:
 				transition = AutotTransition.new(hfsm,transition_res.auto_condition_res )
 			elif transition_res.transition_type == HfsmConstant.TRANSITION_TYPE_EXPRESSION :
 				transition = ExpressionTransition.new(hfsm,transition_res.expression_condition_res)
 			elif transition_res.transition_type == HfsmConstant.TRANSITION_TYPE_VARIABLE :
 				transition = VariableTransition.new(hfsm,transition_res.variable_condition_res)
-				if (transition.force_trigger_list as Array).empty() and (transition.variable_expression_list as Array).empty() : 
+				if (transition.force_trigger_list as Array).empty() and (transition.variable_expression_list as Array).empty() :
 					transition = null
 			if transition:
 				for s in state_list:

@@ -1,15 +1,15 @@
 ##############################################################################
-#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com. 
-#                                                  
+#	Copyright (C) 2021 Daylily-Zeleen  daylily-zeleen@foxmail.com.
+#
 #	DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)   
-#     
-#                 
+#	Hirerarchical Finite State Machine - Trial Version(HFSM - Trial Version)
+#
+#
 #	This file is part of HFSM - Trial Version.
-#                                                                
-#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or 
-#modify it under the terms of the GNU Lesser General Public License as published 
+#
+#	HFSM -Triabl Version is free Godot Plugin: you can redistribute it and/or
+#modify it under the terms of the GNU Lesser General Public License as published
 #by the Free Software Foundation, either version 3 of the License, or
 #(at your option) any later version.
 #
@@ -34,27 +34,28 @@
 #
 #	虽然这是HFSM的试用版本，但是几乎包含了完整版本的所有功能(请阅读README.md了解他们的差异)。如果这个
 #插件对您有帮助，请考虑通过获取完整版本来支持我。
-#	
-# Sponsor link (赞助链接): 
-#	https://afdian.net/@Daylily-Zeleen
-#	https://godotmarketplace.com/?post_type=product&p=37138   
 #
-#                                    
-#	@author   Daylily-Zeleen                                                      
-#	@email    daylily-zeleen@foxmail.com. @qq.com                                              
-#	@version  0.8(版本号)                                                       
-#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)  
-#                                                                      
+# Sponsor link (赞助链接):
+#	https://afdian.net/@Daylily-Zeleen
+#	https://godotmarketplace.com/?post_type=product&p=37138
+#
+#
+#	@author   Daylily-Zeleen
+#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@version  1.0(版本号)
+#	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
+#
 #----------------------------------------------------------------------------
-#  Remark         :                                           
+#  Remark         :
 #----------------------------------------------------------------------------
-#  Change History :                                                          
-#  <Date>     | <Version> | <Author>       | <Description>                   
+#  Change History :
+#  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
-#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file             
-#  2021/07/2 | 0.1   | Daylily-Zeleen      | Support C# state script          
+#  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2021/07/2 | 0.8   | Daylily-Zeleen      | Support C# state script
+#  2022/10/19 | 1.0   | Daylily-Zeleen      | 解決Godot标准版不支持C#脚本导致的报错
 #----------------------------------------------------------------------------
-#                                                                            
+#
 ##############################################################################
 extends Resource
 const HfsmConstant = preload("../../script/source/hfsm_constant.gd")
@@ -62,13 +63,13 @@ const NestedFsmRes = preload("../../script/source/nested_fsm_res.gd")
 
 var state_node :GraphNode
 ##-------------------
-var state_name :String setget _set_state_name , _get_state_name 
+var state_name :String setget _set_state_name , _get_state_name
 func _set_state_name(n :String):
 	state_node.state_name = n
 func _get_state_name():
 	if state_node :
 		return state_node.state_name
-	
+
 
 var state_type :int setget _set_state_type , _get_state_type
 func _set_state_type(t :int) :
@@ -77,7 +78,7 @@ func _set_state_type(t :int) :
 func _get_state_type():
 	if state_node:
 		return state_node.state_type
-	
+
 
 var state_script :Script setget _set_state_script , _get_state_script
 func _set_state_script(s:Script):
@@ -99,7 +100,7 @@ func _set_reset_properties_when_entry(v:bool):
 	property_list_changed_notify ()
 func _get_reset_properties_when_entry():
 	if state_node:
-		return state_node.reset_properties_when_entry 
+		return state_node.reset_properties_when_entry
 var nested_fsm_res :NestedFsmRes
 
 var reset_nested_fsm_when_entry:bool setget _set_reset_nested_fsm_when_entry , _get_reset_nested_fsm_when_entry
@@ -122,7 +123,10 @@ func _get_property_list():
 	properties.push_back({name = "state_name",type = TYPE_STRING })
 	properties.push_back({name = "state_type",type = TYPE_INT , hint = PROPERTY_HINT_ENUM , hint_string = "Normal,ENTRY,EXIT" })
 	properties.push_back({name = "reset_properties_when_entry",type = TYPE_BOOL })
-	properties.push_back({name = "state_script",type = TYPE_OBJECT , hint =  PROPERTY_HINT_RESOURCE_TYPE  , hint_string = "GDScript,CSharpScript"})
+	var script_hint_string = "GDScript"
+	if ClassDB.class_exists("CSharpScript"):
+		script_hint_string += ", CSharpScript"
+	properties.push_back({name = "state_script",type = TYPE_OBJECT , hint =  PROPERTY_HINT_RESOURCE_TYPE  , hint_string = script_hint_string})
 	properties.push_back({name = "is_nested",type = TYPE_BOOL })
 	if _get_is_nested () :
 		properties.push_back({name = "reset_nested_fsm_when_entry",type = TYPE_BOOL })
