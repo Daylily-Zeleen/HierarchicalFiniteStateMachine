@@ -1,4 +1,4 @@
-# Hierarchical Finite State Machine - V 1.0
+# Hierarchical Finite State Machine - V 1.1
 
 ​		As we all know, state machine is a very common design pattern. Here provide a powerful and easy-to-use Godot plugin for Hierarchical Finite State Machine with visual editing.
 
