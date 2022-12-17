@@ -42,7 +42,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com. @qq.com
-#	@version  0.8(版本号)
+#	@version  1.1(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -55,6 +55,7 @@
 #  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete
 #  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete
 #  2022/07/1~3 | 0.8   | Daylily-Zeleen      |   Bugfix, add new feature.
+#  2022/12/18 | 1.1   | Daylily-Zeleen      |   Bugfix
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -251,7 +252,7 @@ func refresh_transition_line() :
 			c.place_line()
 
 func add_new_switch_button(nested_fsm_res:NestedFsmRes) -> SwithcButton:
-	if current_fsm_button and current_fsm_button is SwithcButton:
+	if is_instance_valid(current_fsm_button) and current_fsm_button is SwithcButton:
 		current_fsm_button.disabled = false
 	var n_b:SwithcButton = SwithcButton.new(self,nested_fsm_res)
 	switch_buttons.add_child(n_b)
@@ -352,6 +353,9 @@ func _on_GraphEdit_popup_request(position):
 	if not has_selected:
 		for c in graph_edit.get_children():
 			if c is TransitFlow and c.is_selected():
+				has_selected = true
+				break
+			if c is StateNode and c.is_selected():
 				has_selected = true
 				break
 	popup_menu.set_item_disabled(CREATE_TRANSITION ,false if top and top is StateNode else true)
