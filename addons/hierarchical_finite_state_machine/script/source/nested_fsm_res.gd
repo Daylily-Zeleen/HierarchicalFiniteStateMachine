@@ -32,8 +32,8 @@
 #	https://godotmarketplace.com/?post_type=product&p=37138
 #
 #	@author   Daylily-Zeleen
-#	@email    daylily-zeleen@qq.com
-#	@version  0.8(版本号)
+#	@email    daylily-zeleen@foxmail.com
+#	@version  1.2(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
 #
 #----------------------------------------------------------------------------
@@ -44,6 +44,7 @@
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/02 | 0.8   | Daylily-Zeleen      | Bug fix , implement script transition (full version)
+#  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -416,6 +417,7 @@ func generate_state_list(hfsm:Node , parent_path:Array, nested_state)->Array:
 			state.state_name = state_res.state_name
 			state._state_type = state_res.state_type
 			state._reset_when_entry = state_res.reset_properties_when_entry
+			state.animation_name = state_res.animation_name
 			if hfsm._force_all_state_entry_behavior == 1:
 				state._reset_when_entry = true
 			elif hfsm._force_all_state_entry_behavior == 2:

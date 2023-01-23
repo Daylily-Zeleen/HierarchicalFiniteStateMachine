@@ -32,8 +32,8 @@
 // #	https://godotmarketplace.com/?post_type=product&p=37138      
 // #                     
 // #	@author   Daylily-Zeleen                                                     
-// #	@email    daylily-zeleen@qq.com                                              
-// #	@version  0.8(版本号)                                                    
+// #	@email    daylily-zeleen@foxmail.com                                              
+// #	@version  1.2(版本号)                                                    
 // #	@license  Custom License(Read LISENCES.TXT for more details)
 // #                                                                      
 // #----------------------------------------------------------------------------
@@ -43,7 +43,8 @@
 // #  Change History :                                                          
 // #  <Date>     | <Version> | <Author>       | <Description>                   
 // #----------------------------------------------------------------------------
-// #  2022/07/02 | 0.8   | Daylily-Zeleen      | Create file                 
+// #  2022/07/02 | 0.8   | Daylily-Zeleen      | Create file      
+// #  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.           
 // #----------------------------------------------------------------------------
 // #                                                                            
 // ##############################################################################
@@ -65,15 +66,11 @@ namespace HFSM
             {
                 if (stateName.Empty() && !value.Empty())
                 {
-                    // GD.Print("set name "+ value);
                     stateName = value;
                 }
-                // else
-                // {
-                //     GD.PrintErr("HFSM: Can not set state name'"+value+"' when running.-cs");
-                // }
             }
-            get {
+            get
+            {
                 return stateName;
             }
         }
@@ -115,15 +112,15 @@ namespace HFSM
                         }
                     }
                 }
-                // else
-                // {
-                //     GD.PrintErr("HFSM err:"+state_name+" can not set state property 'hfsm'.-cs");
-                // }
             }
         }
-        static private readonly Array<string> InternalProperties = new Array<string>{"_property_to_default_value", 
-                "state_name", "_state_type", "hfsm", "_nested_fsm", 
-                "StateName", "stateName", "HFSMScript", "Hfsm", "InternalProperties", "_hfsm",};
+        static private readonly Array<string> InternalProperties = new Array<string>{
+                "_property_to_default_value", "state_name", "_state_type", "hfsm", "_nested_fsm", "nestedFsm", "_transition_list", "isExited", "IsExited", "__reset_when_entry",
+                "StateName", "stateName", "HFSMScript", "Hfsm", "InternalProperties", "_hfsm",
+                "animation_name", "animation_blend_time", "animation_play_backwards", "animation_speed",
+                "AnimationName", "AnimationBlendTime", "AnimationPlayBackwards", "AnimationSpeed",
+                "animationName", "animationBlendTime", "animationPlayBackwards", "animationSpeed",
+                };
         private Node _hfsm = null;
 
 
@@ -131,7 +128,38 @@ namespace HFSM
         /// Read only.if true,this State is exited.
         /// </summary>
         /// <value></value>
-        public bool IsExited{ private set; get; }
+        public bool IsExited { private set => isExited = value; get => isExited; }
+        private bool isExited = false;
+
+        /// <summary>
+        /// The animation name of this state.
+        /// Empty name means will cheat as state name. If the hfsm's propeerty animation_player is valid and has this animation, it will be played every time of state entered.
+        /// </summary>
+        /// <value></value>
+        public string AnimationName { private set => animationName = value; get => animationName; }
+        private string animationName = "";
+
+        /// <summary>
+        /// The animation blend time.
+        /// </summary>
+        /// <value></value>
+        public float AnimationBlendTime { private set => animationBlendTime = value; get => animationBlendTime; }
+        private float animationBlendTime = 0.0f;
+
+        /// <summary>
+        /// The animation play speed.
+        /// </summary>
+        /// <value></value>
+        public float AnimationSpeed { private set => animationSpeed = value; get => animationSpeed; }
+        private float animationSpeed = 1.0f;
+
+
+        /// <summary>
+        /// Animation play backword or not.
+        /// </summary>
+        /// <value></value>
+        public bool AnimationPlayBackwards { private set => animationPlayBackwards = value; get => animationPlayBackwards; }
+        private bool animationPlayBackwards = false;
 
 
         /// <summary>
@@ -150,7 +178,7 @@ namespace HFSM
         }
 
 
-        public virtual void Init() {if(_state_type==0){} }
+        public virtual void Init() { if (_state_type == 0) { } }
         public virtual void Entry() { }
         public virtual void Update(float delta) { }
         public virtual void PhysicsUpdate(float delta) { }
@@ -163,7 +191,8 @@ namespace HFSM
         // 以下命名为了兼容GDS逻辑功能
         private string state_name
         {
-            set {
+            set
+            {
                 StateName = value;
             }
             get => StateName;
@@ -200,9 +229,19 @@ namespace HFSM
         }
         private Reference nestedFsm;
 
+        private string animation_name { set => AnimationName = value; get => AnimationName; }
 
-        private Array<Reference> _transition_list =new Array<Reference>();
-        private bool _reset_when_entry { set; get; }
+        private float animation_blend_time { set => AnimationBlendTime = value; get => AnimationBlendTime; }
+
+        private float animation_speed { set => AnimationSpeed = value; get => AnimationSpeed; }
+
+        private bool animation_play_backwards { set => AnimationPlayBackwards = value; get => AnimationPlayBackwards; }
+
+
+        private Array<Reference> _transition_list = new Array<Reference>();
+        private bool _reset_when_entry { set => __reset_when_entry = value; get => __reset_when_entry; }
+        private bool __reset_when_entry;
+
         private void _entry()
         {
             IsExited = false;
@@ -211,8 +250,17 @@ namespace HFSM
             {
                 transition.Call("refresh");
             }
-            
+
             Entry();
+            var animationPlayer = Hfsm.Get("animation_player") as AnimationPlayer;
+            if (IsInstanceValid(animationPlayer))
+            {
+                var anim = AnimationName.Empty() ? StateName : AnimationName;
+                if (animationPlayer.HasAnimation(anim))
+                {
+                    animationPlayer.Play(anim, AnimationBlendTime, AnimationPlayBackwards ? (-AnimationSpeed) : AnimationSpeed, AnimationPlayBackwards);
+                }
+            }
             if (_nested_fsm != null) _nested_fsm.Call("_entry");
         }
 
@@ -233,14 +281,14 @@ namespace HFSM
                 if (!is_terminated_by_upper_level)
                 {
                     var queue = new Array<Reference>() { this };
-                    while (queue[queue.Count-1].Get("_nested_fsm") != null && (bool)((Reference)(queue[queue.Count-1].Get("_nested_fsm"))).Get("is_running"))
+                    while (queue[queue.Count - 1].Get("_nested_fsm") != null && (bool)((Reference)(queue[queue.Count - 1].Get("_nested_fsm"))).Get("is_running"))
                     {
-                        queue.Add((Reference)((Reference)(queue[queue.Count-1].Get("_nested_fsm"))).Get("_current_state"));
+                        queue.Add((Reference)((Reference)(queue[queue.Count - 1].Get("_nested_fsm"))).Get("_current_state"));
                     }
                     while (queue.Count > 0)
                     {
-                        queue[queue.Count-1].Call("_exit", true);
-                        queue.RemoveAt(queue.Count-1);
+                        queue[queue.Count - 1].Call("_exit", true);
+                        queue.RemoveAt(queue.Count - 1);
                     }
                 }
                 else

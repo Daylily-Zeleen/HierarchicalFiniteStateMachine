@@ -42,7 +42,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  0.8(版本号)
+#	@version  1.2(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -53,6 +53,7 @@
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/1~3 | 0.8   | Daylily-Zeleen      |   Bugfix, add new feature.
+#  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -147,17 +148,23 @@ func _enter_tree():
 	if not dir.file_exists(HfsmConstant.ignore_target_path) :
 		dir.copy(HfsmConstant.ignore_default_path , HfsmConstant.ignore_target_path)
 	print("HFSM : If you use this plugin first time in this project ,it may push some error ,they are import error,just ignore them.")
+
+func handles(object: Object) -> bool:
+	return object is HFSM
+
+func edit(object: Object):
+	if object is HFSM:
+		_on_editor_selection_changed()
+
 # ----------------- signals -------------
 func _on_scene_changed(scene_root):
 	hfsm_editor_dock.enable = false
-
 
 func _on_editor_selection_changed():
 	var ns:Array = get_editor_interface().get_selection().get_selected_nodes()
 	if ns.size() > 0:
 		if ns[0] is HFSM :
 			current_hfsm = ns[0]
-			_on_inspector_tab_changed(0)
 			if not current_hfsm._inspector_res.is_connected("script_reload_request",self ,"_on_script_reload_request"):
 				current_hfsm._inspector_res.connect("script_reload_request",self ,"_on_script_reload_request")
 			#如果没有资源，则创建资源
@@ -168,6 +175,9 @@ func _on_editor_selection_changed():
 
 			dock_button.pressed = true
 			dock_button.show()
+			yield(get_tree(), "idle_frame")
+			yield(get_tree(), "idle_frame")
+			_on_inspector_tab_changed(0)
 
 func _on_inspector_tab_changed(indx:int):
 	var ns  = get_editor_interface().get_selection().get_selected_nodes()

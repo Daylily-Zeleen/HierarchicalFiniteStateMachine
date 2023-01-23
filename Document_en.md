@@ -1,4 +1,4 @@
-# Hierarchical Finite State Machine - V 1.1
+# Hierarchical Finite State Machine - V 1.2
 
 ​		As we all know, state machine is a very common design pattern. Here provide a powerful and easy-to-use Godot plugin for Hierarchical Finite State Machine with visual editing.
 
@@ -233,6 +233,23 @@
   1. Set the Entry State and Exit States of the nested FSM to which perset in the editor.
   2. Reset all States in the nested FSM when enter they.
 
+6. Animation properties（v1.2 New Feature）:
+
+  ​   If the HFSM which contain this State, has been setting `animation_player`, it will try to play the animation as these properties descripted every time this State is entered.
+![](DOCUMENT.assets/state_animation.png)
+   - Animation Name:
+      The animation whcih will be tried to play when this State be entered.
+      If remained it as a empty String, the `state_name` will be used as the `animation_name`.
+      If the `animaion_player` of HFSM is invalid or has not target animation, it will not be played.
+
+   - Animation Blend Time( full version only):  
+      The time of target animation fade in.  
+
+   - Animation Speed ( full version only):    
+      The speed of play animation. 
+
+   - Animation Play Backwards ( full version only):    
+      To play animation backwards or not.
 ### State Behavior & Code Control
 
 ​		This is the **State script template( `GDScript` version)** provided by this plugin.
@@ -904,6 +921,11 @@ The difference between process types as follow :
 
 ​		c. Force Persist : In this mode, all FSM will not execute [reset behavior of FSM](#strate-inspector-properties) when is entered.
 
+7. Animation Player Node Path (v1.2 New Feature):    
+
+![](DOCUMENT.assets/animation_player_node_path.png)   
+   The AnimationPlayer NodePath, which point to the AnimationPlayer that used to play animation when State entery.
+
 ### The running of HFSM
 
 1. When the game starts , after HFSM is added to the scene tree, all FSMs, States and Transitions will be instantiated and all States will be initialized.
@@ -1041,8 +1063,17 @@ The difference between process types as follow :
    > 		"agent3":[Node:3],
    > }
 
+5. NodePath animation_player_node_path :
 
+   > v1.2 New feature.    
+   > The AnimationPlayer NodePath, which point to the AnimationPlayer that used to play animation when State entery.
+   > In runtime, when set `animation_player_node_path` or `_ready()` executed, if `animation_player_node_path` point to a valid `AnimationPlayer` node, the `AnimationPlayer`  node will be gotten and assign to this property.
 
+6. AnimationPlayer animation_player:
+
+   > v1.2 New feature.
+   > Runtime property。
+   > The AnimationPlay node that will be used to tried to play animation when state is entered.
 
 ### Methods
 
@@ -1271,33 +1302,46 @@ The difference between process types as follow :
 ## State(`GDScript` version)
 
 ​		Scripts attached to the State in HFSM inherit from this class, but you can not obtain the objects which inherited from this class directly outside HFSM.
-
-> **For `C#` users:**
->
-> ​	The usage of `HFSM.State` can refer to `GDScript` version's `State`.
-
 ### Properties
 
-​		All State's properties are read only.
-
-1. String state_name[default : ""]
+1. String state_name[default : ""] **readyonly**
 
    > get_state_name() #getter
    > The name of State, you can not edit it in runtime. Read only.
 
-2. bool is_exited[default : false]
+2. bool is_exited[default : false] **readyonly**
 
    > is_exited() #getter
    >
    > If true, this State is not running(not enter or already exited). Read only.
 
-3. HFSM hfsm[default : null]
+3. HFSM hfsm[default : null] **readyonly**
 
    > get_hfsm() #getter
    >
    > The HFSM instance which contains this State. Ready only.
 
+4. String animation_name[default: ""]
 
+   > (v1.2 New Feature) 
+   > The animation whcih will be tried to play when this State be entered.
+   > If remained it as a empty String, the `state_name` will be used as the `animation_name`.
+   > If the `animaion_player` of HFSM is invalid or has not target animation, it will not be played.
+
+5. float animation_blend_time[default: 0.0]
+
+   > (v1.2 New Feature, Full version only) 
+   > The time of target animation fade in.
+
+6. float animation_speed[default: 1.0]
+
+   > (v1.2 New Feature, Full version only) 
+   > The speed of target animation playing.  
+
+7. bool animation_play_backwards[default: false]
+
+   > (v1.2 New Feature, Full version only) 
+   > To play the animation backward or not.
 
 ### Methods
 
@@ -1329,6 +1373,73 @@ The difference between process types as follow :
 
 
 
+## State(`CSharpScript` version)
+
+​		Scripts attached to the State in HFSM inherit from this class, but you can not obtain the objects which inherited from this class directly outside HFSM.
+### Properties
+
+1. String StateName[default : ""] **readyonly**
+
+   > The name of State, you can not edit it in runtime. Read only.
+
+2. bool IsExited[default : false] **readyonly**
+
+   > If true, this State is not running(not enter or already exited). Read only.
+
+3. Node Hfsm[default : null] **readyonly**
+
+   > The HFSM instance which contains this State. Ready only.
+   > **Please use `Set()`, `Get()`, `Call()`, etc, to access menbers of this property.**。
+
+4. String AnimationName[default: ""]
+
+   > (v1.2 New Feature) 
+   > The animation whcih will be tried to play when this State be entered.
+   > If remained it as a empty String, the `StateName` will be used as the `AnimationName`.
+   > If the `animaion_player` of HFSM is invalid or has not target animation, it will not be played.
+
+5. float AnimationBlendTime[default: 0.0f]
+
+   > (v1.2 New Feature, Full version only) 
+   > The time of target animation fade in.
+
+6. float AnimationSpeed[default: 1.0f]
+
+   > (v1.2 New Feature, Full version only) 
+   > The speed of target animation playing.  
+
+7. bool AnimationPlayBackwards[default: false]
+
+   > (v1.2 New Feature, Full version only) 
+   > To play the animation backward or not.
+
+### Methods
+
+​		Read [State Behavior](#state-behavior--code-control) for more informations of overridable methods.
+
+1. void ManualExit()
+
+   > Exit State Manually , and execute its exit behavior.
+
+2. void Init() virtual 
+
+   > Overridable, called when HFSM is generated, values of all custom properties will be confirm as initial value.
+
+3. void Entry() virtual 
+
+   > Overridable, called when State is entering.
+
+4. void Update(float delta) virtual 
+
+   > Overridable, called when State updating.
+
+5. void PhysicsUpdate(float delta) virtual 
+
+   > Overridable, called when State physics updating.
+
+6. void Exit() virtual  
+
+   > Overridable, called when State exiting.
 
 
 

@@ -1,4 +1,4 @@
-# 分层有限状态机 - V 1.1
+# 分层有限状态机 - V 1.2
 
 ​		总所周知，状态机是一种很常见的设计模式，这里提供了一个强大易用、可视化编辑的分层有限状态机Godot插件。
 
@@ -234,6 +234,24 @@
 
   1. 将该嵌套`FSM`的`Entry State`和`Exit State`设置为在编辑器中设置的`Entry State`和`Exit State`.
   2. 复位该嵌套`FSM`中的所有`State`。
+
+6. 动画属性（v1.2 新增）:
+
+  ​	当所属的HFSM设定了`动画播放器(animation_player)`属性时，每当进入该State时，将根据这些属性尝试播放相应动画。
+  
+![](DOCUMENT.assets/state_animation.png)
+   - 动画名称（Animation Name):    
+      进入该State时要播放的动画名称。如果留空，将以状态名称`state_name`作为动画名称尝试进行播放。
+      （如果所属的HFSM没有指定动画播放器或该动画播放器不存在指定动画，将不进行动画播放操作）
+
+   - 动画混合时间（Animation Blend Time） （完整版特有）:    
+      播放动画时的混入时间。
+
+   - 动画速度（Animation Speed) （完整版特有）:    
+      动画的播放速度。
+
+   - 动画反向播放（Animation Play Backwards) （完整版特有）:    
+      是否方向播放动画。
 
 ### · 状态行为及其代码控制(State Behavior & Code Control)
 
@@ -898,6 +916,10 @@ public class TemplateTransion :Reference
 
 ​		c. 强制保持(Force Persist) : 该模式下，所有`FSM`在进入时均不执行[FSM的复位](#-%E7%8A%B6%E6%80%81%E7%9B%91%E8%A7%86%E5%99%A8%E5%B1%9E%E6%80%A7state-inspector-properties)。
 
+7. 动画播放器节点路径（animation_player_node_path）（V1.2 新特性）:    
+
+![](DOCUMENT.assets/animation_player_node_path.png)    
+   用于进入State时播放对应动画的动画播放器节点路径。
 
 ​    
 
@@ -1040,8 +1062,16 @@ public class TemplateTransion :Reference
    > 		"agent3":[Node:3],
    > }
 
+5. NodePath animation_player_node_path :
 
+   > v1.2 新特性    
+   > 用于在编辑器指定动画播放器节点路径。
+   > 对该属性进行赋值或在`_ready()`被执行时，如果 `animation_player_node_path` 指向一个合法的 `AnimationPlayer` 节点，将获取对应的节点并赋值给 `animation_player`。
 
+6. AnimationPlayer animation_player:
+
+   > v1.2 新特性    
+   > 运行时属性。每当 State 被进入时尝试播放动画所用的动画播放器节点。
 
 ### · 方法(Methods)
 
@@ -1274,35 +1304,46 @@ public class TemplateTransion :Reference
 ## 二 、 State(`GDScript`版本)
 
 ​		不能在`HFSM`外部直接获取继承自这个类的对象，附加在`HFSM`中状态的脚本均继承自这个类。
-
-> **`C#`用户注意:**
->
-> ​	`HFSM.State`的用法可以直接参考 `GDScript` 版本的`State`.
-
 ### · 属性(Properties)
 
-​		`State`的所有属性均为只读属性，不可写入
-
-1. String state_name[default : ""]
+1. String state_name[default : ""] **只读**
 
    > get_state_name() #getter
    > State的名称，只能在设计`HFSM`时为`State`命名，不可通过代码写入
 
-2. bool is_exited[default : false]
+2. bool is_exited[default : false] **只读**
 
    > is_exited() #getter
    > 如果为真，该`State`未在运行，未进入，或已退出；如果为假，该`State`正在运行。不可写入
 
-3. HFSM hfsm[default : null]
+3. HFSM hfsm[default : null] **只读**
 
    > get_hfsm() #getter
    > 该`State`所处的`HFSM`对象，您可以通过他调用`HFSM`的成员，不可写入
 
+4. String animation_name[default: ""]
 
+   > (v1.2 新特性) 
+   > 进入该State时要播放的动画名称。如果留空，将以状态名称state_name作为动画名称尝试进行播放。 （如果所属的HFSM没有指定动画播放器或该动画播放器不存在指定动画，将不进行动画播放操作）
+
+5. float animation_blend_time[default: 0.0]
+
+   > (v1.2 新特性 完整版特有) 
+   > 播放动画时的混入时间。
+
+6. float animation_speed[default: 1.0]
+
+   > (v1.2 新特性 完整版特有) 
+   > 动画的播放速度。
+
+7. bool animation_play_backwards[default: false]
+
+   > (v1.2 新特性 完整版特有) 
+   > 是否反向播放动画。
 
 ### · 方法(Methods)
 
-​		对于可重载方法，其行为详见[状态行为及其代码控制](#-%E7%8A%B6%E6%80%81%E8%A1%8C%E4%B8%BA%E5%8F%8A%E5%85%B6%E4%BB%A3%E7%A0%81%E6%8E%A7%E5%88%B6state-behavior--code-control)
+​		对于可重载方法，其行为详见[状态行为及其代码控制](#·状态行为及其代码控制(StateBehavior&CodeControl)).
 
 1. void manual_exit()
 
@@ -1328,6 +1369,75 @@ public class TemplateTransion :Reference
 
    > 可重载函数，退出该`State`时执行
 
+
+## 三 、 State(`CSharpScript`版本)
+
+​		不能在`HFSM`外部直接获取继承自这个类的对象，附加在`HFSM`中状态的脚本均继承自这个类。
+
+### · 属性(Properties)
+
+​		`State`的所有属性均为只读属性，不可写入
+
+1. string StateName[default : ""] **只读**
+
+   > State的名称，只能在设计`HFSM`时为`State`命名，不可通过代码写入
+
+2. bool IsExited[default : false] **只读**
+
+   > 如果为真，该`State`未在运行，未进入，或已退出；如果为假，该`State`正在运行。不可写入
+
+3. Node Hfsm[default : null] **只读**
+
+   > 该`State`所处的`HFSM`对象，您可以通过他调用`HFSM`的成员，不可写入
+   > **访问到的 HFSM 节点为GDScript对象，无法进行代码补全，请通过 `Set()`, `Get()`, `Call()` 等方式访问其成员。**
+
+4. string AnimationName[default: ""]
+
+   > (v1.2 新特性) 
+   > 进入该State时要播放的动画名称。如果留空，将以状态名称StateName作为动画名称尝试进行播放。 （如果所属的HFSM没有指定动画播放器或该动画播放器不存在指定动画，将不进行动画播放操作）
+
+5. float AnimationBlendTime[default: 0.0f]
+
+   > (v1.2 新特性 完整版特有) 
+   > 播放动画时的混入时间。
+
+6. float AnimationSpeed[default: 1.0f]
+
+   > (v1.2 新特性 完整版特有) 
+   > 动画的播放速度。
+
+7. bool AnimationPlayBackwards[default: false]
+
+   > (v1.2 新特性 完整版特有) 
+   > 是否反向播放动画。
+
+### · 方法(Methods)
+
+​		对于可重载方法，其行为详见[状态行为及其代码控制](#·状态行为及其代码控制(StateBehavior&CodeControl)).
+
+1. void ManualExit()
+
+   > 手动退出退出该`State`，并执行退出行为。
+
+2. void Init() virtual
+
+   > 可重载函数，当`HFSM`生成时执行，在此方法执行后所有自定义属性的值将作为其初始值。
+
+3. void Entry() virtual
+
+   > 可重载函数，当进入该`State`时执行.
+
+4. void Update(float delta) virtual
+
+   > 可重载函数，该`State`更新时执行.
+
+5. void PhysicsUpdate(float delta) virtual
+
+   > 可重载函数，该`State`物理更新时执行.
+
+6. void Exit() virtual
+
+   > 可重载函数，退出该`State`时执行.
 
 
 

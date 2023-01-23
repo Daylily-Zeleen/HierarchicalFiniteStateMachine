@@ -41,8 +41,8 @@
 #
 #
 #	@author   Daylily-Zeleen
-#	@email    daylily-zeleen@foxmail.com. @qq.com
-#	@version  0.8(版本号)
+#	@email    daylily-zeleen@foxmail.com
+#	@version  1.2(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -52,6 +52,7 @@
 #  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -62,21 +63,11 @@ const StateInspectorResource = preload("state_node_inspector_res.gd")
 func can_handle(object):
 	return object is StateInspectorResource
 
-
 func parse_property(object, type, path, hint, hint_text, usage):
-	if path == "state_name":
-		return false
-	elif path == "state_type" :
-		return false
-	elif path == "state_script":
-		return false
-	elif path == "is_nested" :
-		return false
-	elif path == "nested_fsm_res" :
-		return false
-	elif path == "reset_nested_fsm_when_entry" :
-		return false
-	elif path == "reset_properties_when_entry" :
-		return false
+	if object is StateInspectorResource:
+		if path in ["state_name", "state_type", "state_script", "is_nested", 
+				"nested_fsm_res", "reset_nested_fsm_when_entry", "reset_properties_when_entry",
+				"animation_name"]:
+			return false
 
 	return true

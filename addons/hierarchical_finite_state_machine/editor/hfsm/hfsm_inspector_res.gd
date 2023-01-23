@@ -42,7 +42,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  0.8(版本号)
+#	@version  1.2(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -53,6 +53,7 @@
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/2 | 0.8   | Daylily-Zeleen      | bug fix
+#  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -89,7 +90,7 @@ func set_process_type(type :int)->void:
 func get_process_type()->int:
 	return hfsm.process_type
 
-var agents :Dictionary = {"null" : NodePath("")} setget _set_agents , _get_agents
+var agents :Dictionary setget _set_agents , _get_agents
 func _set_agents(a:Dictionary)->void:
 	for p in hfsm.agents.values():
 		var obj:Node = hfsm.owner.get_node_or_null(String(p)) if hfsm.owner else hfsm.get_node_or_null(String(p))
@@ -100,15 +101,16 @@ func _set_agents(a:Dictionary)->void:
 				obj.disconnect("renamed",self,"_on_Agents_node_renamed")
 			if obj.is_connected("script_changed",self,"_on_Agents_script_changed"):
 				obj.disconnect("script_changed",self,"_on_Agents_script_changed")
-	var obj_to_path :Dictionary
+	var nodes := _get_children_recurently(Engine.get_main_loop().edited_scene_root)
+	var obj_to_path :Dictionary = {}
 	for k in a.keys():
-		var obj = hfsm.owner.get_node_or_null(String(a[k])) if hfsm.owner else hfsm.get_node_or_null(String(a[k]))
-		if not obj:
+		var obj = hfsm.owner.get_node_or_null(String(a[k]))
+		if not obj or not obj in nodes:
 			obj = hfsm.get_node_or_null(a[k])
-		if not obj:
+		if not obj or not obj in nodes:
 			a.erase(k)
-		elif not obj in obj_to_path.keys():
-			obj_to_path[obj] = a[k]
+		elif not obj in obj_to_path:
+			obj_to_path[obj] = hfsm.get_path_to(obj)
 			obj.connect("renamed",self,"_on_Agents_node_renamed")
 			obj.connect("script_changed",self,"_on_Agents_script_changed")
 	var new_agents :Dictionary
@@ -120,44 +122,24 @@ func _set_agents(a:Dictionary)->void:
 			push_warning("HFSM : The name of node '%s' already exist in 'agents' ,and be rename by append '_' ,recommend to rename the target node name." % obj.name)
 			node_name += "_"
 		new_agents[node_name] = obj_to_path[obj]
-	new_agents["null"] = NodePath()
+	new_agents.erase("null")
 	hfsm.agents = new_agents
 	_change_script_agents()
 	yield(hfsm.get_tree(),"idle_frame")
 	yield(hfsm.get_tree(),"idle_frame")
 	property_list_changed_notify()
+
+func _get_children_recurently(node: Node) -> Array:
+	var r := [node]
+	for c in node.get_children():
+		r.append_array(_get_children_recurently(c))
+	return r 
+	
+
 func _get_agents()->Dictionary:
 	var a :Dictionary = hfsm.agents.duplicate()
-	for k in a.keys():
-		if k == "null":
-			 a.erase(k)
 	a["null"] = NodePath()
 	return a
-
-#var _custom_class_list:Dictionary = {"Null":""} setget set_custom_class_list , get_custom_class_list
-#func set_custom_class_list(list:Dictionary):
-#	for k in list.keys() :
-#		if not list[k] is String or not (list[k] as String).is_abs_path():
-#			list.erase(k)
-#	var new_list :Dictionary ={}
-#	for path in list.values():
-#		if not path in new_list.values():
-#			var custom_class_name :String = path.get_file().capitalize().replace(" ","").substr(0 ,path.get_file().find("."))
-#			while custom_class_name in new_list.keys() :
-#				custom_class_name += "_"
-#			new_list[custom_class_name] = path
-#	new_list["Null"] = ""
-#	_custom_class_list = new_list
-#	_change_script_agents()
-#	yield(hfsm.get_tree(),"idle_frame")
-#	property_list_changed_notify()
-#func get_custom_class_list():
-#	var a :Dictionary = _custom_class_list.duplicate()
-#	for k in a.keys():
-#		if k == "Null":
-#			 a.erase(k)
-#	a["Null"] = ""
-#	return a
 
 var _disable_rename_to_snake_case :bool = false setget _set_disable_rename_to_snake_case
 func _set_disable_rename_to_snake_case(b:bool)->void:
@@ -180,6 +162,12 @@ func _set_force_all_fsm_auto_reset_behavior(v:int):
 func _get_force_all_fsm_auto_reset_behavior():
 	return hfsm._force_all_fsm_entry_behavior
 
+var animation_player:NodePath setget _set_animation_player, _get_animation_player
+func _set_animation_player(np:NodePath):
+	hfsm.animation_player_node_path = np
+func _get_animation_player() -> NodePath:
+	return hfsm.animation_player_node_path
+
 func _get_property_list()->Array:
 	var process_types_hint_string :String
 	for i in range(ProcessTypes.size()):
@@ -196,13 +184,12 @@ func _get_property_list()->Array:
 				if reset_option_hint_string != "":
 					reset_option_hint_string += ","
 				reset_option_hint_string += (enum_key as String).capitalize()
-	var properties :Array
+	var properties :Array = []
 	properties.push_back({name = "HFSM",type = TYPE_NIL,usage = PROPERTY_USAGE_CATEGORY  })
 
 	properties.push_back({name = "active",type = TYPE_BOOL })
 	properties.push_back({name = "process_type",type = TYPE_INT , hint = PROPERTY_HINT_ENUM ,hint_string = process_types_hint_string })
 	properties.push_back({name = "agents",type = TYPE_DICTIONARY })
-#	properties.push_back({name = "_custom_class_list",type = TYPE_DICTIONARY })
 	properties.push_back({name = "debug",type = TYPE_BOOL })
 
 
@@ -213,6 +200,9 @@ func _get_property_list()->Array:
 	properties.push_back({name = "_force_all_fsm_entry_behavior",type = TYPE_INT,hint = PROPERTY_HINT_ENUM  , hint_string = reset_option_hint_string})
 	properties.push_back({name = "_root_fsm_res",type = TYPE_OBJECT , hint = PROPERTY_HINT_RESOURCE_TYPE ,hint_string ="Resource" ,usage = PROPERTY_USAGE_STORAGE })
 
+	properties.push_back({name = "Animation",type = TYPE_NIL , usage = PROPERTY_USAGE_GROUP })
+	properties.push_back({name = "animation_player",type = TYPE_NODE_PATH })
+	
 	return properties
 
 func _change_script_agents():
@@ -220,7 +210,7 @@ func _change_script_agents():
 	## 新获取类脚本逻辑
 	var existed_custom_script_path2class_name := {}
 	for agent_name in self.agents.keys():
-		var obj:Node = hfsm.owner.get_node_or_null(String(self.agents[agent_name])) if hfsm.owner else hfsm.get_node_or_null(String(self.agents[agent_name]))
+		var obj:Node = hfsm.get_node_or_null(String(self.agents[agent_name]))
 		if not obj:
 			obj = hfsm.get_node_or_null(self.agents[agent_name])
 		if is_instance_valid(obj):

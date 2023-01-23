@@ -12,7 +12,7 @@ config_version=4
 
 config/name="Hierarchical Finite State Machine LGPL-3.0"
 config/description="To demostrate the plugin Hierarchical Finite State Mahine 's feature."
-run/main_scene="res://addons/hierarchical_finite_state_machine/demo/gds_nested_state_script_style_2d_platform_player/gds_nested_state_script_stype_2d_platform_player.tscn"
+run/main_scene="res://addons/hierarchical_finite_state_machine/demo/new_feature_work_with_animation/work_with_animation.tscn"
 boot_splash/image="res://splash.png"
 config/icon="res://addons/hierarchical_finite_state_machine/script/icon.svg"
 
@@ -24,6 +24,10 @@ window/stretch/aspect="keep"
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/hierarchical_finite_state_machine/plugin.cfg" )
+
+[mono]
+
+project/assembly_name="Hierarchical Finite State Machine LGPL-3.0"
 
 [physics]
 

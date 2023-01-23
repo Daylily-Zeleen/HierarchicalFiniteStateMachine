@@ -42,7 +42,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  0.8(版本号)
+#	@version  1.2(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -53,6 +53,7 @@
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/2 | 0.8   | Daylily-Zeleen      | remove  _custom_class_list
+#  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -65,23 +66,8 @@ func can_handle(object):
 
 
 func parse_property(object, type, path, hint, hint_text, usage):
-	if path == "active":
-		return false
-	elif path == "process_type" :
-		return false
-	elif path == "agents":
-		return false
-#	elif path == "_custom_class_list" :
-#		return false
-	elif path == "_root_fsm_res" :
-		return false
-	elif path == "debug" :
-		return false
-	elif path == "_disable_rename_to_snake_case" :
-		return false
-	elif path == "_force_all_state_entry_behavior" :
-		return false
-	elif path == "_force_all_fsm_entry_behavior" :
+	if path in ["active", "process_type", "agents", "_root_fsm_res", "debug", "_disable_rename_to_snake_case", 
+			"_force_all_state_entry_behavior", "_force_all_fsm_entry_behavior", "animation_player"]:
 		return false
 
 	return true

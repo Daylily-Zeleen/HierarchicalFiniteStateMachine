@@ -32,8 +32,8 @@
 #	https://godotmarketplace.com/?post_type=product&p=37138
 #
 #	@author   Daylily-Zeleen
-#	@email    daylily-zeleen@qq.com
-#	@version  0.8(版本号)
+#	@email    daylily-zeleen@foxmail.com
+#	@version  1.2(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
 #
 #----------------------------------------------------------------------------
@@ -44,6 +44,7 @@
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/02 | 0.8   | Daylily-Zeleen      | Implement C# state script support
+#  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -51,7 +52,6 @@ tool
 extends Resource
 
 const HfsmConstant = preload("../../../script/source/hfsm_constant.gd")
-#const State = preload("../state.gd")
 
 signal param_updated
 
@@ -77,6 +77,8 @@ var editor_offset :Vector2= Vector2.ZERO
 var reset_properties_when_entry :bool = true
 var reset_nested_fsm_when_entry:bool = false
 
+var animation_name := ""
+
 func _get_property_list():
 	var properties :Array
 
@@ -88,6 +90,8 @@ func _get_property_list():
 	properties.push_back({name = "editor_offset",type = TYPE_VECTOR2 , usage = PROPERTY_USAGE_DEFAULT })
 	properties.push_back({name = "reset_properties_when_entry",type = TYPE_BOOL , usage = PROPERTY_USAGE_DEFAULT })
 	properties.push_back({name = "reset_nested_fsm_when_entry",type = TYPE_BOOL , usage = PROPERTY_USAGE_DEFAULT })
+	
+	properties.push_back({name = "animation_name", type = TYPE_STRING })
 
 	return properties
 

@@ -32,8 +32,8 @@
 #	https://godotmarketplace.com/?post_type=product&p=37138
 #
 #	@author   Daylily-Zeleen
-#	@email    daylily-zeleen@qq.com
-#	@version  0.8(版本号)
+#	@email    daylily-zeleen@foxmail.com
+#	@version  1.2(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
 #
 #----------------------------------------------------------------------------
@@ -45,6 +45,7 @@
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/02 | 0.8   | Daylily-Zeleen      | Improve access safity.
+#  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -69,6 +70,14 @@ var hfsm:HFSM  setget _set_hfsm , get_hfsm
 #@description : Read only.if true,this State is exited.
 #------------------------------------------------------------------------------
 var is_exited:bool = false setget _set_is_exit, is_exited
+
+#------------------------------------------------------------------------------
+#@description : The animation name of this state.
+#				Empty name means will cheat as state name. 
+#				If the hfsm's propeerty animation_player is valid and has
+#				this animation, it will be played every time of state entered.
+#------------------------------------------------------------------------------
+var animation_name: String = ""
 
 #======================================================
 #--------------------Methods---------------------------
@@ -150,12 +159,14 @@ func _set_hfsm(_hfsm)->void:
 		var p_name_list :Array
 		for p in get_script().get_script_property_list():
 			p_name_list.append(p.name)
-		for agent in hfsm.agents.keys():
+		for agent in hfsm.agents:
 			if agent != "null" and agent in p_name_list:
 				self.set(agent, hfsm.agents[agent])
 		init()
 		for property in get_script().get_script_property_list():
-			if not property.name in [ "_property_to_default_value" ,"state_name","_state_type","hfsm","_nested_fsm"] and not property.name in hfsm.agents.keys() :
+			if not property.name in [ "_property_to_default_value" , "_transition_list",
+					"state_name","_state_type","hfsm","_nested_fsm", 
+					"animation_name"] and not property.name in hfsm.agents.keys() :
 				_property_to_default_value[property.name] = self[property.name]
 	else :
 		printerr("HFSM err: %s Can not set state property 'hfsm'.-gds"%state_name)
@@ -179,6 +190,10 @@ func _entry()->void:
 	for transition in _transition_list :
 		transition.refresh()
 	entry()
+	if is_instance_valid(hfsm.animation_player):
+		var anim := state_name if animation_name.empty() else animation_name
+		if hfsm.animation_player.has_animation(anim):
+			hfsm.animation_player.play(anim)
 	if _nested_fsm:
 		_nested_fsm._entry()
 

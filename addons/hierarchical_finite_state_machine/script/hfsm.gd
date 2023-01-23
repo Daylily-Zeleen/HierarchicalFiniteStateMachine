@@ -41,8 +41,8 @@
 #
 #
 #	@author   Daylily-Zeleen
-#	@email    daylily-zeleen@foxmail.com. @qq.com
-#	@version  0.8(版本号)
+#	@email    daylily-zeleen@foxmail.com
+#	@version  1.2(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -55,7 +55,7 @@
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2021/04/15 | 0.1   | Daylily-Zeleen       | Change update behavior and trigger flush behavoir
 #  2021/04/16 | 0.1   | Daylily-Zeleen       | Change fix the force entry behavoir
-
+#  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -145,9 +145,16 @@ var active : bool = true setget set_active, get_active
 var agents :Dictionary = {"null" : NodePath("")} setget _set_agents , get_agents
 
 #------------------------------------------------------------------------------
-#@description : If true,it will show a simple debugger at bottom left when running
-#				window.
+#@description : ( Runtime property) The AnimationPlayer to play animation.
+#				The Animation will be play every time state entered. 
 #------------------------------------------------------------------------------
+var animation_player: AnimationPlayer
+
+#------------------------------------------------------------------------------
+#@description : ( Editor property) The AnimationPlayer to play animation.
+#				The Animation will be tried to play every time state is entered. 
+#------------------------------------------------------------------------------
+var animation_player_node_path: NodePath setget _set_animation_player_node_path, _get_animation_player_node_path
 
 #======================================================
 #--------------------Methods---------------------------
@@ -404,16 +411,34 @@ func get_active()->bool :
 
 
 
-
-
 func _set_agents(a:Dictionary)->void:
 	if Engine.editor_hint or not is_inside_tree() or agents.values()[0] is NodePath:
 		agents = a
 func get_agents()->Dictionary:
 	return agents
 
-#var _custom_class_list:Dictionary = {"Null":""}
+func _set_animation_player_node_path(path: NodePath) -> void:
+	if path == NodePath():
+		animation_player_node_path = NodePath()
+		if not Engine.editor_hint:
+			animation_player = null
+	else:
+		if not is_inside_tree(): yield(self, "ready")
+		if get_node(path) is AnimationPlayer:
+			animation_player_node_path = path
+			if not Engine.editor_hint:
+				animation_player = get_node(path)
+		else:
+			printerr("HFSM ERROR:: \"animation_palyer_node_path\" should be a NodePath of AnimationPlayer.")
 
+func _get_animation_player_node_path() -> NodePath:
+	if Engine.editor_hint:
+		return animation_player_node_path
+	else:
+		if is_instance_valid(animation_player):
+			return animation_player.get_path_to(self)
+		else:
+			return NodePath()
 
 var process_type :int = ProcessTypes.IDLE_AND_PHYSICS setget set_process_type , get_process_type
 func set_process_type(type :int)->void:
@@ -450,7 +475,6 @@ func _init():
 	else :
 		connect("tree_entered" , self , "_on_Self_tree_entered")
 
-
 func _get_property_list()->Array:
 	var properties :Array
 	properties.push_back({name = "HFSM",type = TYPE_NIL,usage = PROPERTY_USAGE_CATEGORY  })
@@ -467,6 +491,9 @@ func _get_property_list()->Array:
 	properties.push_back({name = "_force_all_fsm_entry_behavior" , type = TYPE_INT})
 	properties.push_back({name = "_root_fsm_res",type = TYPE_OBJECT , hint = PROPERTY_HINT_RESOURCE_TYPE ,hint_string ="Resource" ,usage = PROPERTY_USAGE_STORAGE})
 
+	properties.push_back({name = "Animation" , type = TYPE_NIL , usage = PROPERTY_USAGE_GROUP})
+	properties.push_back({name = "animation_player_node_path", type = TYPE_NODE_PATH})
+	
 	return properties
 
 func _ready()->void:
@@ -474,7 +501,8 @@ func _ready()->void:
 		_root_fsm_res = load("res://addons/hierarchical_finite_state_machine/script/source/nested_fsm_res.gd").new()
 	else:
 		_root_fsm_res.is_deleted_state_script()
-
+	if animation_player_node_path:
+		animation_player = get_node(animation_player_node_path)
 
 var _current_path :Array = ["root"] setget , get_current_path
 var _previous_path :Array = ["root"] setget , get_previous_path
@@ -550,9 +578,9 @@ func _on_Self_tree_entered():
 	else:
 		yield(self,"ready")
 	for agent in agents.keys():
-		var obj = owner.get_node_or_null(agents[agent]) if owner else get_node_or_null(agents[agent])
-		if not obj:
-			obj = get_node_or_null(agents[agent])
+		var np: NodePath = agents[agent]
+		if np.is_empty(): continue
+		var obj = get_node_or_null(np)
 		if obj :
 			agents[agent] = obj
 		else :

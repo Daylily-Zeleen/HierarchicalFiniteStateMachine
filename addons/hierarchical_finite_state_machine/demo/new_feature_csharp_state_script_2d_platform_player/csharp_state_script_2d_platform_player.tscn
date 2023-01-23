@@ -27,6 +27,10 @@ is_nested = false
 editor_offset = Vector2( 40, 360 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
+animation_blend_time = 0.0
+animation_speed = 1.0
+animation_play_backwards = false
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 8 )
@@ -37,6 +41,10 @@ is_nested = false
 editor_offset = Vector2( 1080, 320 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
+animation_blend_time = 0.0
+animation_speed = 1.0
+animation_play_backwards = false
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 8 )
@@ -47,6 +55,10 @@ is_nested = false
 editor_offset = Vector2( 500, 100 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
+animation_blend_time = 0.0
+animation_speed = 1.0
+animation_play_backwards = false
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 6 )
@@ -271,8 +283,7 @@ script = ExtResource( 13 )
 active = true
 process_type = 0
 agents = {
-"null": NodePath(""),
-"player": NodePath("Player")
+"player": NodePath("..")
 }
 _custom_class_list = null
 debug = null
@@ -280,6 +291,7 @@ _disable_rename_to_snake_case = false
 _force_all_state_entry_behavior = 0
 _force_all_fsm_entry_behavior = 0
 _root_fsm_res = SubResource( 33 )
+animation_player_node_path = NodePath("")
 
 [node name="Static" type="Node" parent="."]
 

@@ -4,7 +4,7 @@ extends "res://addons/hierarchical_finite_state_machine/script/source/state.gd"
 #Please browse document to find API.
 
 ###agents list-start# please not modify this line.
-const Player = preload("res://addons/hierarchical_finite_state_machine/demo/test_2d_platform_player/Player.gd")
+const Player = preload("res://addons/hierarchical_finite_state_machine/demo/new_feature_work_with_animation/Player.gd")
 var player : Player 
 ###agents list-end# please not modify this line.
 ###nested fsm state-start# please not modify this line.
@@ -16,7 +16,6 @@ var player : Player
 #---------Custom signals------------
 
 #--------Custom Properties---------
-var jump_move_accel = 1
 
 #-------Custom Mechods-----------
 
@@ -27,27 +26,24 @@ func init()->void:
 
 #Will be called every time when entry this state.
 func entry()->void:
-	if player.is_on_floor():
-		player.velocity.y += player.jump_speed
+	pass
 
 #Will be called every frame if the hfsm's process_type is setted at "Idle" or "Idle And Physics",
 #and will be called every physics frame if the hfsm's process_type is setted at "Physics".
 #(In order to ensure the function completeness)
 #Note that this method will not be called if this state is an exit state
 func update(delta:float)->void:
-	#just demostrate the HFSM feature.
-	player.velocity_length_label.text = "jumping velocity_length :" + str(hfsm.get_variable("velocity_length"))
+	pass
+	
 
 #Will be called every physics frame if the hfsm's process_type is setted at "Physics" or "Idle And Physics",
 #and will be called every frame if the hfsm's process_type is setted at "Idle".
 #(In order to ensure the function completeness)
 #Note that this method will not be called if this state is an exit state
 func physics_update(delta:float)->void:
-	player.velocity.y += player.gravity * delta
-	player.velocity.x = lerp(player.velocity.x ,(Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")) * player.move_speed , delta * jump_move_accel)
-
+	pass
 
 #Will be called every time when exit this state.
 #Note that this method will be called immediatly after entry() if this state is an exit state.
 func exit()->void:
-	player.velocity_length_label.text = ""
+	pass

@@ -1,4 +1,4 @@
-# Hierarchical Finite State Machine - v 1.1
+# Hierarchical Finite State Machine - v 1.2
 
 ​		As we all know, state machine is a very common design pattern. Here provide a powerful and easy-to-use Godot plugin for Hierarchical Finite State Machine with visual editing.
 
@@ -9,8 +9,9 @@
 3. Diversified transition plans 
 4. Two development modes: signal callback and attached state script
 5. Develop base GDscript, compatible with Godot basic version and mono version
-6. **Allows `C#`script to attached as state script( New).**
-7. **Suppoets `GDscript` and `C#` script to implement the logic of transition( New, full version only). **
+6. **Allows `C#`script to attached as state script.**
+7. **Suppoets `GDscript` and `C#` script to implement the logic of transition( full version only).**
+8. **Has ability of working with animaions( Can be an Animation State Mechine)( New).**
 
 
 # Full version links:

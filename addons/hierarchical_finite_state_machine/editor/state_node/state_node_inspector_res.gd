@@ -41,8 +41,8 @@
 #
 #
 #	@author   Daylily-Zeleen
-#	@email    daylily-zeleen@foxmail.com. @qq.com
-#	@version  1.0(版本号)
+#	@email    daylily-zeleen@foxmail.com
+#	@version  1.2(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -54,9 +54,11 @@
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2021/07/2 | 0.8   | Daylily-Zeleen      | Support C# state script
 #  2022/10/19 | 1.0   | Daylily-Zeleen      | 解決Godot标准版不支持C#脚本导致的报错
+#  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
 #----------------------------------------------------------------------------
 #
 ##############################################################################
+tool
 extends Resource
 const HfsmConstant = preload("../../script/source/hfsm_constant.gd")
 const NestedFsmRes = preload("../../script/source/nested_fsm_res.gd")
@@ -90,10 +92,10 @@ func _get_state_script():
 var is_nested :bool setget _set_is_nested , _get_is_nested
 func _set_is_nested(i :bool):
 	state_node.action_set_is_nested(state_node.is_nested , i)
-
 func _get_is_nested ():
 	if state_node:
 		return state_node.is_nested
+
 var reset_properties_when_entry:bool setget _set_reset_properties_when_entry,_get_reset_properties_when_entry
 func _set_reset_properties_when_entry(v:bool):
 	state_node.action_set_reset_properties_when_entry(v)
@@ -112,6 +114,13 @@ func _get_reset_nested_fsm_when_entry():
 	if state_node:
 		return state_node.reset_nested_fsm_when_entry
 
+
+var animation_name: String setget _set_animation_name, _get_animation_name
+func _set_animation_name(anim_name : String) -> void:
+	state_node.state_res.animation_name = anim_name
+func _get_animation_name() -> String:
+	return state_node.state_res.animation_name
+
 func _init(_state_node):
 	state_node = _state_node
 
@@ -123,14 +132,25 @@ func _get_property_list():
 	properties.push_back({name = "state_name",type = TYPE_STRING })
 	properties.push_back({name = "state_type",type = TYPE_INT , hint = PROPERTY_HINT_ENUM , hint_string = "Normal,ENTRY,EXIT" })
 	properties.push_back({name = "reset_properties_when_entry",type = TYPE_BOOL })
+
 	var script_hint_string = "GDScript"
 	if ClassDB.class_exists("CSharpScript"):
-		script_hint_string += ", CSharpScript"
+		script_hint_string += ",CSharpScript"
 	properties.push_back({name = "state_script",type = TYPE_OBJECT , hint =  PROPERTY_HINT_RESOURCE_TYPE  , hint_string = script_hint_string})
 	properties.push_back({name = "is_nested",type = TYPE_BOOL })
 	if _get_is_nested () :
 		properties.push_back({name = "reset_nested_fsm_when_entry",type = TYPE_BOOL })
 		properties.push_back({name = "nested_fsm_res",type = TYPE_OBJECT , hint =  PROPERTY_HINT_RESOURCE_TYPE ,usage = PROPERTY_USAGE_STORAGE })
 
-	return properties
+	properties.push_back({name = "Animation" , type = TYPE_NIL , usage = PROPERTY_USAGE_GROUP})
+	var animations := ""
+	if Engine.editor_hint:
+		var hfsm :Node = state_node.hfsm_editor.current_hfsm
+		if is_instance_valid(hfsm):
+			var anim_player :AnimationPlayer = hfsm.get_node_or_null(hfsm.animation_player_node_path)
+			if is_instance_valid(anim_player):
+				for anim in anim_player.get_animation_list():
+					animations += "," + anim
+	properties.push_back({name = "animation_name", type = TYPE_STRING, hint = PROPERTY_HINT_ENUM_SUGGESTION, hint_string = animations })
 
+	return properties
