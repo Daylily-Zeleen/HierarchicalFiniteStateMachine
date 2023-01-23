@@ -41,7 +41,7 @@
 #
 #
 #	@author   Daylily-Zeleen
-#	@email    daylily-zeleen@foxmail.com. @qq.com
+#	@email    daylily-zeleen@foxmail.com
 #	@version  1.1(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #

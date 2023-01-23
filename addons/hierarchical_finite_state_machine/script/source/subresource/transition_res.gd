@@ -32,7 +32,7 @@
 #	https://godotmarketplace.com/?post_type=product&p=37138
 #
 #	@author   Daylily-Zeleen
-#	@email    daylily-zeleen@qq.com
+#	@email    daylily-zeleen@foxmail.com
 #	@version  0.8(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
 #
