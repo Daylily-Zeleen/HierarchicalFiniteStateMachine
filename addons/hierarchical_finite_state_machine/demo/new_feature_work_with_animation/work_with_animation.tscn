@@ -17,256 +17,53 @@ extents = Vector2( 32, 32 )
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 5 )
-state_name = "state"
-state_type = 0
+state_name = "idle"
+state_type = 1
 is_nested = false
-editor_offset = Vector2( 0, 0 )
+editor_offset = Vector2( -80, 500 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
-animation_name = ""
+animation_name = "idle_alias"
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
-state_name = "state"
+state_name = "move"
 state_type = 0
 is_nested = false
-editor_offset = Vector2( 0, 0 )
+editor_offset = Vector2( 880, 440 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
 animation_name = ""
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 5 )
-state_name = "state"
+state_name = "jump"
 state_type = 0
 is_nested = false
-editor_offset = Vector2( 0, 0 )
+editor_offset = Vector2( 40, 140 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
 animation_name = ""
 
 [sub_resource type="Resource" id=39]
 script = ExtResource( 5 )
-state_name = "state"
+state_name = "floating"
 state_type = 0
 is_nested = false
-editor_offset = Vector2( 0, 0 )
+editor_offset = Vector2( 460, 40 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
 animation_name = ""
 
 [sub_resource type="Resource" id=40]
 script = ExtResource( 5 )
-state_name = "state"
+state_name = "land"
 state_type = 0
 is_nested = false
-editor_offset = Vector2( 0, 0 )
+editor_offset = Vector2( 1000, 100 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
 animation_name = ""
-
-[sub_resource type="Resource" id=41]
-script = ExtResource( 9 )
-auto_transit_mode = 0
-delay_time = 1.0
-times = 5
-
-[sub_resource type="Resource" id=42]
-script = ExtResource( 11 )
-expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
-expression_comment = ""
-expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
-expression_comment = ""
-
-[sub_resource type="Resource" id=43]
-script = ExtResource( 8 )
-variable_op_mode = 0
-variable_expression_res_list = [  ]
-
-[sub_resource type="Resource" id=44]
-script = ExtResource( 7 )
-from_res = SubResource( 2 )
-to_res = SubResource( 4 )
-transition_type = 2
-auto_condition_res = SubResource( 41 )
-expression_condition_res = SubResource( 42 )
-variable_condition_res = SubResource( 43 )
-
-[sub_resource type="Resource" id=45]
-script = ExtResource( 9 )
-auto_transit_mode = 0
-delay_time = 1.0
-times = 5
-
-[sub_resource type="Resource" id=46]
-script = ExtResource( 11 )
-expression_text = "not player.is_on_floor()"
-expression_comment = ""
-expression_text = "not player.is_on_floor()"
-expression_comment = ""
-
-[sub_resource type="Resource" id=47]
-script = ExtResource( 8 )
-variable_op_mode = 0
-variable_expression_res_list = [  ]
-
-[sub_resource type="Resource" id=48]
-script = ExtResource( 7 )
-from_res = SubResource( 2 )
-to_res = SubResource( 39 )
-transition_type = 2
-auto_condition_res = SubResource( 45 )
-expression_condition_res = SubResource( 46 )
-variable_condition_res = SubResource( 47 )
-
-[sub_resource type="Resource" id=49]
-script = ExtResource( 9 )
-auto_transit_mode = 0
-delay_time = 0.5
-times = 5
-
-[sub_resource type="Resource" id=50]
-script = ExtResource( 11 )
-expression_text = ""
-expression_comment = ""
-expression_text = ""
-expression_comment = ""
-
-[sub_resource type="Resource" id=51]
-script = ExtResource( 8 )
-variable_op_mode = 0
-variable_expression_res_list = [  ]
-
-[sub_resource type="Resource" id=52]
-script = ExtResource( 7 )
-from_res = SubResource( 4 )
-to_res = SubResource( 39 )
-transition_type = 0
-auto_condition_res = SubResource( 49 )
-expression_condition_res = SubResource( 50 )
-variable_condition_res = SubResource( 51 )
-
-[sub_resource type="Resource" id=53]
-script = ExtResource( 9 )
-auto_transit_mode = 0
-delay_time = 0.5
-times = 5
-
-[sub_resource type="Resource" id=54]
-script = ExtResource( 11 )
-expression_text = ""
-expression_comment = ""
-expression_text = ""
-expression_comment = ""
-
-[sub_resource type="Resource" id=55]
-script = ExtResource( 8 )
-variable_op_mode = 0
-variable_expression_res_list = [  ]
-
-[sub_resource type="Resource" id=56]
-script = ExtResource( 7 )
-from_res = SubResource( 40 )
-to_res = SubResource( 2 )
-transition_type = 0
-auto_condition_res = SubResource( 53 )
-expression_condition_res = SubResource( 54 )
-variable_condition_res = SubResource( 55 )
-
-[sub_resource type="Resource" id=57]
-script = ExtResource( 9 )
-auto_transit_mode = 0
-delay_time = 1.0
-times = 5
-
-[sub_resource type="Resource" id=58]
-script = ExtResource( 11 )
-expression_text = "player.is_on_floor()"
-expression_comment = ""
-expression_text = "player.is_on_floor()"
-expression_comment = ""
-
-[sub_resource type="Resource" id=59]
-script = ExtResource( 8 )
-variable_op_mode = 0
-variable_expression_res_list = [  ]
-
-[sub_resource type="Resource" id=60]
-script = ExtResource( 7 )
-from_res = SubResource( 39 )
-to_res = SubResource( 40 )
-transition_type = 2
-auto_condition_res = SubResource( 57 )
-expression_condition_res = SubResource( 58 )
-variable_condition_res = SubResource( 59 )
-
-[sub_resource type="Resource" id=61]
-script = ExtResource( 9 )
-auto_transit_mode = 0
-delay_time = 1.0
-times = 5
-
-[sub_resource type="Resource" id=62]
-script = ExtResource( 11 )
-expression_text = "not player.is_on_floor()"
-expression_comment = ""
-expression_text = "not player.is_on_floor()"
-expression_comment = ""
-
-[sub_resource type="Resource" id=63]
-script = ExtResource( 8 )
-variable_op_mode = 0
-variable_expression_res_list = [  ]
-
-[sub_resource type="Resource" id=64]
-script = ExtResource( 7 )
-from_res = SubResource( 3 )
-to_res = SubResource( 39 )
-transition_type = 2
-auto_condition_res = SubResource( 61 )
-expression_condition_res = SubResource( 62 )
-variable_condition_res = SubResource( 63 )
-
-[sub_resource type="Resource" id=65]
-script = ExtResource( 9 )
-auto_transit_mode = 0
-delay_time = 1.0
-times = 5
-
-[sub_resource type="Resource" id=66]
-script = ExtResource( 11 )
-expression_text = ""
-expression_comment = ""
-expression_text = ""
-expression_comment = ""
-
-[sub_resource type="Resource" id=7]
-script = ExtResource( 6 )
-variable_name = "velocity_length"
-variable_type = 3
-variable_comment = ""
-is_deleted = false
-
-[sub_resource type="Resource" id=67]
-script = ExtResource( 10 )
-variable_res = SubResource( 7 )
-trigger_mode = 0
-comparation = 4
-value = 5.0
-
-[sub_resource type="Resource" id=68]
-script = ExtResource( 8 )
-variable_op_mode = 0
-variable_expression_res_list = [ SubResource( 67 ) ]
-
-[sub_resource type="Resource" id=69]
-script = ExtResource( 7 )
-from_res = SubResource( 3 )
-to_res = SubResource( 2 )
-transition_type = 1
-auto_condition_res = SubResource( 65 )
-expression_condition_res = SubResource( 66 )
-variable_condition_res = SubResource( 68 )
 
 [sub_resource type="Resource" id=70]
 script = ExtResource( 9 )
@@ -280,6 +77,13 @@ expression_text = ""
 expression_comment = ""
 expression_text = ""
 expression_comment = ""
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 6 )
+variable_name = "velocity_length"
+variable_type = 3
+variable_comment = ""
+is_deleted = false
 
 [sub_resource type="Resource" id=72]
 script = ExtResource( 10 )
@@ -302,69 +106,265 @@ auto_condition_res = SubResource( 70 )
 expression_condition_res = SubResource( 71 )
 variable_condition_res = SubResource( 73 )
 
-[sub_resource type="Resource" id=75]
+[sub_resource type="Resource" id=103]
 script = ExtResource( 9 )
 auto_transit_mode = 0
 delay_time = 1.0
 times = 5
 
-[sub_resource type="Resource" id=76]
+[sub_resource type="Resource" id=104]
 script = ExtResource( 11 )
-expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
+expression_text = ""
 expression_comment = ""
-expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
+expression_text = ""
 expression_comment = ""
 
-[sub_resource type="Resource" id=77]
+[sub_resource type="Resource" id=106]
 script = ExtResource( 8 )
 variable_op_mode = 0
 variable_expression_res_list = [  ]
 
-[sub_resource type="Resource" id=78]
+[sub_resource type="Resource" id=107]
 script = ExtResource( 7 )
-from_res = SubResource( 3 )
-to_res = SubResource( 4 )
-transition_type = 2
-auto_condition_res = SubResource( 75 )
-expression_condition_res = SubResource( 76 )
-variable_condition_res = SubResource( 77 )
+from_res = SubResource( 4 )
+to_res = SubResource( 39 )
+transition_type = 0
+auto_condition_res = SubResource( 103 )
+expression_condition_res = SubResource( 104 )
+variable_condition_res = SubResource( 106 )
 
-[sub_resource type="Resource" id=79]
+[sub_resource type="Resource" id=119]
 script = ExtResource( 9 )
 auto_transit_mode = 0
 delay_time = 1.0
 times = 5
 
-[sub_resource type="Resource" id=80]
+[sub_resource type="Resource" id=120]
 script = ExtResource( 11 )
 expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
 expression_comment = ""
 expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
 expression_comment = ""
 
-[sub_resource type="Resource" id=81]
+[sub_resource type="Resource" id=122]
 script = ExtResource( 8 )
 variable_op_mode = 0
 variable_expression_res_list = [  ]
 
-[sub_resource type="Resource" id=82]
+[sub_resource type="Resource" id=123]
 script = ExtResource( 7 )
 from_res = SubResource( 40 )
 to_res = SubResource( 4 )
 transition_type = 2
-auto_condition_res = SubResource( 79 )
-expression_condition_res = SubResource( 80 )
-variable_condition_res = SubResource( 81 )
+auto_condition_res = SubResource( 119 )
+expression_condition_res = SubResource( 120 )
+variable_condition_res = SubResource( 122 )
+
+[sub_resource type="Resource" id=129]
+script = ExtResource( 9 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=130]
+script = ExtResource( 11 )
+expression_text = "not player.is_on_floor()"
+expression_comment = ""
+expression_text = "not player.is_on_floor()"
+expression_comment = ""
+
+[sub_resource type="Resource" id=132]
+script = ExtResource( 8 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=133]
+script = ExtResource( 7 )
+from_res = SubResource( 3 )
+to_res = SubResource( 39 )
+transition_type = 2
+auto_condition_res = SubResource( 129 )
+expression_condition_res = SubResource( 130 )
+variable_condition_res = SubResource( 132 )
+
+[sub_resource type="Resource" id=139]
+script = ExtResource( 9 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=140]
+script = ExtResource( 11 )
+expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
+expression_comment = ""
+expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
+expression_comment = ""
+
+[sub_resource type="Resource" id=142]
+script = ExtResource( 8 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=143]
+script = ExtResource( 7 )
+from_res = SubResource( 3 )
+to_res = SubResource( 4 )
+transition_type = 2
+auto_condition_res = SubResource( 139 )
+expression_condition_res = SubResource( 140 )
+variable_condition_res = SubResource( 142 )
+
+[sub_resource type="Resource" id=144]
+script = ExtResource( 9 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=145]
+script = ExtResource( 11 )
+expression_text = ""
+expression_comment = ""
+expression_text = ""
+expression_comment = ""
+
+[sub_resource type="Resource" id=147]
+script = ExtResource( 8 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=148]
+script = ExtResource( 7 )
+from_res = SubResource( 40 )
+to_res = SubResource( 2 )
+transition_type = 0
+auto_condition_res = SubResource( 144 )
+expression_condition_res = SubResource( 145 )
+variable_condition_res = SubResource( 147 )
+
+[sub_resource type="Resource" id=149]
+script = ExtResource( 9 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=150]
+script = ExtResource( 11 )
+expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
+expression_comment = ""
+expression_text = "Input.is_action_just_pressed(\"ui_accept\") and player.is_on_floor() "
+expression_comment = ""
+
+[sub_resource type="Resource" id=152]
+script = ExtResource( 8 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=153]
+script = ExtResource( 7 )
+from_res = SubResource( 2 )
+to_res = SubResource( 4 )
+transition_type = 2
+auto_condition_res = SubResource( 149 )
+expression_condition_res = SubResource( 150 )
+variable_condition_res = SubResource( 152 )
+
+[sub_resource type="Resource" id=154]
+script = ExtResource( 9 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=155]
+script = ExtResource( 11 )
+expression_text = "player.is_on_floor()"
+expression_comment = ""
+expression_text = "player.is_on_floor()"
+expression_comment = ""
+
+[sub_resource type="Resource" id=157]
+script = ExtResource( 8 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=158]
+script = ExtResource( 7 )
+from_res = SubResource( 39 )
+to_res = SubResource( 40 )
+transition_type = 2
+auto_condition_res = SubResource( 154 )
+expression_condition_res = SubResource( 155 )
+variable_condition_res = SubResource( 157 )
+
+[sub_resource type="Resource" id=159]
+script = ExtResource( 9 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=160]
+script = ExtResource( 11 )
+expression_text = "not player.is_on_floor()"
+expression_comment = ""
+expression_text = "not player.is_on_floor()"
+expression_comment = ""
+
+[sub_resource type="Resource" id=162]
+script = ExtResource( 8 )
+variable_op_mode = 0
+variable_expression_res_list = [  ]
+
+[sub_resource type="Resource" id=163]
+script = ExtResource( 7 )
+from_res = SubResource( 2 )
+to_res = SubResource( 39 )
+transition_type = 2
+auto_condition_res = SubResource( 159 )
+expression_condition_res = SubResource( 160 )
+variable_condition_res = SubResource( 162 )
+
+[sub_resource type="Resource" id=164]
+script = ExtResource( 9 )
+auto_transit_mode = 0
+delay_time = 1.0
+times = 5
+
+[sub_resource type="Resource" id=165]
+script = ExtResource( 11 )
+expression_text = ""
+expression_comment = ""
+expression_text = ""
+expression_comment = ""
+
+[sub_resource type="Resource" id=167]
+script = ExtResource( 10 )
+variable_res = SubResource( 7 )
+trigger_mode = 0
+comparation = 4
+value = 5.0
+
+[sub_resource type="Resource" id=168]
+script = ExtResource( 8 )
+variable_op_mode = 0
+variable_expression_res_list = [ SubResource( 167 ) ]
+
+[sub_resource type="Resource" id=169]
+script = ExtResource( 7 )
+from_res = SubResource( 3 )
+to_res = SubResource( 2 )
+transition_type = 1
+auto_condition_res = SubResource( 164 )
+expression_condition_res = SubResource( 165 )
+variable_condition_res = SubResource( 168 )
 
 [sub_resource type="Resource" id=28]
 script = ExtResource( 2 )
 fsm_name = "root"
 state_res_list = [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 39 ), SubResource( 40 ) ]
-transition_res_list = [ SubResource( 44 ), SubResource( 48 ), SubResource( 52 ), SubResource( 56 ), SubResource( 60 ), SubResource( 64 ), SubResource( 69 ), SubResource( 74 ), SubResource( 78 ), SubResource( 82 ) ]
+transition_res_list = [ SubResource( 74 ), SubResource( 107 ), SubResource( 123 ), SubResource( 133 ), SubResource( 143 ), SubResource( 148 ), SubResource( 153 ), SubResource( 158 ), SubResource( 163 ), SubResource( 169 ) ]
 is_nested = false
 variable_res_list = [ SubResource( 7 ) ]
 variable_list_offset = Vector2( -160, -40 )
-editor_scroll_offset = Vector2( -174.87, -74 )
+editor_scroll_offset = Vector2( -16.0251, -54.958 )
 transition_comment_visible = true
 transition_editor_folded = false
 

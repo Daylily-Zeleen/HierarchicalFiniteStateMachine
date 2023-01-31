@@ -1,11 +1,11 @@
-extends "res://addons/hierarchical_finite_state_machine/script/source/state.gd"
+ extends "res://addons/hierarchical_finite_state_machine/script/source/state.gd"
 
 #You can use 'hfsm' to call the HFSM which contain this state , and call it's menbers.
 #Please browse document to find API.
 
 ###agents list-start# please not modify this line.
 const Player = preload("res://addons/hierarchical_finite_state_machine/demo/gds_nested_state_script_style_2d_platform_player/Player.gd")
-var player : Player
+var player : Player 
 ###agents list-end# please not modify this line.
 ###nested fsm state-start# please not modify this line.
 ###nested fsm state-end# please not modify this line.

@@ -21,6 +21,7 @@ is_nested = false
 editor_offset = Vector2( 240, 380 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 5 )
@@ -30,6 +31,7 @@ is_nested = false
 editor_offset = Vector2( 500, 180 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
@@ -40,6 +42,7 @@ is_nested = false
 editor_offset = Vector2( 260, 240 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 5 )
@@ -49,6 +52,7 @@ is_nested = false
 editor_offset = Vector2( 520, 60 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 5 )
@@ -58,6 +62,7 @@ is_nested = false
 editor_offset = Vector2( 900, 200 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 8 )
@@ -155,6 +160,7 @@ nested_fsm_res = SubResource( 17 )
 editor_offset = Vector2( 680, 320 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=19]
 script = ExtResource( 8 )
@@ -268,9 +274,6 @@ anchor_left = -0.000517339
 anchor_right = 0.999483
 anchor_bottom = 1.0
 script = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HFSM" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -279,10 +282,13 @@ process_type = 2
 agents = {
 "null": NodePath("")
 }
+_custom_class_list = null
+debug = null
 _disable_rename_to_snake_case = false
 _force_all_state_entry_behavior = 0
 _force_all_fsm_entry_behavior = 0
 _root_fsm_res = SubResource( 33 )
+animation_player_node_path = NodePath("")
 
 [node name="Button" type="Button" parent="."]
 anchor_right = 1.0

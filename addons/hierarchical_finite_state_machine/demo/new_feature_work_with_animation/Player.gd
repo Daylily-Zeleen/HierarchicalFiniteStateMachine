@@ -24,7 +24,7 @@ func _on_HFSM_physics_updated(state, delta:float, fsm_path:Array):
 	velocity = move_and_slide_with_snap(velocity, Vector2.DOWN, Vector2.UP)
 	hfsm.set_float("velocity_length" ,velocity.length())
 	velocity_length_label.text = "velocity_length :" + str(hfsm.get_variable("velocity_length"))
-
+	
 
 func _on_HFSM_transited(from, to,fsm_path):
 	#print the transit infomation.

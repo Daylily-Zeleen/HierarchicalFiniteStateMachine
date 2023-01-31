@@ -25,9 +25,6 @@ editor_offset = Vector2( 40, 360 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
 animation_name = ""
-animation_blend_time = 0.0
-animation_speed = 1.0
-animation_play_backwards = false
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
@@ -38,9 +35,6 @@ editor_offset = Vector2( 1080, 320 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
 animation_name = ""
-animation_blend_time = 0.0
-animation_speed = 1.0
-animation_play_backwards = false
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 5 )
@@ -52,9 +46,6 @@ editor_offset = Vector2( 560, 60 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
 animation_name = ""
-animation_blend_time = 0.0
-animation_speed = 1.0
-animation_play_backwards = false
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 9 )

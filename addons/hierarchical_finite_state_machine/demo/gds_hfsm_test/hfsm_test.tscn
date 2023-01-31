@@ -21,6 +21,7 @@ is_nested = false
 editor_offset = Vector2( 240, 200 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 8 )
@@ -30,6 +31,7 @@ is_nested = false
 editor_offset = Vector2( 560, 120 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 8 )
@@ -40,6 +42,7 @@ is_nested = false
 editor_offset = Vector2( 260, 260 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 8 )
@@ -49,6 +52,7 @@ is_nested = false
 editor_offset = Vector2( 480, 120 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 8 )
@@ -58,6 +62,7 @@ is_nested = false
 editor_offset = Vector2( 820, 200 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 1 )
@@ -155,6 +160,7 @@ nested_fsm_res = SubResource( 17 )
 editor_offset = Vector2( 700, 260 )
 reset_properties_when_entry = true
 reset_nested_fsm_when_entry = false
+animation_name = ""
 
 [sub_resource type="Resource" id=19]
 script = ExtResource( 1 )
@@ -259,7 +265,7 @@ transition_res_list = [ SubResource( 23 ), SubResource( 28 ), SubResource( 32 ) 
 is_nested = false
 variable_res_list = [ SubResource( 8 ) ]
 variable_list_offset = Vector2( -160, 80 )
-editor_scroll_offset = Vector2( 838.414, 215.256 )
+editor_scroll_offset = Vector2( 20.414, -53.744 )
 transition_comment_visible = true
 transition_editor_folded = false
 
@@ -282,6 +288,7 @@ _disable_rename_to_snake_case = false
 _force_all_state_entry_behavior = 0
 _force_all_fsm_entry_behavior = 0
 _root_fsm_res = SubResource( 33 )
+animation_player_node_path = NodePath("")
 
 [node name="Button" type="Button" parent="."]
 anchor_left = 0.5
