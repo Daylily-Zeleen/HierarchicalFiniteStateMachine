@@ -42,7 +42,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  0.9(版本号)
+#	@version  1.3(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -54,6 +54,7 @@
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition(full version)
 #  2021/09/18 | 0.9   | Daylily-Zeleen      | fix trail version bug: can't change transition type.
+#  2023/01/30 | 1.3   | Daylily-Zeleen      | Add auto transition type : AnimationFinish
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -107,7 +108,7 @@ func _get_transition_type():
 
 
 #------------------automode_properties-------------------------------------
-var auto_transit_mode :int = HfsmConstant.AUTO_TRANSIT_MODE_DELAY_TIMER setget _set_auto_transit_mode , _get_auto_transit_mode
+var auto_transit_mode :int = HfsmConstant.AUTO_TRANSIT_MODE_ANIMATION_FINISH setget _set_auto_transit_mode , _get_auto_transit_mode
 func _set_auto_transit_mode (t:int):
 	action_auto_transit_mode(_get_auto_transit_mode() , t)
 

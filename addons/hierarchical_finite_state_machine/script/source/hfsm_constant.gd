@@ -34,6 +34,7 @@
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
 #	@version  0.8(版本号)
+#	@version  1.3(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
 #
 #----------------------------------------------------------------------------
@@ -44,6 +45,7 @@
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/02 | 0.8   | Daylily-Zeleen      | Add C# script template code
+#  2023/01/30 | 1.3   | Daylily-Zeleen      | Add auto transition type : AnimationFinish
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -60,6 +62,7 @@ enum {
 	TRANSITION_TYPE_EXPRESSION ,
 }
 enum {
+	AUTO_TRANSIT_MODE_ANIMATION_FINISH ,
 	AUTO_TRANSIT_MODE_DELAY_TIMER ,
 	AUTO_TRANSIT_MODE_NESTED_FSM_EXIT ,
 	AUTO_TRANSIT_MODE_MANUAL ,
@@ -100,6 +103,7 @@ enum {
 }
 #
 const AutoTransitionTipText :={
+	ANIMATION_FINISH = "It will transit after the state's animation finished. Specially, if the state has not play animation, it will transit at the next update automatically.",
 	DELAY_TIMER = "Once entry the 'from_state',it will use delay time which you setted to creat a timer,and transit if the timer timeout." ,
 	NESTED_FSM_EXIT = "It will transit if the nested fsm exited.",
 	MANUAL = "It will transit after execute manual_exit() in state script manual,ensure this method is called in below override method:\n\t entry()\n\t update()\n\t physics_update()\n\t.",

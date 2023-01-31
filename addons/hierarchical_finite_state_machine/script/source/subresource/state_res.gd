@@ -33,7 +33,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  1.2(版本号)
+#	@version  1.3(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
 #
 #----------------------------------------------------------------------------
@@ -45,6 +45,7 @@
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/02 | 0.8   | Daylily-Zeleen      | Implement C# state script support
 #  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
+#  2023/01/30 | 1.3   | Daylily-Zeleen      | Add auto transition type : AnimationFinish
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -78,6 +79,10 @@ var reset_properties_when_entry :bool = true
 var reset_nested_fsm_when_entry:bool = false
 
 var animation_name := ""
+
+
+func get_animation_name() -> String:
+	return state_name if animation_name.empty() else animation_name
 
 func _get_property_list():
 	var properties :Array

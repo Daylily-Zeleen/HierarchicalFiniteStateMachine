@@ -33,7 +33,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  1.2(版本号)
+#	@version  1.3(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
 #
 #----------------------------------------------------------------------------
@@ -45,6 +45,7 @@
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/02 | 0.8   | Daylily-Zeleen      | Bug fix , implement script transition (full version)
 #  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
+#  2023/01/30 | 1.3   | Daylily-Zeleen      | Add auto transition type : AnimationFinish
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -69,37 +70,41 @@ class AutotTransition :
 
 	var auto_condition :Array
 	func _init(hfsm:Node,auto_condition_res:AutoConditionRes).(hfsm)->void:
-		if auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_DELAY_TIMER :
-			auto_condition = [0,auto_condition_res.delay_time , false , hfsm]
+		if auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_ANIMATION_FINISH :
+			auto_condition = [0]
+		elif auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_DELAY_TIMER :
+			auto_condition = [1,auto_condition_res.delay_time , false , hfsm]
 		elif auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_NESTED_FSM_EXIT :
-			auto_condition = [1]
-		elif auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_MANUAL :
 			auto_condition = [2]
+		elif auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_MANUAL :
+			auto_condition = [3]
 		elif auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_UPDATE_TIMES :
-			auto_condition = [3,auto_condition_res.times , 0]
-		elif auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_PHYSICS_UPDATE_TIMES :
 			auto_condition = [4,auto_condition_res.times , 0]
+		elif auto_condition_res.auto_transit_mode == AutoConditionRes.HfsmConstant.AUTO_TRANSIT_MODE_PHYSICS_UPDATE_TIMES :
+			auto_condition = [5,auto_condition_res.times , 0]
 
 	func refresh()->void:
-		if auto_condition[0] == 0 :
+		if auto_condition[0] == 1 :
 			auto_condition[2] = false
 			yield(auto_condition[3].get_tree().create_timer(auto_condition[1]) , "timeout")
 			auto_condition[2] = true
-		elif auto_condition[0] in [3,4] :
+		elif auto_condition[0] in [4,5] :
 			auto_condition[2] = 0
 
 	func check()->bool :
 		if auto_condition[0] == 0 :
+			return not from_state.animation_playing
+		elif auto_condition[0] == 1 :
 			return auto_condition[2]
-		elif auto_condition[0] == 1:
-			return true if from_state._nested_fsm and not from_state._nested_fsm.is_running else false
 		elif auto_condition[0] == 2:
-			return true if from_state.is_exited else false
+			return true if from_state._nested_fsm and not from_state._nested_fsm.is_running else false
 		elif auto_condition[0] == 3:
+			return true if from_state.is_exited else false
+		elif auto_condition[0] == 4:
 			if not Engine.is_in_physics_frame():
 				auto_condition[2] += 1
 			return false if auto_condition[2] <=auto_condition[1] else true
-		else:#ds auto_condition[0] == 4:
+		else:#ds auto_condition[0] == 5:
 			if Engine.is_in_physics_frame():
 				auto_condition[2] += 1
 			return false if auto_condition[2] <=auto_condition[1] else true

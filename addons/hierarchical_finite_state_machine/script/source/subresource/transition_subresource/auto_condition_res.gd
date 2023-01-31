@@ -42,7 +42,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  0.8(版本号)
+#	@version  1.3(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -52,6 +52,7 @@
 #  <Date>     | <Version> | <Author>       | <Description>
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
+#  2023/01/30 | 1.3   | Daylily-Zeleen      | Add auto transition type : AnimationFinish
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -60,7 +61,7 @@ extends Resource
 
 const HfsmConstant = preload("../../../../script/source/hfsm_constant.gd")
 
-var auto_transit_mode :int= HfsmConstant.AUTO_TRANSIT_MODE_DELAY_TIMER
+var auto_transit_mode :int= HfsmConstant.AUTO_TRANSIT_MODE_ANIMATION_FINISH
 var delay_time :float = 1.0
 var times :int = 5
 
@@ -74,7 +75,7 @@ func _get_property_list():
 
 	return properties
 
-func _init(_auto_transit_mode :int= HfsmConstant.AUTO_TRANSIT_MODE_DELAY_TIMER ,_delay_time :float = 1.0 ,_times :int = 5):
+func _init(_auto_transit_mode :int= HfsmConstant.AUTO_TRANSIT_MODE_ANIMATION_FINISH ,_delay_time :float = 1.0 ,_times :int = 5):
 	auto_transit_mode = _auto_transit_mode
 	delay_time = _delay_time
 	times = _times

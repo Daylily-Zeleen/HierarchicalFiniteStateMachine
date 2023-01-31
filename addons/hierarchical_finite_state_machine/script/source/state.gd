@@ -33,7 +33,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  1.2(版本号)
+#	@version  1.3(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
 #
 #----------------------------------------------------------------------------
@@ -46,6 +46,7 @@
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/02 | 0.8   | Daylily-Zeleen      | Improve access safity.
 #  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.
+#  2023/01/30 | 1.3   | Daylily-Zeleen      | Add auto transition type : AnimationFinish
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -78,6 +79,12 @@ var is_exited:bool = false setget _set_is_exit, is_exited
 #				this animation, it will be played every time of state entered.
 #------------------------------------------------------------------------------
 var animation_name: String = ""
+
+#------------------------------------------------------------------------------
+#@description : Indicating the animation is playing or not. 
+#				If this state is not running in the hfsm path, this meaning of this property is not reliable.
+#------------------------------------------------------------------------------
+var animation_playing: bool = false setget _readonly, is_animation_playing
 
 #======================================================
 #--------------------Methods---------------------------
@@ -112,7 +119,11 @@ func get_hfsm():
 func is_exited()->bool:
 	return is_exited
 
-
+#------------------------------------------------------------------------------
+#@description : getter of property 'animation_playing'.
+#------------------------------------------------------------------------------
+func is_animation_playing() -> bool:
+	return animation_playing
 
 
 
@@ -143,6 +154,8 @@ func exit()->void:
 #======================================================
 #--------------------Internal--------------------------
 #======================================================
+func _readonly(v): pass
+
 func _set_is_exit(v:bool):
 	return
 
@@ -166,7 +179,7 @@ func _set_hfsm(_hfsm)->void:
 		for property in get_script().get_script_property_list():
 			if not property.name in [ "_property_to_default_value" , "_transition_list",
 					"state_name","_state_type","hfsm","_nested_fsm", 
-					"animation_name"] and not property.name in hfsm.agents.keys() :
+					"animation_name", "animation_playing"] and not property.name in hfsm.agents.keys() :
 				_property_to_default_value[property.name] = self[property.name]
 	else :
 		printerr("HFSM err: %s Can not set state property 'hfsm'.-gds"%state_name)
@@ -189,13 +202,27 @@ func _entry()->void:
 		_reset()
 	for transition in _transition_list :
 		transition.refresh()
-	entry()
 	if is_instance_valid(hfsm.animation_player):
-		var anim := state_name if animation_name.empty() else animation_name
+		var anim := _get_animation_name()
 		if hfsm.animation_player.has_animation(anim):
+			if not hfsm.animation_player.is_connected("animation_finished",self,"_on_animation_player_finished"):
+				hfsm.animation_player.connect("animation_finished",self,"_on_animation_player_finished")
 			hfsm.animation_player.play(anim)
+			animation_playing = true
+		else:
+			animation_playing = false
+	else:
+		animation_playing = false
+	entry()
 	if _nested_fsm:
 		_nested_fsm._entry()
+
+func _get_animation_name() -> String:
+	return state_name if animation_name.empty() else animation_name
+
+func _on_animation_player_finished(anim_name: String) -> void:
+	if anim_name == _get_animation_name():
+		animation_playing = false
 
 func _update(delta:float)->void:
 	if not is_exited:

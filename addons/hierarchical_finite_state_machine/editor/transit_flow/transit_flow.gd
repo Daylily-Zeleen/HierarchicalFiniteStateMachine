@@ -42,7 +42,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  0.8(版本号)
+#	@version  1.3(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -53,6 +53,8 @@
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2021/07/2 | 0.8   | Daylily-Zeleen      | Support script transition  (full version)
+#  2023/01/30 | 1.3   | Daylily-Zeleen      | Add auto transition type : AnimationFinish
+#  2023/01/31 | 1.3   | Daylily-Zeleen      | Fixed duplicate add transit flow in editor
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -244,6 +246,8 @@ func update_comment():
 		HfsmConstant.TRANSITION_TYPE_AUTO :
 			var label_text :String = "Empty,this Transition Will be false."
 			match _get_auto_condition_res().auto_transit_mode :
+				HfsmConstant.AUTO_TRANSIT_MODE_ANIMATION_FINISH :
+					label_text = "after animation \"%s\" finished." % from.state_res.get_animation_name()
 				HfsmConstant.AUTO_TRANSIT_MODE_DELAY_TIMER :
 					label_text = "delay " + str(_get_auto_condition_res().delay_time) + "s."
 				HfsmConstant.AUTO_TRANSIT_MODE_MANUAL :
@@ -402,6 +406,8 @@ func _on_TransitFlow_gui_input(event:InputEvent):
 
 
 func delete_self():
+	if get_parent():
+		get_parent().remove_child(self)
 	(hfsm_editor.current_nested_fsm_res as NestedFsmRes).delete_transition(transition_res)
 	queue_free()
 

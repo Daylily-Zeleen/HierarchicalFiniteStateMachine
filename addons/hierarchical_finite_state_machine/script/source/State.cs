@@ -33,7 +33,7 @@
 // #                     
 // #	@author   Daylily-Zeleen                                                     
 // #	@email    daylily-zeleen@foxmail.com                                              
-// #	@version  1.2(版本号)                                                    
+// #	@version  1.3(版本号)                                                    
 // #	@license  Custom License(Read LISENCES.TXT for more details)
 // #                                                                      
 // #----------------------------------------------------------------------------
@@ -45,6 +45,7 @@
 // #----------------------------------------------------------------------------
 // #  2022/07/02 | 0.8   | Daylily-Zeleen      | Create file      
 // #  2023/01/23 | 1.2   | Daylily-Zeleen      | Provide ability to be a Animation State Mechine.           
+// #  2023/01/30 | 1.3   | Daylily-Zeleen      | Add auto transition type : AnimationFinish
 // #----------------------------------------------------------------------------
 // #                                                                            
 // ##############################################################################
@@ -117,9 +118,9 @@ namespace HFSM
         static private readonly Array<string> InternalProperties = new Array<string>{
                 "_property_to_default_value", "state_name", "_state_type", "hfsm", "_nested_fsm", "nestedFsm", "_transition_list", "isExited", "IsExited", "__reset_when_entry",
                 "StateName", "stateName", "HFSMScript", "Hfsm", "InternalProperties", "_hfsm",
-                "animation_name", "animation_blend_time", "animation_play_backwards", "animation_speed",
-                "AnimationName", "AnimationBlendTime", "AnimationPlayBackwards", "AnimationSpeed",
-                "animationName", "animationBlendTime", "animationPlayBackwards", "animationSpeed",
+                "animation_name", "aniamtion_playing",
+                "AnimationName", "AnimationPlaying",
+                "animationName","animationPlaying",
                 };
         private Node _hfsm = null;
 
@@ -140,26 +141,12 @@ namespace HFSM
         private string animationName = "";
 
         /// <summary>
-        /// The animation blend time.
+        /// Indicating the animation is playing or not. 
+        /// If this state is not running in the hfsm path, this meaning of this property is not reliable.
         /// </summary>
         /// <value></value>
-        public float AnimationBlendTime { private set => animationBlendTime = value; get => animationBlendTime; }
-        private float animationBlendTime = 0.0f;
-
-        /// <summary>
-        /// The animation play speed.
-        /// </summary>
-        /// <value></value>
-        public float AnimationSpeed { private set => animationSpeed = value; get => animationSpeed; }
-        private float animationSpeed = 1.0f;
-
-
-        /// <summary>
-        /// Animation play backword or not.
-        /// </summary>
-        /// <value></value>
-        public bool AnimationPlayBackwards { private set => animationPlayBackwards = value; get => animationPlayBackwards; }
-        private bool animationPlayBackwards = false;
+        public bool AnimationPlaying { private set => animationPlaying = value; get => animationPlaying; }
+        private bool animationPlaying = false;
 
 
         /// <summary>
@@ -231,11 +218,7 @@ namespace HFSM
 
         private string animation_name { set => AnimationName = value; get => AnimationName; }
 
-        private float animation_blend_time { set => AnimationBlendTime = value; get => AnimationBlendTime; }
-
-        private float animation_speed { set => AnimationSpeed = value; get => AnimationSpeed; }
-
-        private bool animation_play_backwards { set => AnimationPlayBackwards = value; get => AnimationPlayBackwards; }
+        private bool animation_playing { set => AnimationPlaying = value; get => AnimationPlaying; }
 
 
         private Array<Reference> _transition_list = new Array<Reference>();
@@ -251,17 +234,40 @@ namespace HFSM
                 transition.Call("refresh");
             }
 
-            Entry();
             var animationPlayer = Hfsm.Get("animation_player") as AnimationPlayer;
             if (IsInstanceValid(animationPlayer))
             {
-                var anim = AnimationName.Empty() ? StateName : AnimationName;
+                var anim = GetAnimationName();
                 if (animationPlayer.HasAnimation(anim))
                 {
-                    animationPlayer.Play(anim, AnimationBlendTime, AnimationPlayBackwards ? (-AnimationSpeed) : AnimationSpeed, AnimationPlayBackwards);
+                    if (!animationPlayer.IsConnected("animation_finished", this, nameof(OnAnimationPlayerFinished)))
+                    {
+                        animationPlayer.Connect("animation_finished", this, nameof(OnAnimationPlayerFinished));
+                    }
+                    animationPlayer.Play(anim);
+                    AnimationPlaying = true;
+                }
+                else
+                {
+                    AnimationPlaying = false;
                 }
             }
+            else
+            {
+                AnimationPlaying = false;
+            }
+            Entry();
             if (_nested_fsm != null) _nested_fsm.Call("_entry");
+        }
+
+        private string GetAnimationName() => AnimationName.Empty() ? StateName : AnimationName;
+
+        private void OnAnimationPlayerFinished(string animName)
+        {
+            if (animName == GetAnimationName())
+            {
+                AnimationPlaying = false;
+            }
         }
 
         private void _update(float delta)

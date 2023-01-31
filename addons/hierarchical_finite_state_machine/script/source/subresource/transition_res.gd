@@ -33,7 +33,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  0.8(版本号)
+#	@version  1.3(版本号)
 #	@license  Custom License(Read LISENCES.TXT for more details)
 #
 #----------------------------------------------------------------------------
@@ -44,6 +44,7 @@
 #----------------------------------------------------------------------------
 #  2021/04/14 | 0.1   | Daylily-Zeleen      | Create file
 #  2022/07/02 | 0.8   | Daylily-Zeleen      | Implement script_condition
+#  2023/01/30 | 1.3   | Daylily-Zeleen      | Add auto transition type : AnimationFinish
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -67,8 +68,6 @@ var variable_condition_res :VariableConditionRes = null
 
 func _get_property_list():
 	var properties :Array
-#		properties.push_back({name = "TransitionRes",type = TYPE_NIL,usage = PROPERTY_USAGE_CATEGORY  })
-
 	properties.push_back({name = "from_res" , type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE, hint_string = "Resource" })
 	properties.push_back({name = "to_res",type = TYPE_OBJECT,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
 	properties.push_back({name = "transition_type",type = TYPE_INT  })
@@ -78,6 +77,7 @@ func _get_property_list():
 	properties.push_back({name = "script_condition_res",type = TYPE_OBJECT ,hint = PROPERTY_HINT_RESOURCE_TYPE , hint_string = "Resource"  })
 
 	return properties
+
 func _init(
 		_from_res :StateRes = null ,
 		_to_res:StateRes  = null,

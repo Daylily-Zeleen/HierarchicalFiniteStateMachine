@@ -119,9 +119,9 @@ margin_right = 376.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Delay timer"
+text = "Animation Finish"
 align = 1
-items = [ "Delay timer", null, false, 0, null, "Nested Fsm Exit", null, false, 1, null, "Manual Exit", null, false, 2, null, "Update times", null, false, 3, null, "Physics Update times", null, false, 4, null ]
+items = [ "Animation Finish", null, false, 0, null, "Delay timer", null, false, 1, null, "Nested Fsm Exit", null, false, 2, null, "Manual Exit", null, false, 3, null, "Update times", null, false, 4, null, "Physics Update times", null, false, 5, null ]
 selected = 0
 
 [node name="DelayTimerEditor" type="HBoxContainer" parent="Editor/AutoEditor/Panel/VBoxContainer"]

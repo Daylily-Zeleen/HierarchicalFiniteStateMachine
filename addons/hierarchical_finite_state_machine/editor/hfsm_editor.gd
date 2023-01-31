@@ -42,7 +42,7 @@
 #
 #	@author   Daylily-Zeleen
 #	@email    daylily-zeleen@foxmail.com
-#	@version  1.1(版本号)
+#	@version  1.3(版本号)
 #	@license  GNU Lesser General Public License v3.0 (LGPL-3.0)
 #
 #----------------------------------------------------------------------------
@@ -56,6 +56,8 @@
 #  2021/04/18 | 0.1   | Daylily-Zeleen      | Fix pupupmenue delete
 #  2022/07/1~3 | 0.8   | Daylily-Zeleen      |   Bugfix, add new feature.
 #  2022/12/18 | 1.1   | Daylily-Zeleen      |   Bugfix
+#  2023/01/30 | 1.3   | Daylily-Zeleen      | Fix logic of delete shotcut, fix auto deleted of transitions.
+#  2023/01/31 | 1.3   | Daylily-Zeleen      | Fix duplicate add TransitFlow
 #----------------------------------------------------------------------------
 #
 ##############################################################################
@@ -165,20 +167,22 @@ func _ready():
 
 func _load_state_machine_from_res():
 	#移除
+	yield(get_tree(),"idle_frame")
+	yield(get_tree(),"idle_frame")
 	if current_nested_fsm_res :
 		for s in graph_edit.get_children():
 			if s is StateNode :
+				graph_edit.remove_child(s)
 				s.queue_free()
 	if current_nested_fsm_res :
 		for t in graph_edit.get_children() :
 			if t is TransitFlow :
+				graph_edit.remove_child(t)
 				t.queue_free()
-	yield(get_tree(),"idle_frame")
 	#载入state node
 	for state_res in current_nested_fsm_res.state_res_list :
 		if state_res is NestedFsmRes.StateRes :
 			add_state_node(state_res)
-	yield(get_tree(),"idle_frame")
 	#载入TransitFlow
 	for transition_res in current_nested_fsm_res.transition_res_list :
 		if transition_res is NestedFsmRes.TransitionRes:
@@ -211,6 +215,10 @@ func add_state_node(state_res:NestedFsmRes.StateRes = NestedFsmRes.StateRes.new(
 
 
 func add_transit_flow(transition_res :NestedFsmRes.TransitionRes) ->TransitFlow:
+	for n in graph_edit.get_children():
+		if n is TransitFlow:
+			if n.transition_res == transition_res:
+				return null
 	var new_transit_flow :TransitFlow = preload("transit_flow/transit_flow.tscn").instance()
 	graph_edit.add_child(new_transit_flow)
 	new_transit_flow.init(self , transition_res)
@@ -282,6 +290,9 @@ func paste(offset:Vector2):
 func get_top_control_or_null_at_pos(position:Vector2 = graph_edit.get_local_mouse_position()):
 	var count :int = graph_edit.get_child_count()
 	var mouse_pos :Vector2 = position#graph_edit.get_local_mouse_position()
+	for node in graph_edit.get_children():
+		if node is TransitFlow:
+			graph_edit.move_child(node, 0)
 	for i in range(count-1,-1,-1):
 		var current:Control = graph_edit.get_child(i)
 		if current is StateNode and current.get_rect().has_point(mouse_pos):
@@ -514,6 +525,8 @@ func _on_GraphEdit_node_selected(node):
 					editing_transit_flow.delete_self()
 					message.set_error(Message.Error.TRANSITION_ALREADY_EXIST)
 			else:
+				if editing_transit_flow.get_parent():
+					editing_transit_flow.get_parent().remove_child(editing_transit_flow)
 				editing_transit_flow.queue_free()
 				action_add_new_transit_flow(t_res)
 				message.set_tip(Message.Tip.DEFAULT)
@@ -586,7 +599,7 @@ func _on_GraphEdit_copy_nodes_request():
 func _on_GraphEdit_paste_nodes_request():
 	paste(Vector2(30,20))
 
-func _on_GraphEdit_delete_nodes_request():
+func _on_GraphEdit_delete_nodes_request(_nodes):
 	action_delete()
 
 
