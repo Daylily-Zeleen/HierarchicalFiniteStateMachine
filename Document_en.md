@@ -1,4 +1,4 @@
-# Hierarchical Finite State Machine - V 1.2
+# Hierarchical Finite State Machine - V 1.3
 
 ​		As we all know, state machine is a very common design pattern. Here provide a powerful and easy-to-use Godot plugin for Hierarchical Finite State Machine with visual editing.
 
@@ -10,7 +10,7 @@
 4. Two development modes: signal callback and attached state script
 5. Develop base GDscript, compatible with Godot basic version and mono version
 5. **Allows `C#`script to attached as state script( New).**
-5. **Suppoets `GDscript` and `C#` script to implement the logic of transition( New, full version only). **
+5. **Suppoets `GDscript` and `C#` script to implement the logic of transition( New, full version only).**
 
 ​	
 
@@ -476,10 +476,10 @@ public class PlaceHolder: HFSM.State
   ​		After you set the agents correctly in the HFSM inspector(read [HFSM's Inspector Porperties](### Â· HFSM's Inspector Porperties) for more), a series of variables representing the agent nodes will be added to all the State scripts belonging to the HFSM. The example is as follows:
 
   ```python
-  ###agents list start# please not modify this line.
+  ###agents list-start# please not modify this line.
   const Player = preload("res://addons/hierarchical_finite_state_machine/demo/test_2d_platform_player/Player.gd")
   var player : Player 
-  ###agents list end# please not modify this line.
+  ###agents list-end# please not modify this line.
   ```
 
   ​		When a state with nested FSM has a state script, the plugin will automatically add a variable representing this State for all States in nested FSM and the variable name is "fsm_xxx", "xxx" is the name of the State, and its type is referenced from the script of the state. The example is as follows:
@@ -546,39 +546,43 @@ public class PlaceHolder: HFSM.State
 
 ### Auto Transition
 
-​		There are 5 modes, which can be selected by "Auto transit mode" in the inspector.
+​		There are ~~(5)~~ **6** modes, which can be selected by "Auto transit mode" in the inspector.
 
 ![](DOCUMENT.assets/auto_mode.png)
 
+  1. Animation Finish( **v 1.3 New Feature**):    
+     ​		When from State's animation finished, the condition of the Transition is true.    
+     **Note: if the from State has not appropriate animation to play when it is entered, the condition of the Transition is true, too.**
+   
   1. Delay timer:
 
      ![](DOCUMENT.assets/delay_timer.png)
 
-     ​		In this mode, by configuring the delay time, when FSM enters the start State of the Transition, the Transition will start countdown according to the delay time you set. When the countdown ends, the condition of the Transition is true.
+     ​		In this mode, by configuring the delay time, when FSM enters the from State of the Transition, the Transition will start countdown according to the delay time you set. When the countdown ends, the condition of the Transition is true.
 
   2. Nested Fsm Exit :
 
      ![](DOCUMENT.assets/nested_exit.png)
 
-​		Only when the start State of the Transition contain a nested FSM, the condition of the Transition can be true. When the nested FSM of the start State runs to its Exit State and exit behavior is finished, the condition of the Transition is true.
+​		Only when the from State of the Transition contain a nested FSM, the condition of the Transition can be true. When the nested FSM of the from State runs to its Exit State and exit behavior is finished, the condition of the Transition is true.
 
   3. Manual Exit :
 
      ![](DOCUMENT.assets/manual_exit.png)
 
-​		In this mode, when the start State of this Transition execute `manual_exit()` in normal State behavior, the condition of the Transition is true.
+​		In this mode, when the from State of this Transition execute `manual_exit()` in normal State behavior, the condition of the Transition is true.
 
   4. Update times :
 
      ![](DOCUMENT.assets/update_times.png)
 
-     ​		In this mode, when FSM enters the start State of the Transition, it will start to count the number of updates (that is, the number of times `update()` is executed). When the number of times you set is reached, the condition of the Transition is true.
+     ​		In this mode, when FSM enters the from State of the Transition, it will start to count the number of updates (that is, the number of times `update()` is executed). When the number of times you set is reached, the condition of the Transition is true.
 
   5. Physics Update times :
 
      ![](DOCUMENT.assets/physics_update_time.png)
 
-     ​		In this mode, when FSM enters the start State of the Transition, it will start to count the number of physics updates (that is, the number of `times physics_updates()` is executed). When the number of times you set is reached, the condition of the Transition is true.
+     ​		In this mode, when FSM enters the from State of the Transition, it will start to count the number of physics updates (that is, the number of `times physics_updates()` is executed). When the number of times you set is reached, the condition of the Transition is true.
 
 ### Variable Transition
 
@@ -787,7 +791,7 @@ public class TemplateTransion :Reference
 
  ### Multiple Transitions
 
-​		When the start States of multiple Transitions are the same, and multiple Transition's conditions are true, although it will not transit to the next State randomly, its priority is opaque to developers. Therefore, when you design the Transition's condition, you should avoid that multiple Transitions with the same start State can reach to true in the same frame.
+​		When the from States of multiple Transitions are the same, and multiple Transition's conditions are true, although it will not transit to the next State randomly, its priority is opaque to developers. Therefore, when you design the Transition's condition, you should avoid that multiple Transitions with the same from State can reach to true in the same frame.
 
 ## Finite State Machine - FSM
 
@@ -1343,6 +1347,12 @@ The difference between process types as follow :
    > (v1.2 New Feature, Full version only) 
    > To play the animation backward or not.
 
+8. bool animation_playing[default: false]
+
+   > (v1.3 New Feature) 
+   > indicating this State is playing animation or not。
+   > **Note：If this state is not running in the HFSM path, the meaning of this property is not reliable.**
+
 ### Methods
 
 ​		Read [State Behavior](#state-behavior--code-control) for more informations of overridable methods.
@@ -1412,6 +1422,12 @@ The difference between process types as follow :
 
    > (v1.2 New Feature, Full version only) 
    > To play the animation backward or not.
+
+8. bool AnimationPlaying[default: false]
+
+   > (v1.3 New Feature) 
+   > indicating this State is playing animation or not。
+   > **Note：If this state is not running in the HFSM path, the meaning of this property is not reliable.**
 
 ### Methods
 

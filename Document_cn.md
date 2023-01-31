@@ -1,4 +1,4 @@
-# 分层有限状态机 - V 1.2
+# 分层有限状态机 - V 1.3
 
 ​		总所周知，状态机是一种很常见的设计模式，这里提供了一个强大易用、可视化编辑的分层有限状态机Godot插件。
 
@@ -484,10 +484,10 @@ public class PlaceHolder: HFSM.State
   ​		当您在`HFSM`监视器中正确设置代理(详见[HFSM监视器属性](#-hfsm%E7%9A%84%E7%9B%91%E8%A7%86%E5%99%A8%E5%B1%9E%E6%80%A7hfsms-inspector-porperties))之后,会在所有属于该`HFSM`里的状态脚本中添加一系列代表代理节点的变量,示例如下:
   
   ```python
-  ###agents list start# please not modify this line.
+  ###agents list-start# please not modify this line.
   const Player = preload("res://addons/hierarchical_finite_state_machine/demo/test_2d_platform_player/Player.gd")
   var player : Player 
-  ###agents list end# please not modify this line.
+  ###agents list-end# please not modify this line.
   ```
   
   ​		当您内嵌了`FSM`的`State`有附加的状态脚本，本插件会自动为其内嵌`FSM`中附加了脚本的所有`State`添加一个代表该`State`的变量，且变量名为`fsm_xxx` , `xxx` 为该`State`的名称，其类型引用自该状态的脚本，示例如下：
@@ -552,35 +552,39 @@ public class PlaceHolder: HFSM.State
 
 ### · 自动转换(Auto Transition)
 
-  ​		具有5种模式，通过监视器中Auto transit mode进行选择。
+  ​		具有~~(5)~~**6**种模式，通过监视器中Auto transit mode进行选择。
 
 ![](DOCUMENT.assets/auto_mode.png)
 
-  1. 延时定时器(Delay timer):
+  1. 动画结束(Animation Finish)(**v 1.3 新特性**):    
+     ​		当起始状态的动画播放结束时，该转换的条件为真。    
+     **注意：如果进入起始状态时无可播放的动画，该转换的条件将立刻置为真。**
+   
+  2. 延时定时器(Delay timer):
 
      ![](DOCUMENT.assets/delay_timer.png)
 
      ​		该模式下，通过配置延时时间(Delay time)，当`FSM`进入该`Transition`的起始`State`时，该`Transition`会根据您设置的延时时间开始倒计时，当倒计时结束后，该转换的条件为真。
 
-  2. 内嵌状态机退出(Nested Fsm Exit)：
+  3. 内嵌状态机退出(Nested Fsm Exit)：
 
      ![](DOCUMENT.assets/nested_exit.png)
 
 ​		只有当该转换的起始状态是内嵌了`FSM`的`State`时，该`Transition`的转换条件才有可能为真。当起始`State`的内嵌`FSM`运行到`Exit State`并执行完退出行为后，该转换条件为真。
 
-  3. 手动退出(Manual Exit)：
+  4. 手动退出(Manual Exit)：
 
      ![](DOCUMENT.assets/manual_exit.png)
 
 ​			该模式下，当该转换的起始状态脚本中在正常的状态行为中通过代码调用了`manual_exit()`时，该`Transition`的转换条件为真。
 
-  4. 更新次数(Update times):
+  5. 更新次数(Update times):
 
      ![](DOCUMENT.assets/update_times.png)
 
      ​		该模式下，当`FSM`进入到该`Transition`的起始`State`时，会开始计数更新的次数（即`update()`执行的次数），当达到您设定的次数时，该`Transition`的转换条件为真。
 
-  5. 物理更新次数(Physics Update times):
+  6. 物理更新次数(Physics Update times):
 
      ![](DOCUMENT.assets/physics_update_time.png)
 
@@ -1341,6 +1345,12 @@ public class TemplateTransion :Reference
    > (v1.2 新特性 完整版特有) 
    > 是否反向播放动画。
 
+8. bool animation_playing[default: false]
+
+   > (v1.3 新特性) 
+   > 指示该状态是否正在播放动画。
+   > **注意：只有当该状态在HFSM的运行路径中，该属性值的含义才是可靠的。**
+
 ### · 方法(Methods)
 
 ​		对于可重载方法，其行为详见[状态行为及其代码控制](#·状态行为及其代码控制(StateBehavior&CodeControl)).
@@ -1410,6 +1420,12 @@ public class TemplateTransion :Reference
 
    > (v1.2 新特性 完整版特有) 
    > 是否反向播放动画。
+
+8. bool AnimationPlaying[default: false]
+
+   > (v1.3 新特性) 
+   > 指示该状态是否正在播放动画。
+   > **注意：只有当该状态在HFSM的运行路径中，该属性值的含义才是可靠的。**
 
 ### · 方法(Methods)
 
